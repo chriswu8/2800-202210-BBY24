@@ -1,0 +1,17 @@
+{
+  "name": "shoppingcart",
+  "version": "1.0.0",
+  "description": "COMP2537 Week 4 Deliverable",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon appp.js"
+  },
+  "author": "Chris",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16"
+  }
+}
