@@ -22,6 +22,13 @@ app.get('/', function (req, res) {
     res.send('working');
 });
 
+// Setting routes
+const pages = require('./routes/pages');
+app.use('/', pages);
+
+const adminPages = require('./routes/adminPages');
+app.use('/admin/pages', adminPages);
+
 // start server
 const port = 8000;
 app.listen(port, function () {
