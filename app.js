@@ -5,7 +5,7 @@ const app = express();
 const mongoose = require('mongoose');
 
 // connect to db
-const db = mongoose.connect('mongodb://localhost:27017/cart')
+mongoose.connect('mongodb://localhost:27017/cart')
     .then(
         function () { console.log("Connected to local MongoDB. Nice!"); },
         err => { handleError(error) }
