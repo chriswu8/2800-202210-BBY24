@@ -5,13 +5,14 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon appp.js"
+    "start": "nodemon app.js"
   },
   "author": "Chris",
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.8",
     "express": "^4.18.1",
+    "mongoose": "^6.3.3",
     "nodemon": "^2.0.16"
   }
 }
