@@ -5,7 +5,8 @@ const app = express();
 const mongoose = require('mongoose');
 const session = require('express-session');
 const { body, validationResult } = require('express-validator');
-
+const cookieParser = require('cookie-parser')
+const flash = require('connect-flash');
 
 // connect to db
 mongoose.connect('mongodb://localhost:27017/cart')
@@ -25,7 +26,7 @@ app.use(express.json()); // Used to parse JSON bodies
 app.use(express.urlencoded({ extended: false })); // parses & encode incoming requests into URL-encoded format
 
 //
-app.get('/store', function(req, res) {
+app.get('/store', function (req, res) {
     res.render('index');
 });
 
@@ -67,7 +68,8 @@ app.post(
 );
 
 // Express messages middleware 
-app.use(require('connect-flash')());
+app.use(cookieParser());
+app.use(flash());
 app.use(function (req, res, next) {
     res.locals.messages = require('express-messages')(req, res);
     next();
