@@ -1,25 +1,25 @@
 <%- include('../layouts/adminHeader'); %>
 
-    <h2 class="pagetitle">Add a page</h2>
-    <a href="/admin/pages">Back to all pages </a>
+    <h2 class="pageTitle">Add a page</h2>
+    <a href="/admin/pages" class="btn btn-primary">Back to all pages </a>
     <br><br>
 
-    <form action="admin/pages/addPage" method="POST">
+    <form action="/admin/pages/addPage" method="POST">
 
         <div class="form-group">
             <label for="">Title</label>
-            <input class="form-control" type="text" name="title" value="<%= title %>">
+            <input class="form-control" type="text" name="title" value="<%= title %>" placeholder="Title">
         </div>
 
         <div class="form-group">
             <label for="">Slug</label>
-            <input class="form-control" type="text" name="title" value="<%= title %>">
+            <input class="form-control" type="text" name="title" value="<%= slug %>"  placeholder="Slug">
         </div>
 
         <div class="form-group">
             <label for="">Content</label>
-            <textarea class="form-control" name=""content> <%= content %></textarea>
+            <textarea class="form-control" name="content"  placeholder="Content"> <%= content %></textarea>
         </div>
 
-        <button>Submit</button>
+        <button type="submit" class="btn btn-dark">Submit</button>
     </form>
