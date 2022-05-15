@@ -7,6 +7,7 @@ const session = require('express-session');
 const { body, validationResult } = require('express-validator');
 const cookieParser = require('cookie-parser')
 const flash = require('connect-flash');
+const pageSchema = require('./models/page')
 
 // connect to db
 mongoose.connect('mongodb://localhost:27017/cart')
@@ -21,6 +22,9 @@ app.set('view engine', 'ejs');
 
 // set public folder
 app.use(express.static(path.join(__dirname, 'public')));
+
+// set global errors variable
+app.locals.errors = null;
 
 app.use(express.json()); // Used to parse JSON bodies
 app.use(express.urlencoded({ extended: false })); // parses & encode incoming requests into URL-encoded format

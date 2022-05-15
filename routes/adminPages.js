@@ -3,6 +3,7 @@ const { append } = require('express/lib/response'); // auto generated
 const router = express.Router();
 var { body, validationResult} = require('express-validator');
 const app = express();
+app.use(express.json());
 
 /**
  * GET pages index
@@ -36,29 +37,22 @@ router.get('/addPage', function (req, res) {
  * POST add page
  */
 
-router.post('/addPage', function (req, res) {
+router.post('/addPage', 
+    
+    body('title').notEmpty(),
+    body('content').notEmpty(),
 
-    // req.checkBody('title', 'Title must have a value').notEmpty();
-    // req.checkBody('content', 'Content must have a value').notEmpty();
-
-    const title = req.body.title;
-    const slug = req.body.slug; // \s+ means 
-    if (slug == "") slug = title;
-    const content = req.body.content;
-
-    const errors = validationResult(req);
-    if (errors) {
-        console.log("errors");
-
-        res.render('admin/addPage', {
-            errors: errors,
-            title: title,
-            slug: slug,
-            content: content 
-        });
-    } else {
+    function (req, res) {
+        // Finds the validation errors in this request and wraps them in an object with handy functions
+        const errors = validationResult(req);
+        
+        if (!errors.isEmpty()) {
+            console.log("errors");
+          return res.status(400).json({ errors: errors.array() });
+        } else {
         console.log("success");
     }
+        res.render('admin/addPage');
 });
 
 
