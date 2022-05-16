@@ -14,7 +14,11 @@ const flash = require('connect-flash/lib/flash');
  */
 
 router.get('/', function (req, res) {
-    res.send("Admin Page")
+    Page.find({}).sort({sorting: 1}).exec(function (err, pages) {
+        res.render('admin/pages', {
+            pages: pages
+        })
+    })
 });
 
 
@@ -76,7 +80,7 @@ router.post('/addPage',
                     title: title,
                     slug: slug,
                     content: content,
-                    // sorting: 0
+                    sorting: 100
                 });
                 
                 page.save(function (err) {
