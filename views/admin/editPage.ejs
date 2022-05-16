@@ -1,0 +1,26 @@
+<%- include('../layouts/adminHeader'); %>
+
+    <h2 class="pageTitle">Edit a page</h2>
+    <a href="/admin/pages" class="btn btn-primary">Back to all pages </a>
+    <br><br>
+
+    <form action="/admin/pages/editPage/<%= title %>" method="POST">
+
+        <div class="form-group">
+            <label for="">Title</label>
+            <input class="form-control" type="text" name="title"  placeholder="Title" > 
+        </div>
+
+        <div class="form-group">
+            <label for="">Slug</label>
+            <input class="form-control" type="text" slug="title"  placeholder="Slug" > 
+        </div>
+
+        <div class="form-group">
+            <label for="">Content</label>
+            <textarea class="form-control" name="content"  placeholder="Content" > </textarea> 
+        </div>
+
+        <input type="hidden" name="id" value="<%= id %>">
+        <button type="submit" class="btn btn-dark">Submit</button>
+    </form>

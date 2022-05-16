@@ -8,13 +8,14 @@ app.use(express.json());
 // GET Page model
 const Page = require('../models/page');
 const flash = require('connect-flash/lib/flash');
+const { getMaxListeners, count } = require('../models/page');
 
 /**
  * GET pages index
  */
 
 router.get('/', function (req, res) {
-    Page.find({}).sort({sorting: 1}).exec(function (err, pages) {
+    Page.find({}).sort({ sorting: 1 }).exec(function (err, pages) {
         res.render('admin/pages', {
             pages: pages
         })
@@ -65,7 +66,7 @@ router.post('/addPage',
             // document.getElementById('alertError').innerHTML = 'Title and Content fields cannot be empty';
             // return res.status(400).json({ errors: errors.array() });
         } else {
-            
+
             // Page.findOne({ slug: slug }, function (err, page) {  // left slug is in collection, right slug is the variable
             //     if (page) {
             //     // req.flash('danger', 'Page slug exists, choose another.');  // NOT WORKING
@@ -75,23 +76,23 @@ router.post('/addPage',
             //         content: content
             //     });
             // } else {
-                console.log("This line of code ran!!!!!!!");
-                    const page = new Page({
-                    title: title,
-                    slug: slug,
-                    content: content,
-                    sorting: 100
-                });
-                
-                page.save(function (err) {
-                    if (err) return console.log(err);
-                    // req.flash("success", 'Page added!'); // NOT WORKING
-                    console.log("Success. Page added!");
-                    res.redirect('/admin/pages');
-                });
-            }
+            console.log("This line of code ran!!!!!!!");
+            const page = new Page({
+                title: title,
+                slug: slug,
+                content: content,
+                sorting: 100
+            });
+
+            page.save(function (err) {
+                if (err) return console.log(err);
+                // req.flash("success", 'Page added!'); // NOT WORKING
+                console.log("Success. Page added!");
+                res.redirect('/admin/pages');
+            });
+        }
     })
-        // res.render('admin/addPage');
+// res.render('admin/addPage');
 //     }
 // });
 
@@ -102,16 +103,55 @@ router.post('/addPage',
  * POST reorder pages
  */
 
-
- router.post('/reorderPages', function (req, res) {
-    console.log("hiiiiiiiiiiiiiiiiiiiiiiiii");
-
+router.post('/reorderPages', function (req, res) {
+    var ids = req.body['id[]'];
     console.log(req.body);
+
+    console.log(ids);
+    var count = 0;
+
+    for (var i = 0; i < ids.length; i++) {
+        var id = ids[i];
+        count++;
+
+        (function (count) {
+            // wrapped in a closure
+            Page.findById(id, function (err, page) {
+                page.sorting = count;
+                page.save(function (err) {
+                    if (err)
+                        return console.log(err);
+                });
+            });
+
+        })(count);
+    }
 });
 
 
 
- 
+
+/**
+ * GET edit page
+ */
+
+router.get('/editPage/:title', function (req, res) {
+    Page.findOne({ title: req.params.title }, function (err, page) {
+        if (err)
+            return console.log(err);
+
+        res.render('admin/editPage', {
+            title: page.title,
+            slug: page.slug,
+            content: page.content,
+            id: page._id
+        });
+    });
+
+
+
+});
+
 
 
 
