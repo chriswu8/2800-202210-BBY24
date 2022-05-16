@@ -5,11 +5,46 @@
     <br><br>
 
     <table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
+        <thead class="home">
+            <tr>
+                <th>Title</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% pages.forEach(function(page) { %>
+                <!-- the table rows will be sortable via jQuery UI sortable-->
+                <tr id="id_ <%= page._id %>" class="<%= page.title %>">
+                    <td>
+                        <%= page.title %>
+                    </td>
+                    <td> <a href="/admin/pages/editPage/<%= page.slug %>">Edit</a></td>
+                    <% if (page.title === "home" ) { %>
+                        <td></td>
+                        <% } else {%>
+
+                            <td> <a href="/admin/pages/deletePage/<%= page._id %>">Delete</a></td>
+                            <% } %>
+                </tr>
+                <% }); %>
+        </tbody>
     </table>
+
+
+
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+    <script>
+        $('tbody').sortable({
+            items: "tr:not('.home')",
+            placeholder: "ui-state-highlight",
+            update: function () {
+                const ids =   $('tbody').sortable("serialized");
+                const url = "/admin/pages/reorder-page";
+
+                $.post(url, ids);
+            }
+        
+        })
+    </script>
