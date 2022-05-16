@@ -97,12 +97,21 @@ router.post('/addPage',
 
 
 
-router.get('/test', function (req, res) {
-    res.send('bbbbbbbbbb');
+
+/**
+ * POST reorder pages
+ */
+
+
+ router.post('/reorderPages', function (req, res) {
+    console.log("hiiiiiiiiiiiiiiiiiiiiiiiii");
+
+    console.log(req.body);
 });
 
 
 
+ 
 
 
 

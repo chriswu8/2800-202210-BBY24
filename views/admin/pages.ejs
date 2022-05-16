@@ -16,11 +16,11 @@
         <tbody>
             <% pages.forEach(function(page) { %>
                 <!-- the table rows will be sortable via jQuery UI sortable-->
-                <tr id="id_ <%= page._id %>" class="<%= page.title %>">
+                <tr id="id_<%= page._id %>" class="<%= page._id %>">
                     <td>
                         <%= page.title %>
                     </td>
-                    <td> <a href="/admin/pages/editPage/<%= page.slug %>">Edit</a></td>
+                    <td> <a href="/admin/pages/editPage/<%= page.title %>">Edit</a></td>
                     <% if (page.title === "home" ) { %>
                         <td></td>
                         <% } else {%>
@@ -40,11 +40,9 @@
             items: "tr:not('.home')",
             placeholder: "ui-state-highlight",
             update: function () {
-                const ids =   $('tbody').sortable("serialized");
-                const url = "/admin/pages/reorder-page";
-
+                const ids =   $('tbody').sortable();
+                const url = "/admin/pages/reorderPages";
                 $.post(url, ids);
             }
-        
-        })
+        });
     </script>
