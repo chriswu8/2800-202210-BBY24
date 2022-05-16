@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Add New User</title>
+
+   <!-- font awesome cdn -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file -->
+   <link rel="stylesheet" href="../css/editUser.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1><%= title %> <%= registerusers.name %></h1>
+        <form method="post" action="/update/<%= registerusers._id %>" mthod="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="label">Name</label>
+                <input type="text" id='name' name="name" class="form-control" value="<%= registerusers.name %>"
+                 placeholder="Please enter name">
+            </div>
+            <div class="form-group">
+                <label class="label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" value="<%=registerusers.password %>" 
+                placeholder="Please enter password">
+            </div>
+            <div class="form-group">
+                <label class="label">Email</label>
+                <input type="email" name="email" class="form-control" placeholder="Please enter email"
+                 value="<%= registerusers.email %>" id="email">
+            </div>
+            <div class="form-group">
+                <label class="label">Phone Number</label>
+                <input type="number" name="number" class="form-control" placeholder="Please enter phone number" 
+                value="<%= registerusers.number %>" id="number">
+            </div>
+            <div>
+                <label class="label">User Type</label>
+            </div>
+            <div id="multiple-choice-container">
+                <input type="radio" id="admin" name="type" value="<%= registerusers.type %>">
+                <label for="admin">Admin</label>
+                <input type="radio" id="regular" name="type" value="<%= registerusers.type %>">
+                <label for="regular">Regular</label>
+            </div>
+            <div>
+                <label for="image" class="label">Avatar</label>
+            </div>
+            <div>    
+                <label class="file" for="image">
+                    <input type="file" id="file" name="image">
+                    <span class="file-custom"></span>
+                </label>
+                <img src="/<%= registerusers.image %>" width="100" class="img-thumbnail">
+            </div>
+            <input type="hidden" name="old_image" value="<%= registerusers.image %>"/>
+            <button name="submit" class="btn" value="Update User">Update User</button>
+        </form>
+    </div>
+</body>
+</html>
