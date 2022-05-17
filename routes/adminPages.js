@@ -10,6 +10,7 @@ const Page = require('../models/page');
 const flash = require('connect-flash/lib/flash');
 const { getMaxListeners, count } = require('../models/page');
 
+
 /**
  * GET pages index
  */
@@ -76,7 +77,6 @@ router.post('/addPage',
             //         content: content
             //     });
             // } else {
-            console.log("This line of code ran!!!!!!!");
             const page = new Page({
                 title: title,
                 slug: slug,
@@ -86,7 +86,7 @@ router.post('/addPage',
 
             page.save(function (err) {
                 if (err) return console.log(err);
-                // req.flash("success", 'Page added!'); // NOT WORKING
+                req.flash("success", 'Page added!'); // NOT WORKING
                 console.log("Success. Page added!");
                 res.redirect('/admin/pages');
             });
@@ -124,7 +124,7 @@ router.post('/reorderPages', function (req, res) {
                 });
             });
 
-        })(count);
+        }) (count);
     }
 });
 
@@ -134,7 +134,6 @@ router.post('/reorderPages', function (req, res) {
 /**
  * GET edit page
  */
-
 router.get('/editPage/:title', function (req, res) {
     Page.findOne({ title: req.params.title }, function (err, page) {
         if (err)
@@ -147,9 +146,6 @@ router.get('/editPage/:title', function (req, res) {
             id: page._id
         });
     });
-
-
-
 });
 
 
@@ -178,6 +174,7 @@ router.post('/editPage/:title',
 
         if (!errors.isEmpty()) {
             console.log("Error, empty field detected.");
+            // insert flash message here if possible
         } else {
 
             Page.findById(id, function (err, page) {  // left slug is in collection, right slug is the variable

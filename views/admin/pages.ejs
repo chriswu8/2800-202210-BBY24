@@ -1,52 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
 <%- include('../layouts/adminHeader'); %>
 
-    <h2 class="pageTitle">Pages</h2>
-    <a href="/admin/pages/addPage" class="btn btn-primary">Add a new page </a>
-    <br><br>
+    <body>
 
-    <table class="table table-striped sorting">
-        <thead class="home">
-            <tr>
-                <th>Title</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
 
-        <tbody>
-            <% pages.forEach(function(page) { %>
-                <!-- the table rows will be sortable via jQuery UI sortable-->
-                <tr id="id_<%= page._id %>" class="<%= page._id %>">
-                    <td>
-                        <%= page.title %>
-                    </td>
-                    <td> <a href="/admin/pages/editPage/<%= page.title %>">Edit</a></td>
-                    <% if (page.title === "home" ) { %>
-                        <td></td>
-                        <% } else {%>
+        <header class="header">
 
-                            <td> <a class="confirmDeletion" href="/admin/pages/deletePage/<%= page._id %>">Delete</a></td>
-                            <% } %>
+            <div class="flex">
+
+                <a href="#home" class="logo"><img src="./css/img/logo.png" alt=""></a>
+
+                <!-- Inspiration from Skaikh Anas start -->
+                <nav class="navbar">
+                    <a href="/home">HOME</a>
+                    <a href="/protocols">PROTOCOLS</a>
+                    <a href="/weather">WEATHER</a>
+                    <a href="/login/postings">BLOG</a>
+                    <a href="/admin/pages">Pages</a>
+                    <a href="/profile">PROFILE</a>
+                    <a href="/" target="blank" class="navbar-brand">Shopping Cart</a>
+                    <a id="logout" href="/logout">LOGOUT</a>
+                </nav>
+                <!-- Inspiration from Skaikh Anas end -->
+
+
+                <div class="dropdown" style="float:right;">
+                    <button class="dropbtn">MENU</button>
+                    <div class="dropdown-content">
+                        <a href="/home">HOME</a>
+                        <a href="/protocols">PROTOCOLS</a>
+                        <a href="weather/">WEATHER</a>
+                        <a href="/login/postings">BLOG</a>
+                        <a href="/admin/pages">Pages</a>
+                        <a href="profile/">PROFILE</a>
+                        <a href="/" target="blank" class="navbar-brand">Shopping Cart</a>
+                        <a id="logout" href="/logout">LOGOUT</a>
+                        <!--Bo -->
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <h2 class="pageTitle">Pages</h2>
+        <a href="/admin/pages/addPage" class="btn btn-primary">Add a new page </a>
+        <br><br>
+
+        <table class="table table-striped sorting">
+            <thead class="home">
+                <tr>
+                    <th>Title</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
-                <% }); %>
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+                <% pages.forEach(function(page) { %>
+                    <!-- the table rows will be sortable via jQuery UI sortable-->
+                    <tr id="id_<%= page._id %>" class="<%= page._id %>">
+                        <td>
+                            <%= page.title %>
+                        </td>
+                        <td> <a href="/admin/pages/editPage/<%= page.title %>">Edit</a></td>
+                        <% if (page.title==="Home" ) { %>
+                            <td></td>
+                            <% } else {%>
+
+                                <td> <a class="confirmDeletion"
+                                        href="/admin/pages/deletePage/<%= page._id %>">Delete</a>
+                                </td>
+                                <% } %>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
 
 
 
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
-    <script>
-        $('tbody').sortable({
-            items: "tr:not('.home')",
-            placeholder: "ui-state-highlight",
-            update: function () {
-                const ids =   $('tbody').sortable("serialize");
-                const url = "/admin/pages/reorderPages";
-                $.post(url, ids);
-            }
-        });
-    </script>
+        <%- include('../layouts/adminFooter'); %>
+
+            <script>
+                $('tbody').sortable({
+                    items: "tr:not('.home')",
+                    placeholder: "ui-state-highlight",
+                    update: function () {
+                        const ids = $('tbody').sortable("serialize");
+                        const url = "/admin/pages/reorderPages";
+                        $.post(url, ids);
+                    }
+                });
+            </script>
 
 
 
-<%- include('../layouts/adminFooter'); %>
+    </body>
+
+</html>

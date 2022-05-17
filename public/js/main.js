@@ -1,21 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(function () {
-    alert('test');
-});
+// function() {
+//     alert('test');
+// };
