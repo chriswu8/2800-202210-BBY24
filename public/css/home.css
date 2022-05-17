@@ -1,3 +1,8 @@
+body {
+   margin: 25px !important;
+}
+
+
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Ubuntu:wght@300&display=swap');
 :root{
    --main-color:#5d9cee;
