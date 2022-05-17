@@ -155,5 +155,62 @@ router.get('/editPage/:title', function (req, res) {
 
 
 
+
+/**
+ * POST edit page
+ */
+
+router.post('/editPage/:title',
+
+    body('title').notEmpty(),
+    body('content').notEmpty(),
+
+
+    function (req, res) {
+
+        const title = req.body.title;
+        const slug = req.body.slug;
+        const content = req.body.content;
+        const id = req.body.id;
+
+        // Finds the validation errors in this request and wraps them in an object
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            console.log("Error, empty field detected.");
+        } else {
+
+            Page.findById(id, function (err, page) {  // left slug is in collection, right slug is the variable
+                if (err)
+                    return console.log(err);
+
+                page.title = title;
+                page.slug = slug;
+                page.content = content;
+
+                page.save(function (err) {
+                    if (err) return console.log(err);
+
+                    req.flash("Success", 'Page updated.');
+                    res.redirect('/admin/pages');
+                });
+            });
+        }
+    }
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Exports
 module.exports = router;
