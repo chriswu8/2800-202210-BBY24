@@ -190,9 +190,8 @@ router.post('/editPage/:title',
 
                 page.save(function (err) {
                     if (err) return console.log(err);
-
-                    req.flash("Success", 'Page updated.');
                     res.redirect('/admin/pages');
+                    // req.flash("Success", 'Page updated.');   // not working for some reason =/
                 });
             });
         }
@@ -203,8 +202,19 @@ router.post('/editPage/:title',
 
 
 
+/**
+ * GET delete page
+ */
 
+router.get('/deletePage/:id', function (req, res) {
+    Page.findByIdAndRemove(req.params.id, function (err) {
+        if (err)
+            return console.log(err);
 
+        res.redirect('/admin/pages');
+        // req.flash("Success", 'Page deleted.'); // not working for some reason =/
+    })
+});
 
 
 
