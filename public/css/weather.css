@@ -131,7 +131,7 @@
   
   .ajax-section .city {
     position: relative;
-    padding: 40px 10%;
+    padding: 10px 10%;
     border-radius: 20px;
     background: var(--text_light);
     color: var(--text_med);
@@ -167,7 +167,7 @@
     font-size: 0.5em;
   }
   
-  .ajax-section .city sup {
+  .ajax-section .city-name sup {
     padding: 0.2em 0.6em;
     border-radius: 30px;
     color: var(--text_light);
