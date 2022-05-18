@@ -8,6 +8,8 @@ const { body, validationResult } = require('express-validator');
 const cookieParser = require('cookie-parser')
 const flash = require('connect-flash');
 const pageSchema = require('./models/page')
+const fileUpload = require('express-fileupload');
+
 
 // connect to db
 mongoose.connect('mongodb://localhost:27017/cart')
@@ -25,6 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // set global errors variable
 app.locals.errors = null;
+
+// express fileupload middleware
+app.use(fileUpload());
 
 app.use(express.json()); // Used to parse JSON bodies
 app.use(express.urlencoded({ extended: false })); // parses & encode incoming requests into URL-encoded format
@@ -89,6 +94,10 @@ app.use('/admin/pages', adminPages);
 
 const adminCategories = require('./routes/adminCategories');
 app.use('/admin/categories', adminCategories);
+
+const adminProducts = require('./routes/adminProducts');
+app.use('/admin/products', adminProducts);
+
 
 // start server
 const port = 8000;
