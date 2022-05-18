@@ -1,0 +1,51 @@
+<%- include('../layouts/adminHeader'); %>
+
+    <h2 class="pageTitle">Add a product</h2>
+    <br>
+    <a href="/admin/products" class="btn btn-primary">Back to all product </a>
+    <br><br>
+
+    <!-- enctype needed to be able to upload an image -->
+    <form action="/admin/products/addProduct" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="">Title</label>
+            <input class="form-control" type="text" name="title" placeholder="Title">
+        </div>
+
+        <div class="form-group">
+            <label for="">Description</label>
+            <textarea class="form-control" name="description" placeholder="Description"><%= description %> </textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="">Category</label>
+            <select name="category" class="form-control">
+                <% categories.forEach(function(cat) { %>
+                    <option>
+                        <%= cat.title %>
+                    </option>
+                    <% }); %>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="">Price</label>
+            <input class="form-control" type="text" name="price" placeholder="Price">
+        </div>
+
+        <div class="form-group">
+            <label for="">Image</label>
+            <input class="form-control" type="file" name="image" id="img"
+                onchange="document.getElementById('imgPreview').src = window.URL.createObjectURL(this.files[0])"> <br>
+
+            <!-- code snippet from https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded start -->
+            <img id="imgPreview" alt="Choose file to preview image" width="100" height="100" />
+            <!-- code snippet from https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded end -->
+            <br><br>
+            <button type="submit" class="btn btn-dark">Submit</button>
+
+        </div>
+
+    </form>
+

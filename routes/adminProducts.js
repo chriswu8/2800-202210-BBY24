@@ -34,18 +34,21 @@ router.get('/', function (req, res) {
 
 
 /**
- * GET add page
+ * GET add product
  */
 
-router.get('/addPage', function (req, res) {
+router.get('/addProduct', function (req, res) {
     const title = "";
-    const slug = "";
-    const content = "";
+    const description = "";
+    const price = "";
 
-    res.render('admin/addPage', {
-        title: title,
-        slug: slug,
-        content: content
+    Category.find(function (err, categories) {
+        res.render('admin/addProduct', {
+            title: title,
+            description: description,
+            categories: categories,
+            price: price
+        });
     });
 
 });

@@ -1,3 +1,4 @@
+
 .sorting tr:not(.home) {
    cursor: pointer;
 }
@@ -9,7 +10,6 @@
 h2 {
    text-align: center
 }
-
 
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Ubuntu:wght@300&display=swap');
 :root{
