@@ -56,28 +56,31 @@ router.get('/addProduct', function (req, res) {
 
 
 /**
- * POST add page
+ * POST add product
  */
 
-router.post('/addPage',
+router.post('/addProduct',
 
     body('title').notEmpty(),
-    body('content').notEmpty(),
+    body('description').notEmpty(),
+    body('category').notEmpty(),
+    body('price').notEmpty().isDecimal(),
+    body('image'),
 
 
     function (req, res) {
 
         const title = req.body.title;
-        const slug = req.body.slug;
-        const content = req.body.content;
+        const description = req.body.description;
+        const price = req.body.price;
+        const category = req.body.category;
+        const image = req.body.image;
 
         // Finds the validation errors in this request and wraps them in an object
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
             console.log("Error, empty field detected.");
-            // document.getElementById('alertError').innerHTML = 'Title and Content fields cannot be empty';
-            // return res.status(400).json({ errors: errors.array() });
         } else {
 
             // Page.findOne({ slug: slug }, function (err, page) {  // left slug is in collection, right slug is the variable
@@ -89,18 +92,41 @@ router.post('/addPage',
             //         content: content
             //     });
             // } else {
-            const page = new Page({
+            const price2 = parseFloat(price).toFixed(2);
+            const product = new Product({
                 title: title,
-                slug: slug,
-                content: content,
-                sorting: 100
+                description: description,
+                price: price2,
+                category: category,
+                image: image, // may need to modify to for validation later
             });
 
-            page.save(function (err) {
+            product.save(function (err) {
                 if (err) return console.log(err);
-                req.flash("success", 'Page added!'); // NOT WORKING
-                console.log("Success. Page added!");
-                res.redirect('/admin/pages');
+
+                // make folder
+                mkdirp('public/productImages/' + product._id, function (err) {
+                    console.log("This line ran#######");
+                    if (err) return console.log(err);
+                });
+
+                mkdirp('public/productImages/' + product._id + '/gallery', function (err) {
+                    if (err) return console.log(err);
+                });
+
+                mkdirp('public/productImages/' + product._id + '/gallery/thumbs', function (err) {
+                    if (err) return console.log(err);
+                });
+
+                if (image != "") {
+                    var productImage = req.files.image;
+                    var path = 'public/productImage/' + product._id + '/' + image;
+                    productImage.mv(path, function (err) {
+                        return console.log(err);
+                    });
+                }
+                console.log("Success. Product added!");
+                res.redirect('/admin/products');
             });
         }
     })
