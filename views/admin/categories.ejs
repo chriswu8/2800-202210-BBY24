@@ -4,78 +4,41 @@
 
     <body>
 
+        <%- include('../layouts/adminNavbar'); %>
+            <br>
 
-        <header class="header">
+            <h2 class="pageTitle">Categories</h2>
 
-            <div class="flex">
+            <a href="/admin/categories/addCategory" class="btn btn-primary">Add a new category </a>
+            <br><br>
 
-                <a href="#home" class="logo"><img src="./css/img/logo.png" alt=""></a>
-
-                <!-- Inspiration from Skaikh Anas start -->
-                <nav class="navbar">
-                    <a href="/home">HOME</a>
-                    <a href="/protocols">PROTOCOLS</a>
-                    <a href="/weather">WEATHER</a>
-                    <a href="/login/postings">BLOG</a>
-                    <a href="/admin/pages">PAGES</a>
-                    <a href="/admin/categories">CATEGORIES</a>
-                    <a href="/profile">PROFILE</a>
-                    <a href="/" target="blank" class="navbar-brand">Shopping Cart</a>
-                    <a id="logout" href="/logout">LOGOUT</a>
-                </nav>
-                <!-- Inspiration from Skaikh Anas end -->
-
-
-                <div class="dropdown" style="float:right;">
-                    <button class="dropbtn">MENU</button>
-                    <div class="dropdown-content">
-                        <a href="/home">HOME</a>
-                        <a href="/protocols">PROTOCOLS</a>
-                        <a href="weather/">WEATHER</a>
-                        <a href="/login/postings">BLOG</a>
-                        <a href="/admin/pages">PAGES</a>
-                        <a href="/admin/categories">CATEGORIES</a>
-                        <a href="profile/">PROFILE</a>
-                        <a href="/" target="blank" class="navbar-brand">Shopping Cart</a>
-                        <a id="logout" href="/logout">LOGOUT</a>
-                        <!--Bo -->
-                    </div>
-                </div>
-            </div>
-        </header>
-        <br>
-
-        <h2 class="pageTitle">Categories</h2>
-
-        <a href="/admin/categories/addCategory" class="btn btn-primary">Add a new category </a>
-        <br><br>
-
-        <table class="p-3 table table-striped">
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <% categories.forEach(function(cat) { %>
-                    <!-- the table rows will be sortable via jQuery UI sortable-->
+            <table class="p-3 table table-striped">
+                <thead>
                     <tr>
-                        <td>
-                            <%= cat.title %>
-                        </td>
-                        <td> <a href="/admin/categories/editCategory/<%= cat.title %>">Edit</a></td>
-                        <td> <a class="confirmDeletion" href="/admin/categories/deleteCategory/<%= cat._id %>">Delete</a></td>
+                        <th>Category</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
-                    <% }); %>
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                    <% categories.forEach(function(cat) { %>
+                        <!-- the table rows will be sortable via jQuery UI sortable-->
+                        <tr>
+                            <td>
+                                <%= cat.title %>
+                            </td>
+                            <td> <a href="/admin/categories/editCategory/<%= cat.title %>">Edit</a></td>
+                            <td> <a class="confirmDeletion"
+                                    href="/admin/categories/deleteCategory/<%= cat._id %>">Delete</a></td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
 
 
 
-        <%- include('../layouts/adminFooter'); %>
+            <%- include('../layouts/adminFooter'); %>
 
 
 
