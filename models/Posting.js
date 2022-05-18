@@ -27,4 +27,5 @@ const postingSchema = new mongoose.Schema({
     }
 });
 
+// make reference to postingSchema via Posting (in postingRounter.js)
 module.exports = mongoose.model('Posting', postingSchema)

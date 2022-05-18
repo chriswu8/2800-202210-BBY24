@@ -23,13 +23,18 @@ const userSchema = new schema({
         type: String,
         unique: true,
         required: true
-    }
+    },
 
-    // admin: {
-    //     type: Boolean,
-    //     unique: true,
-    //     required: true
-    // }
+    image: {
+        type: String,
+        required: false,
+    },
+    
+    created: {
+        type: Date,
+        required: true,
+        default: Date.now,
+    },
 });
 
 // users is the collection name
