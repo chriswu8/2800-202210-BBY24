@@ -9,6 +9,13 @@ const registerusers = require('../models/user');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const fetch = require('node-fetch');
+const weatherApiKey = '331b0695fcab54c85d0b414147df6eaf';
+const https = require('https');
+const temp = '';
+const weatherDesc = '';
+const city = '';
+const imgurl = "https://cdn.iconscout.com/icon/free/png-256/sunny-weather-1-458138.png";
 
 // =====================================================
 // user registration (Help from and credits to Ali Babar)
@@ -112,6 +119,19 @@ Router.get('/dashboard', checkNotAuthenticated, checkAuthenticated, (req, res) =
 
 Router.get('/home', checkNotAuthenticated, checkAuthenticated, (req, res) => {
     res.render('home');
+})
+
+Router.get('/weather', (req, res) => {
+    res.render('weather', {
+        tempReal : temp,
+        des : weatherDesc,
+        city : city,
+        img : imgurl
+    });
+});
+
+Router.get('/easter_egg', (req, res,) => {
+    res.render('easter_egg');
 })
 
 Router.get('/', (req, res, next) => {
@@ -274,7 +294,8 @@ Router.get('/delete/:id', (req, res) => {
 
 // ======================================================================================================================
 
-const Posting = require('../models/Posting')
+const Posting = require('../models/Posting');
+const { response } = require('express');
 
 // http://localhost:8000/login/postings/new
 Router.get('/new', function (req, res) {
@@ -333,6 +354,74 @@ Router.post('/postings', async function (req, res) {
 // ============================================================
 Router.get('/protocols', function (req, res) {
     res.render('protocols');
+});
+
+// ============================================================
+// Regular user weather page
+// ============================================================
+
+
+Router.post('/weather', async (req, res) => {
+    // https.get(weatherApi, function(response) {
+    //     response.on('data', function(data){
+    //         const weatherData = JSON.parse(data);
+    //         const temp = weatherData.main.tempature;
+    //         console.log(weatherData);
+
+            const city = req.body.city;
+            const unit = 'metric';
+            const url_api = 'https://api.openweathermap.org/data/2.5/weather?q='+city+'&appid='+weatherApiKey+'&units='+unit;
+
+            https.get(url_api,(response) => {
+                response.on('data', (data) => {
+                    const weatherData = JSON.parse(data);
+                    const temp = weatherData.main.temp;
+                    const realTemperature = temp;
+                    const des = weatherData.weather[0].description;
+                    const icon = weatherData.weather[0].icon; 
+                    const imgurl = 'http://openweathermap.org/img/wn/'+ icon +'@2x.png';
+
+                    res.render('weather', {
+                            tempReal : realTemperature,
+                            des : des,
+                            city : city,
+                            img : imgurl
+                        });
+                })
+            })
+
+
+            // try {
+            //     await fetch(url_api)
+            //     .then(res => res.json())
+            //     .then(data => {
+            //         if(data.message === 'City not found') {
+            //             res.render('weather', {
+            //                 city: data.message,
+            //                 des: null,
+            //                 icon: null,
+            //                 temp: null
+            //             })
+            //         } else {
+            //             const city = data.name;
+            //             const des = data.weather[0].description;
+            //             const icon = data.weather[0].icon;
+            //             const temp = data.main.temp;
+
+            //             res.render('weather', {
+            //                 city, des, icon, temp
+            //             });
+            //         }
+            //     });
+            // } catch (err) {
+            //     res.render('weather', {
+            //         city: 'City not found',
+            //         des: null,
+            //         icon: null,
+            //         temp: null
+            //     })
+            // }
+    
 });
 
 

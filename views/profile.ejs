@@ -1,10 +1,6 @@
 <%- include('layouts/adminHeader'); %>
-
-
-        <h1>All Users</h1>
-        <h2>
-            <a href="/add_user">Add User</a>
-        </h2>
+    <div class="container">
+        <h1>User Profile</h1>
         <% if (registerusers != '') { %>
             <table>
                 <tr>
@@ -24,7 +20,6 @@
                             <td><%= row.email %></td>
                             <td><%= row.type %></td>
                             <td>
-                                <a href="/delete/<%= row._id %>" class="" id="del">Delete</a>
                                 <a href="/edit_user/<%= row._id %>" class="" id="edit">Edit</a>
                             </td>
                         </tr>
@@ -34,4 +29,6 @@
         <% } else { %>       
             <h1>No users found in the database</h1>
         <% } %>    
+    </div>
+
 
