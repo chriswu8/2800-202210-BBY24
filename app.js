@@ -4,10 +4,15 @@ var session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
+const path = require('path');
 const dashboardRouter = require('./routers/dashboardRouter');
-const port = 8000;
+const {
+    checkNotAuthenticated,
+    checkAuthenticated,
+  } = require("./middleware/auth");
+const port = process.env.PORT || 8000;
 const app = express();
-const url = 'mongodb+srv://bby24:bby24@cluster0.caisp.mongodb.net/BBY24Database?retryWrites=true&w=majority';
+const url = 'mongodb+srv://atmospal:bby24@cluster0.airlv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
 
 // ======================================
@@ -44,15 +49,26 @@ mongoose.connect(url, connectionParams)
 
 app.set('view engine', 'ejs');
 
+app.set('views', path.resolve(__dirname, 'views'));
+
 app.use(express.static('public'));
 
+app.use(express.static('uploads'));
+
+/**
+ * For post requests, which sends data (in the form of some data object) to the server.
+ * We need to ask server to store that data (object), which is enclosed in the body (i.e. req.body) of that POST request.
+ * express.urlencoded() recognizes the incoming object as strings or arrays, and converts the request body to JSON (which is converted to BSON that gets stored to MongoDB)
+ */
 app.use(express.urlencoded({ extended: false }));
 
 app.use(passport.session());
 
 app.use('/', dashboardRouter);
 
+app.use('/dashboard', checkNotAuthenticated, dashboardRouter);
 
+app.use('/home', checkNotAuthenticated, dashboardRouter);
 
 
 // +++++++++++++++++++++++++++
@@ -60,22 +76,22 @@ app.use('/', dashboardRouter);
 // ++++++++++++++++++++++++++
 const Posting = require('./models/Posting');
 
-const postingRouter = require('./routers/postings');
-app.use('/login/postings', postingRouter);
+// const postingRouter = require('./routers/postings');
+// app.use('/login/postings', postingRouter);
 
 app.get('/login/postings', async function (req, res) {
 
-    const posts = [
-        {
-            title: 'Title1.1',
-            snippet: 'abcdefghijklmnop',
-            author: 'Chris',
-            dateCreated: new Date,
-            img: 'placeholder.jpg'
-        },
-        ]
+    // const posts = [
+    //     {
+    //         title: 'Title1.1',
+    //         snippet: 'abcdefghijklmnop',
+    //         author: 'Chris',
+    //         dateCreated: new Date,
+    //         img: 'placeholder.jpg'
+    //     },
+    //     ]
 
-        // const posts = await Posting.find().sort({ timeCreated: 'asc' });
+        const posts = await Posting.find().sort({ timeCreated: 'asc' });
 
         res.render('index', { posts: posts })
 });
