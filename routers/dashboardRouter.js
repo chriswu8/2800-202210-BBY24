@@ -15,6 +15,7 @@ const https = require('https');
 const temp = '';
 const weatherDesc = '';
 const city = '';
+const country = '';
 const imgurl = "https://cdn.iconscout.com/icon/free/png-256/sunny-weather-1-458138.png";
 
 // =====================================================
@@ -126,6 +127,7 @@ Router.get('/weather', (req, res) => {
         tempReal : temp,
         des : weatherDesc,
         city : city,
+        country : country,
         img : imgurl
     });
 });
@@ -377,6 +379,7 @@ Router.post('/weather', async (req, res) => {
                     const weatherData = JSON.parse(data);
                     const temp = weatherData.main.temp;
                     const realTemperature = temp;
+                    const country = weatherData.sys.country; 
                     const des = weatherData.weather[0].description;
                     const icon = weatherData.weather[0].icon; 
                     const imgurl = 'http://openweathermap.org/img/wn/'+ icon +'@2x.png';
@@ -385,6 +388,7 @@ Router.post('/weather', async (req, res) => {
                             tempReal : realTemperature,
                             des : des,
                             city : city,
+                            country : country,
                             img : imgurl
                         });
                 })

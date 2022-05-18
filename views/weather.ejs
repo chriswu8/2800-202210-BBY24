@@ -27,13 +27,15 @@
           </form>
         </div>
       </section>
+      <% if (city != '') { %>
       <section class="ajax-section">
         <div class="container">
-          <ul class="cities">
-            <li class="cities">
+          <ul class="city">
+            <li class="city">
             <% if(city !== null)  {%>
                 <h2 class="city-name">
-                  <span><%= city %></span>   
+                  <span class="city"><%= city %></span>   
+                  <sup><%= country %></sup>
                 </h2>
                 <% } %>
           
@@ -52,6 +54,9 @@
           </ul>
         </div>
       </section>
+      <% } else { %>       
+        <h1>AtmosPal</h1>
+    <% } %>
 
 </body>
 </html>
