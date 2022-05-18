@@ -174,7 +174,7 @@ router.post('/editPage/:title',
 
         if (!errors.isEmpty()) {
             console.log("Error, empty field detected.");
-            // insert flash message here if possible
+            res.redirect('/admin/pages');
         } else {
 
             Page.findById(id, function (err, page) {  // left slug is in collection, right slug is the variable

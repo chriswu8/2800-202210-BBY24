@@ -124,6 +124,7 @@ router.post('/editCategory/:id',
         if (!errors.isEmpty()) {
             console.log("Error, empty field detected.");
             // insert flash message here if possible
+            res.redirect('/admin/categories');
         } else {
 
             Category.findById(id, function (err, category) {
