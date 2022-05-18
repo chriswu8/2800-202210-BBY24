@@ -42,95 +42,61 @@ router.get('/addCategory', function (req, res) {
  * POST add category
  */
 
- router.post('/addCategory',
+router.post('/addCategory',
 
- body('title').notEmpty(),
-
-
- function (req, res) {
-
-     const title = req.body.title;
-     const slug = req.body.slug;
-
-     // Finds the validation errors in this request and wraps them in an object
-     const errors = validationResult(req);
-
-     if (!errors.isEmpty()) {
-         console.log("Error, empty field detected.");
-         // document.getElementById('alertError').innerHTML = 'Title and Content fields cannot be empty';
-         // return res.status(400).json({ errors: errors.array() });
-     } else {
-
-         // Page.findOne({ slug: slug }, function (err, page) {  // left slug is in collection, right slug is the variable
-         //     if (page) {
-         //     // req.flash('danger', 'Page slug exists, choose another.');  // NOT WORKING
-         //     res.render('admin/addPage', {
-         //         title: title,
-         //         slug: slug,
-         //         content: content
-         //     });
-         // } else {
-         const category = new Category({
-             title: title,
-             slug: slug
-         });
-
-         category.save(function (err) {
-             if (err) return console.log(err);
-             req.flash("success", 'Category added!'); // NOT WORKING
-             console.log("Success. Category added!");
-             res.redirect('/admin/categories');
-         });
-     }
- })
+    body('title').notEmpty(),
 
 
+    function (req, res) {
 
-/**
- * POST reorder pages
- */
+        const title = req.body.title;
+        const slug = req.body.slug;
 
-router.post('/reorderPages', function (req, res) {
-    var ids = req.body['id[]'];
-    console.log(req.body);
+        // Finds the validation errors in this request and wraps them in an object
+        const errors = validationResult(req);
 
-    console.log(ids);
-    var count = 0;
+        if (!errors.isEmpty()) {
+            console.log("Error, empty field detected.");
+            // document.getElementById('alertError').innerHTML = 'Title and Content fields cannot be empty';
+            // return res.status(400).json({ errors: errors.array() });
+        } else {
 
-    for (var i = 0; i < ids.length; i++) {
-        var id = ids[i];
-        count++;
-
-        (function (count) {
-            // wrapped in a closure
-            Page.findById(id, function (err, page) {
-                page.sorting = count;
-                page.save(function (err) {
-                    if (err)
-                        return console.log(err);
-                });
+            // Page.findOne({ slug: slug }, function (err, page) {  // left slug is in collection, right slug is the variable
+            //     if (page) {
+            //     // req.flash('danger', 'Page slug exists, choose another.');  // NOT WORKING
+            //     res.render('admin/addPage', {
+            //         title: title,
+            //         slug: slug,
+            //         content: content
+            //     });
+            // } else {
+            const category = new Category({
+                title: title,
+                slug: slug
             });
 
-        })(count);
-    }
-});
-
+            category.save(function (err) {
+                if (err) return console.log(err);
+                req.flash("success", 'Category added!'); // NOT WORKING
+                console.log("Success. Category added!");
+                res.redirect('/admin/categories');
+            });
+        }
+    })
 
 
 
 /**
- * GET edit page
+ * GET edit category
  */
-router.get('/editPage/:title', function (req, res) {
-    Page.findOne({ title: req.params.title }, function (err, page) {
+router.get('/editCategory/:title', function (req, res) {
+    Category.findOne({ title: req.params.title }, function (err, category) {
         if (err)
             return console.log(err);
 
-        res.render('admin/editPage', {
-            title: page.title,
-            slug: page.slug,
-            content: page.content,
-            id: page._id
+        res.render('admin/editCategory', {
+            title: category.title,
+            id: category._id
         });
     });
 });
@@ -140,21 +106,17 @@ router.get('/editPage/:title', function (req, res) {
 
 
 /**
- * POST edit page
+ * POST edit category
  */
 
-router.post('/editPage/:title',
+router.post('/editCategory/:id',
 
     body('title').notEmpty(),
-    body('content').notEmpty(),
-
 
     function (req, res) {
 
         const title = req.body.title;
-        const slug = req.body.slug;
-        const content = req.body.content;
-        const id = req.body.id;
+        const id = req.params.id;
 
         // Finds the validation errors in this request and wraps them in an object
         const errors = validationResult(req);
@@ -164,18 +126,15 @@ router.post('/editPage/:title',
             // insert flash message here if possible
         } else {
 
-            Page.findById(id, function (err, page) {  // left slug is in collection, right slug is the variable
+            Category.findById(id, function (err, category) {
                 if (err)
                     return console.log(err);
 
-                page.title = title;
-                page.slug = slug;
-                page.content = content;
+                category.title = title;
 
-                page.save(function (err) {
+                category.save(function (err) {
                     if (err) return console.log(err);
-                    res.redirect('/admin/pages');
-                    // req.flash("Success", 'Page updated.');   // not working for some reason =/
+                    res.redirect('/admin/categories');
                 });
             });
         }
