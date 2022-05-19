@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "login_logout_sessions",
   "version": "1.0.0",
   "description": "",
@@ -203,4 +204,31 @@
   },
   "author": "",
   "license": "ISC"
+=======
+  "name": "shoppingcart",
+  "version": "1.0.0",
+  "description": "COMP2537 Week 4 Deliverable",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Chris",
+  "license": "ISC",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-fileupload": "^1.3.1",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.14.0",
+    "fs-extra": "^10.1.0",
+    "mkdirp": "0.5.1",
+    "mongoose": "^6.3.3",
+    "nodemon": "^2.0.16",
+    "resize-img": "^2.0.0"
+  }
+>>>>>>> shoppingCart
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../layouts/adminHeader'); %>
+
+
+    <body>
+
+        <h2 class="pageTitle">Add a category</h2>
+        <a href="/admin/categories" class="btn btn-primary">Back to all pages </a>
+        <br><br>
+
+        <form action="/admin/categories/addCategory" method="POST">
+
+            <div class="form-group">
+                <label for="">Title</label>
+                <input class="form-control" type="text" name="title" placeholder="Title">
+            </div>
+
+            <button type="submit" class="btn btn-dark">Submit</button>
+        </form>
+
+
+    </body>
+
+</html>
