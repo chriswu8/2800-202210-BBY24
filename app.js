@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser')
 const flash = require('connect-flash');
 const pageSchema = require('./models/page')
 const fileUpload = require('express-fileupload');
+const fs = require('fs-extra');
 
 
 // connect to db
@@ -74,6 +75,23 @@ app.post(
             password: req.body.password,
         }).then(user => res.json(user));
     },
+);
+
+app.post(
+    '/addProduct',
+    body('image').custom(value => {
+        var extension = (path.extname(filename)).toLowerCase();
+        switch (extension) {
+            case '.jpg':
+                return '.jpg';
+            case '.jpeg':
+                return '.jpeg';
+            case '.png':
+                return '.png';
+            default:
+                return false;
+        }
+    })
 );
 
 // Express messages middleware 

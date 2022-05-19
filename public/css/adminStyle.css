@@ -1,3 +1,6 @@
+body {
+   margin: 25px !important;
+}
 
 .sorting tr:not(.home) {
    cursor: pointer;

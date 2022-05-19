@@ -4,7 +4,7 @@ const router = express.Router();
 var { body, validationResult } = require('express-validator');
 const app = express();
 app.use(express.json());
-const mkdirp = require('mkdirp');
+// const mkdirp = require('mkdirp');
 const fs = require('fs-extra');
 const resizeImg = require('resize-img');
 
@@ -13,6 +13,7 @@ const Product = require('../models/product');
 
 // GET Category model
 const Category = require('../models/category');
+const req = require('express/lib/request');
 
 /**
  * GET products index
@@ -67,14 +68,15 @@ router.post('/addProduct',
     body('price').notEmpty().isDecimal(),
     body('image'),
 
-
     function (req, res) {
-
+        // const imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
         const title = req.body.title;
         const description = req.body.description;
         const price = req.body.price;
         const category = req.body.category;
         const image = req.body.image;
+
+
 
         // Finds the validation errors in this request and wraps them in an object
         const errors = validationResult(req);
@@ -98,29 +100,35 @@ router.post('/addProduct',
                 description: description,
                 price: price2,
                 category: category,
-                image: image, // may need to modify to for validation later
+                image: imageFile, // may need to modify to for validation later
             });
 
             product.save(function (err) {
                 if (err) return console.log(err);
 
-                // make folder
-                mkdirp('public/productImages/' + product._id, function (err) {
-                    console.log("This line ran#######");
-                    if (err) return console.log(err);
-                });
+                fs.ensureDir(dir + product._id).then(() => {
+                console.log('success!')
+                }).catch(err => {
+                console.error(err)
+                })
 
-                mkdirp('public/productImages/' + product._id + '/gallery', function (err) {
-                    if (err) return console.log(err);
-                });
+                fs.ensureDir(dir + product._id + '/gallery').then(() => {
+                    console.log('success!')
+                    }).catch(err => {
+                    console.error(err)
+                    })
 
-                mkdirp('public/productImages/' + product._id + '/gallery/thumbs', function (err) {
-                    if (err) return console.log(err);
-                });
+                fs.ensureDir(dir + product._id +'/gallery/thumbs').then(() => {
+                    console.log('success!')
+                    }).catch(err => {
+                    console.error(err)
+                    })
 
-                if (image != "") {
+                if (imageFile != "") { 
                     var productImage = req.files.image;
-                    var path = 'public/productImage/' + product._id + '/' + image;
+                    //var path = 'public/productImages/' + image; //CHANGED THIS TO THE BELOW
+                    var path = 'public/productImages/' + product._id + '/' + imageFile;
+                    //var path = 'public/productImages/' + product._id + '/' + image;
                     productImage.mv(path, function (err) {
                         return console.log(err);
                     });
@@ -136,53 +144,31 @@ router.post('/addProduct',
 
 
 
-
 /**
- * POST reorder pages
+ * GET edit product
  */
+router.get('/editProduct/:title', function (req, res) {
 
-router.post('/reorderPages', function (req, res) {
-    var ids = req.body['id[]'];
-    console.log(req.body);
+    // var errors;
 
-    console.log(ids);
-    var count = 0;
+    // if (req.session.errors)
+    //     errors = req.sessions.errors;
 
-    for (var i = 0; i < ids.length; i++) {
-        var id = ids[i];
-        count++;
+    // req.session.errors = null;
 
-        (function (count) {
-            // wrapped in a closure
-            Page.findById(id, function (err, page) {
-                page.sorting = count;
-                page.save(function (err) {
-                    if (err)
-                        return console.log(err);
-                });
+    Category.findOne({ title: req.params.title }, function (err, product) {
+        if (err) {
+            console.log(err);
+            res.redirect('admin/products')
+        } else {
+            res.render('admin/editProduct', {
+                title: product.title,
+                description: product.description,
+                categories: product.categories,
+                price: product.price,
+                image: product.image
             });
-
-        })(count);
-    }
-});
-
-
-
-
-/**
- * GET edit page
- */
-router.get('/editPage/:title', function (req, res) {
-    Page.findOne({ title: req.params.title }, function (err, page) {
-        if (err)
-            return console.log(err);
-
-        res.render('admin/editPage', {
-            title: page.title,
-            slug: page.slug,
-            content: page.content,
-            id: page._id
-        });
+        }
     });
 });
 
@@ -191,28 +177,32 @@ router.get('/editPage/:title', function (req, res) {
 
 
 /**
- * POST edit page
+ * POST edit product
  */
 
-router.post('/editPage/:title',
+router.post('/editProduct/:title',
 
     body('title').notEmpty(),
-    body('content').notEmpty(),
+    body('description').notEmpty(),
+    body('category').notEmpty(),
+    body('price').notEmpty().isDecimal(),
+    body('image'),
 
 
     function (req, res) {
 
         const title = req.body.title;
-        const slug = req.body.slug;
-        const content = req.body.content;
-        const id = req.body.id;
+        const description = req.body.description;
+        const Category = req.body.Category;
+        const price = req.body.price;
+        const image = req.body.image;
 
         // Finds the validation errors in this request and wraps them in an object
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
             console.log("Error, empty field detected.");
-            res.redirect('/admin/pages');
+            res.redirect('/admin/products');
         } else {
 
             Page.findById(id, function (err, page) {  // left slug is in collection, right slug is the variable
