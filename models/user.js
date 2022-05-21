@@ -21,7 +21,6 @@ const userSchema = new schema({
 
     password: {
         type: String,
-        unique: true,
         required: true
     },
 
