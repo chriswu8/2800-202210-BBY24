@@ -42,10 +42,10 @@
                                 </td>
                                 <td>
                                     <% if (product.image=="" ) { %>
-                                        <img src="/images/noImage.png" alt="defaultImage">
+                                        <img src="/images/noImage.png" alt="defaultImage" class="noImage">
                                         <% } else {%>
                                             <img src="/productImages/<%= product._id %>/<%= product.image %>"
-                                                alt="productImage">
+                                                alt="productImage" class="noImage">
                                             <% } %>
                                 </td>
                                 <td>

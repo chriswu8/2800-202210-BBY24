@@ -1,4 +1,21 @@
+body {
+   margin: 25px !important;
+}
+
+
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Ubuntu:wght@300&display=swap');
+.tipImage {
+   cursor:pointer;
+}
+.description {
+   display:none;
+   position:absolute;
+   border:1px solid #000;
+   width:100%;
+   height:200%;
+   top: 400px;
+   left: 0px;
+}
 :root{
    --main-color:#5d9cee;
    --black:#333;
@@ -25,6 +42,32 @@ html{
    overflow-x: hidden;
    scroll-behavior: smooth;
    scroll-padding-top: 6.5rem;
+}
+a:link {
+   color: white;
+   background-color: transparent;
+   text-decoration: none;
+ }
+h2{
+            
+   width: 90px;
+   background-color: #2b71b8;
+   line-height: 30px;
+   border-radius: 3px;
+   margin-bottom: 20px;
+   font-size: 20px;
+}
+
+table { 
+   width: 100%; 
+   border-collapse: collapse; 
+}
+
+td a:nth-of-type(1){
+   background-color: #e35d4a;
+}
+td a:nth-of-type(2){
+   background-color: #55a95a;
 }
 
 /* hide dropdown */
@@ -55,6 +98,13 @@ div {
 }
 
 .header .flex .logo img{
+   height: 10rem;
+   border-radius: 18px;
+   border-style: solid;
+   border-color:rgb(106, 114, 214);
+}
+
+.tipImage img {
    height: 10rem;
    border-radius: 18px;
    border-style: solid;
@@ -253,4 +303,59 @@ div {
       color:var(--white);
    }
 
+   table, thead, tbody, th, td, tr { 
+		display: block; 
+      width: 110%;
+      margin-left: -20px;
+	}
+	
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { 
+        border: 1px solid #ccc; 
+    }
+    th {
+        display: none;
+        width: 100%;
+    }
+	
+	td { 
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		position: absolute;
+		top: 6px;
+		left: 100px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+   tr:nth-child(1){
+      background-color: grey;
+      color:white;
+   }
+
+   tr:nth-child(3){
+      background-color: grey;
+      color:white;
+   }
+	
+   tr:nth-child(5){
+      background-color: grey;
+      color:white;
+   }
+	td:nth-of-type(1):before { content: "Avatar"; }
+	td:nth-of-type(2):before { content: "Name"; }
+	td:nth-of-type(3):before { content: "Phone Number"; }
+	td:nth-of-type(4):before { content: "Email"; }
+	/* td:nth-of-type(5):before { content: "Type"; } */
+	td:nth-of-type(6):before { content: "Action"; }
 }

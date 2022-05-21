@@ -1,21 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Add New User</title>
-
-   <!-- font awesome cdn -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
-   <!-- custom css file -->
-   <link rel="stylesheet" href="css/addUser.css">
-
-</head>
-
-<body>
+<%- include('layouts/adminHeader'); %>
     <div class="container">
         <h1><%= title %></h1>
         <form method="post" action="/add" mthod="post" enctype="multipart/form-data">
@@ -56,5 +39,3 @@
             <button value="Add User">Add User</button>
         </form>
     </div>
-</body>
-</html>

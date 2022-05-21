@@ -4,11 +4,19 @@ const userSchema = require('../models/user');
 const {
     checkNotAuthenticated,
     checkAuthenticated,
-  } = require("../middleware/auth");
+} = require("../middleware/auth");
 const registerusers = require('../models/user');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const fetch = require('node-fetch');
+const weatherApiKey = '331b0695fcab54c85d0b414147df6eaf';
+const https = require('https');
+const temp = '';
+const weatherDesc = '';
+const city = '';
+const country = '';
+const imgurl = "https://cdn.iconscout.com/icon/free/png-256/sunny-weather-1-458138.png";
 
 // =====================================================
 // user registration (Help from and credits to Ali Babar)
@@ -106,7 +114,11 @@ Router.get('/logout', function (req, res) {
 // ====================================================
 // User login session
 //=====================================================
-Router.get('/dashboard', checkNotAuthenticated, checkAuthenticated, (req, res) => {
+// Router.get('/dashboard', checkNotAuthenticated, checkAuthenticated, (req, res) => {
+//     res.render('dashboard');
+// })
+
+Router.get('/dash', function (req, res) {
     res.render('dashboard');
 })
 
@@ -114,34 +126,51 @@ Router.get('/home', checkNotAuthenticated, checkAuthenticated, (req, res) => {
     res.render('home');
 })
 
+// ============================================================
+// Regular user weather page
+// ============================================================
+Router.get('/weather', (req, res) => {
+    res.render('weather', {
+        tempReal: temp,
+        des: weatherDesc,
+        city: city,
+        country: country,
+        img: imgurl
+    });
+});
+
+Router.get('/easter_egg', (req, res,) => {
+    res.render('easter_egg');
+})
+
 Router.get('/', (req, res, next) => {
-    res.render('all_users', { title: "All Users"});
+    res.render('all_users', { title: "All Users" });
 });
 
 Router.get('/add_user', (req, res, next) => {
-    res.render('add_user', { title: "Add New User"});
+    res.render('add_user', { title: "Add New User" });
 });
 
 // ====================================================
 // Upload avatar
 //=====================================================
-var storage = multer.diskStorage ({
+var storage = multer.diskStorage({
     destination: './uploads/',
     filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now() + 
-        path.extname(file.originalname));
+        cb(null, file.fieldname + '-' + Date.now() +
+            path.extname(file.originalname));
     }
 });
 
 var upload = multer({
     storage: storage,
-  }).single('image');
+}).single('image');
 
 // ====================================================
 // Add new user
 //=====================================================
 Router.post('/add', upload, (req, res) => {
-    const Registerusers = new registerusers ({
+    const Registerusers = new registerusers({
         name: req.body.name,
         password: req.body.password,
         email: req.body.email,
@@ -153,7 +182,7 @@ Router.post('/add', upload, (req, res) => {
         // res.status(201).json({
         //   message: "User registered successfully!",
         // });
-        res.render('all_users');
+        res.redirect('/all_users');
     })
 });
 
@@ -162,7 +191,7 @@ Router.post('/add', upload, (req, res) => {
 //=====================================================
 Router.get('/all_users', (req, res) => {
     registerusers.find().exec((err, registerusers) => {
-        if(err) {
+        if (err) {
             res.json({ message: err.message });
         } else {
             res.render('all_users', {
@@ -177,7 +206,7 @@ Router.get('/all_users', (req, res) => {
 //=====================================================
 Router.get('/profile', (req, res) => {
     registerusers.find().exec((err, registerusers) => {
-        if(err) {
+        if (err) {
             res.json({ message: err.message });
         } else {
             res.render('profile', {
@@ -196,7 +225,7 @@ Router.get('/edit_user/:id', (req, res) => {
         if (err) {
             res.redirect('/all_users');
         } else {
-            if(registerusers == null) {
+            if (registerusers == null) {
                 res.redirect('/all_users');
             } else {
                 res.render('edit_user', {
@@ -212,6 +241,7 @@ Router.get('/edit_user/:id', (req, res) => {
 // Update User Profile
 //=====================================================
 Router.post('/update/:id', upload, (req, res) => {
+
     let id = req.params.id;
     let new_image = '';
 
@@ -219,23 +249,22 @@ Router.post('/update/:id', upload, (req, res) => {
         new_image = req.file.filename;
         try {
             fs.unlinkSync('./uploads/' + req.body.old_image);
-        } catch(err) {
+        } catch (err) {
             throw err;
-        } 
+        }
     } else {
         new_image = req.body.old_image;
-    } 
+    }
 
     registerusers.findByIdAndUpdate(id, {
         name: req.body.name,
         password: req.body.password,
         email: req.body.email,
         number: req.body.number,
-        type: req.body.type,
         image: new_image
     }, (err, result) => {
         if (err) {
-            res.json({ message: err.message, type: 'danger'});
+            res.json({ message: err.message, type: 'danger' });
         } else {
             req.session.message = {
                 type: 'success',
@@ -252,10 +281,10 @@ Router.post('/update/:id', upload, (req, res) => {
 Router.get('/delete/:id', (req, res) => {
     let id = req.params.id;
     registerusers.findByIdAndRemove(id, (err, result) => {
-        if ( result.image != '') {
-            try{
+        if (result.image != '') {
+            try {
                 fs.unlinkSync('./uploads/' + result.image);
-            } catch(err) {
+            } catch (err) {
                 throw err;
             }
         }
@@ -274,7 +303,8 @@ Router.get('/delete/:id', (req, res) => {
 
 // ======================================================================================================================
 
-const Posting = require('../models/Posting')
+const Posting = require('../models/Posting');
+const { response } = require('express');
 
 // http://localhost:8000/login/postings/new
 Router.get('/new', function (req, res) {
@@ -308,7 +338,7 @@ Router.post('/postings', async function (req, res) {
         // makes reference to req.body's description data (specified in the name attribute of the form's <input> tag)
         description: req.body.description
     });
-    console.log(req.body);
+
 
     // =======================================
     // Try-catch
@@ -316,15 +346,13 @@ Router.post('/postings', async function (req, res) {
     try {
         // save() WRITES to mongoDB and returns an id to posting
         thePosting = await thePosting.save();
-        console.log("id: " + thePosting.id);
+
 
         // pass ${posting.id} as parameter; dont forget the / before posting.id!!!
         res.redirect('/login/postings'); // this is the 'prevew page' before returning to the main postings page
     }
 
     catch (error) {
-        console.log("Failed to write to MongoDB");
-        console.log(error);
     }
 });
 
@@ -334,6 +362,221 @@ Router.post('/postings', async function (req, res) {
 Router.get('/protocols', function (req, res) {
     res.render('protocols');
 });
+
+
+
+// ============================================================
+// Regular user weather page
+// ============================================================
+Router.get('/weather', function (req, res) {
+    res.render('weather');
+});
+
+Router.post('/weather', async (req, res) => {
+
+    const city = req.body.city;
+    const unit = 'metric';
+    const url_api = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + weatherApiKey + '&units=' + unit;
+
+    https.get(url_api, (response) => {
+        response.on('data', (data) => {
+            const weatherData = JSON.parse(data);
+            const temp = weatherData.main.temp;
+            const realTemperature = temp;
+            const country = weatherData.sys.country;
+            const des = weatherData.weather[0].description;
+            const icon = weatherData.weather[0].icon;
+            const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
+
+            res.render('weather', {
+                tempReal: realTemperature,
+                des: des,
+                city: city,
+                country: country,
+                img: imgurl
+            });
+        })
+    })
+
+});
+
+
+
+
+// ============================================================
+// Admin user weather page (Vancouver)
+// ============================================================
+Router.post('/van_weather', async function (req, res) {
+
+    const city = req.body.city;
+    const unit = 'metric';
+    const url_api = 'https://api.openweathermap.org/data/2.5/weather?q=Vancouver&appid=' + weatherApiKey + '&units=' + unit;
+
+    https.get(url_api, function (response) {
+        response.on('data', function (data) {
+            const weatherData = JSON.parse(data);
+            const temp = weatherData.main.temp;
+            const realTemperature = temp;
+            const country = weatherData.sys.country;
+            const des = weatherData.weather[0].description;
+            const icon = weatherData.weather[0].icon;
+            const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
+
+            res.render('van_weather', {
+                tempReal: realTemperature,
+                des: des,
+                city: city,
+                country: country,
+                img: imgurl
+            });
+        })
+    })
+});
+
+
+// ============================================================
+// Routing to admin user weather page (Vancouver)
+// ============================================================
+Router.get('/van_weather', function (req, res) {
+    res.render('van_weather', {
+        tempReal: temp,
+        des: weatherDesc,
+        city: city,
+        country: country,
+        img: imgurl
+    });
+});
+
+// ============================================================
+// Admin user weather page (Calgary)
+// ============================================================
+Router.post('/cal_weather', async function (req, res) {
+
+    const city = req.body.city;
+    const unit = 'metric';
+    const url_api = 'https://api.openweathermap.org/data/2.5/weather?q=Calgary&appid=' + weatherApiKey + '&units=' + unit;
+
+    https.get(url_api, function (response) {
+        response.on('data', function (data) {
+            const weatherData = JSON.parse(data);
+            const temp = weatherData.main.temp;
+            const realTemperature = temp;
+            const country = weatherData.sys.country;
+            const des = weatherData.weather[0].description;
+            const icon = weatherData.weather[0].icon;
+            const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
+
+            res.render('cal_weather', {
+                tempReal: realTemperature,
+                des: des,
+                city: city,
+                country: country,
+                img: imgurl
+            });
+        })
+    })
+});
+
+// ============================================================
+// Routing to admin user weather page (Calgary)
+// ============================================================
+Router.get('/cal_weather', function (req, res) {
+    res.render('cal_weather', {
+        tempReal: temp,
+        des: weatherDesc,
+        city: city,
+        country: country,
+        img: imgurl
+    });
+});
+
+// ============================================================
+// Admin user weather page (Toronto)
+// ============================================================
+Router.post('/tor_weather', async function (req, res) {
+
+    const city = req.body.city;
+    const unit = 'metric';
+    const url_api = 'https://api.openweathermap.org/data/2.5/weather?q=Toronto&appid=' + weatherApiKey + '&units=' + unit;
+
+    https.get(url_api, function (response) {
+        response.on('data', function (data) {
+            const weatherData = JSON.parse(data);
+            const temp = weatherData.main.temp;
+            const realTemperature = temp;
+            const country = weatherData.sys.country;
+            const des = weatherData.weather[0].description;
+            const icon = weatherData.weather[0].icon;
+            const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
+
+            res.render('tor_weather', {
+                tempReal: realTemperature,
+                des: des,
+                city: city,
+                country: country,
+                img: imgurl
+            });
+        })
+    })
+});
+
+// ============================================================
+// Routing to admin user weather page (Toronto)
+// ============================================================
+Router.get('/tor_weather', function (req, res) {
+    res.render('tor_weather', {
+        tempReal: temp,
+        des: weatherDesc,
+        city: city,
+        country: country,
+        img: imgurl
+    });
+});
+
+// ============================================================
+// Admin user weather page (New Brunswick)
+// ============================================================
+Router.post('/nb_weather', async function (req, res) {
+
+    const city = req.body.city;
+    const unit = 'metric';
+    const url_api = 'https://api.openweathermap.org/data/2.5/weather?q=New+Brunswick&appid=' + weatherApiKey + '&units=' + unit;
+
+    https.get(url_api, function (response) {
+        response.on('data', function (data) {
+            const weatherData = JSON.parse(data);
+            const temp = weatherData.main.temp;
+            const realTemperature = temp;
+            const country = weatherData.sys.country;
+            const des = weatherData.weather[0].description;
+            const icon = weatherData.weather[0].icon;
+            const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
+
+            res.render('nb_weather', {
+                tempReal: realTemperature,
+                des: des,
+                city: city,
+                country: country,
+                img: imgurl
+            });
+        })
+    })
+});
+
+// ============================================================
+// Routing to admin user weather page (New Brunswick)
+// ============================================================
+Router.get('/nb_weather', function (req, res) {
+    res.render('nb_weather', {
+        tempReal: temp,
+        des: weatherDesc,
+        city: city,
+        country: country,
+        img: imgurl
+    });
+});
+
+
 
 
 module.exports = Router;
