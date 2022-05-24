@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+	<div class="main">
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+		<!-- The Signup Form -->
+		<div class="signup">
+			<form action="/register" method="post">
+				<label id="signupText" for="chk" aria-hidden="true">Click here to sign up</label>
+				<input required type="text" name="name" placeholder="Full name">
+				<input required type="number" name="number" placeholder="Phone">
+				<input required type="email" name="email" placeholder="Email">
+				<input required type="password" name="password" placeholder="Password">
+				<input required type="password" name="cpassword" placeholder="Retype your password">
+				<button type="submit">Submit</button>
+			</form>
+		</div>
+
+		<!-- The Login Form -->
+		<div class="login">
+			<form method="post" action="/login">
+				<label id="loginText" for="chk">Login</label>
+				<input required type="email" name="email" placeholder="Email">
+				<input required type="password" name="password" placeholder="Password">
+				<button>Login</button>
+			</form> <br>
+			<div id="privacy"><a target="_blank" id="policy"
+					href="https://www.termsfeed.com/live/3bdfa207-76e9-4d1e-a81e-30d8b1dab013">Privacy Policy</a></div>
+		</div>
+
+
+	</div>
+</body>
+
+</html>
