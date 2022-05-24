@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>editProduct</title>
+</head>
+
+<%- include('../layouts/adminHeader'); %>
+
+    <h2 class="pageTitle">Edit a product</h2>
+    <br>
+    <a href="/admin/products" class="btn btn-primary">Back to all product </a>
+    <br><br>
+
+    <!-- enctype needed to be able to upload an image -->
+    <form action="/admin/products/editProduct/<%= id %>" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="">Title</label>
+            <input class="form-control" type="text" name="title" value="<%= title %>" placeholder="Title">
+        </div>
+
+        <div class="form-group">
+            <label for="">Description</label>
+            <textarea class="form-control" name="description" placeholder="Description"><%= description %> </textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="">Category</label>
+            <select name="category" class="form-control">       <!--SKIPPED PART AT 2:00 FOR VID 29-->
+                <% categories.forEach(function(cat) { %>
+                    <option>
+                        <%= cat.title %>
+                    </option>
+                    <% }); %>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="">Price</label>
+            <input class="form-control" type="text" name="price" value="<%= price %>" placeholder="Price">
+        </div>
+
+        <!--NEWLY ADDED-->
+        <div class="form-group">
+            <label for="">Current Image</label>
+            <p>
+                <% if (image == "") { %>
+                    <img class="noimage" src="/images/noImage.png" alt="">
+                <% } else {%>
+                    <img class="noimage" src="/productImages/<%= id %>/<%= image %>" alt="">
+                <% } %>
+            </p>
+        </div>
+
+        <div class="form-group">
+            <label for="">Upload Image</label>
+            <!--BELOW IS THE ORIGINAL-->
+            <input class="form-control" type="file" name="image" id="img"  
+                onchange="document.getElementById('imgPreview').src = window.URL.createObjectURL(this.files[0])"><br>
+                <!-- <input class="form-control" type="file" name="image" id="img"><br> -->
+
+            <!-- code snippet from https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded start -->
+            <img id="imgPreview" alt="Choose file to preview image" width="100" height="100" />
+            <!-- code snippet from https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded end -->
+            <br><br>
+
+            <input type ="hidden" name="pimage" value="<%= image %>">
+            <!-- <button type="submit" class="btn btn-dark">Submit</button> -->
+
+        </div>
+        <button type="submit" class="btn btn-dark">Submit</button>
+    </form>
+
+    <hr>
+    <h3 class="page-header">Gallery</h3>
+
+    <ul class="gallery">
+        <% galleryImages.forEach(function(image) { %>
+        <% if (image != "thumbs") { %>
+        <li>
+            <img src="/productImages/<%= id %>/gallery/thumbs/<%= image %>" alt="">&nbsp; <!--below line is the original-->
+            <!--<img src="/productImages/<%= id %>/gallery/thumbs/<%= image %>" alt="">&nbsp;--> <!--removed gallery/thumbs/-->
+            <a class="confirmDeletion" href="/admin/products/deleteImage/<%= image %>?id=<%= id %>">delete</a> <!--UNSURE--> <!--deleteImage-->
+        </li>
+        <% } %>
+        <% }); %>
+    </ul>
+
+<!---------------------------------------------------------------------------------------------------------->
+    <br><br>
+    <form action="/admin/products/productGallery/<%= id %>" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+        <div class="fallback">
+            <input type="file" name="file" multiple>
+            <input type ="submit" value="Upload">
+        </div>
+    </form>
+
+<!---------------------------------------------------------------------------------------------------------->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/basic.css" integrity="sha512-Ucip2staDcls3OuwEeh5s9rRVYBsCA4HRr18+qd0Iz3nYpnfUeCIMh/82aHKeYgdaXGebmi9vcREw7YePXsutQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />"
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/dropzone.css" integrity="sha512-UrCkMTUH0evgGYJJ1Gb5XGuBXDrsSNoyN6Y6OecnEldtTg0TnqZACVJXyEY1wmvf6H8sKET/Yb85cG1xOjSnsw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/dropzone.js" integrity="sha512-FxNYY9KMOqqFeiHFlZs0sFD1Wefi2o12h4UDRb53BIt7I8TOH2RLfdi1H5FXHVy/DexD4clUQ9Fx1YTLyyRfSw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script
+			  src="https://code.jquery.com/jquery-3.6.0.js"
+			  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+			  crossorigin="anonymous"></script>
+<!--------------------------------------------------------------------------------------------------------->
+<script>
+    //Preview image
+    function readURL(input) {
+        if(input.files && input.files[[0]]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $("#imgPreview").attr('src', e.target.result).width(100).height(100);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#img").change(function() {
+        readURL(this);
+    });
+
+    //Dropzone code
+    Dropzone.options.dropzoneForm = {
+        acceptedFiles: "image/*",
+        init: function() {
+            this.on("queuecomplete", function(file){
+                setTimeout(function() {
+                    location.reload()
+                }, 1000);
+            });
+        }
+    }
+
+
+
+</script>

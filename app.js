@@ -18,8 +18,8 @@ const {
 } = require("./middleware/auth");
 const port = process.env.PORT || 8000;
 const app = express();
-const url = 'mongodb://localhost:27017/cart';
-
+// const url = 'mongodb://localhost:27017/cart';
+const url = 'mongodb+srv://atmospal:w7BYxfThauyMUO58@realmcluster.s7dvc.mongodb.net/BBY_24_user_for_group_24?retryWrites=true&w=majority';
 
 // ======================================
 // sessions
@@ -40,7 +40,7 @@ const url = 'mongodb://localhost:27017/cart';
 // express-session middleware
 app.use(session({
     secret: 'keyboard cat',
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     // cookie: { secure: true }
 }));
@@ -74,9 +74,6 @@ app.post(
 );
 
 
-
-
-
 //Mongodb atlas
 const connectionParams = {
     useNewUrlParser: true,
@@ -86,7 +83,7 @@ const connectionParams = {
 mongoose.connect(url, connectionParams)
     .then(
         function () { console.log("Connected to local MongoDB. Nice!"); },
-        err => { handleError(error) }
+        function(err) { console.log("Did not connect to  MongoDB =(")}
     );
 
 // EJS setup
@@ -176,6 +173,81 @@ app.use('/admin/categories', adminCategories);
 const adminProducts = require('./routers/adminProducts');
 app.use('/admin/products', adminProducts);
 
+// ======================================================
+// Chat feature (credit to Brad Traversey) - start
+// ======================================================
+const http = require('http');
+const socketio = require('socket.io');
+const formatMessage = require('./utils/messages');
+const {
+  userJoin,
+  getCurrentUser,
+  userLeave,
+  getRoomUsers
+} = require('./utils/users');
 
-app.listen(port);
+const server = http.createServer(app);
+const io = socketio(server);
+
+const botName = 'AtmosBot ';
+
+var count = 0;
+// Run when client connects
+io.on('connection', socket => {
+  count++;
+  console.log("New WS connection!!! BAM! " + count);
+  socket.on('joinRoom', ({ username, room }) => {
+    const user = userJoin(socket.id, username, room);
+
+    socket.join(user.room);
+
+    // message to the CURRENT (single) user
+    socket.emit('message', formatMessage(botName, 'You are in AtmosChat. How can we help you today?'));
+
+    // message to all clients except to the client who's connecting
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        'message',
+        formatMessage(botName, `${user.username} has joined the chat`)
+      );
+
+    // message to all clients in general
+    io.to(user.room).emit('roomUsers', {
+      room: user.room,
+      users: getRoomUsers(user.room)
+    });
+  });
+
+  // Listen for chatMessage
+  socket.on('chatMessage', msg => {
+    const user = getCurrentUser(socket.id);
+
+    io.to(user.room).emit('message', formatMessage(user.username, msg));
+  });
+
+  // Runs when client disconnects
+  socket.on('disconnect', () => {
+    const user = userLeave(socket.id);
+
+    if (user) {
+      io.to(user.room).emit(
+        'message',
+        formatMessage(botName, `${user.username} has left the chat`)
+      );
+
+      // Send users and room info
+      io.to(user.room).emit('roomUsers', {
+        room: user.room,
+        users: getRoomUsers(user.room)
+      });
+    }
+  });
+});
+
+// ======================================================
+// Chat feature (credit to Brad Traversey) - end
+// ======================================================
+
+server.listen(port);
 console.log("listening to port " + port + "!");

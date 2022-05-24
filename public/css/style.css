@@ -103,3 +103,12 @@ button:hover {
 }
 
 
+#privacy {
+	text-align: center;
+	z-index: 999;
+}
+
+#policy {
+	text-decoration: none !important;
+	color: #4695da;
+}

@@ -9,11 +9,12 @@
             <br>
 
             <h2 class="pageTitle">Products</h2>
-            <a href="/admin/products/addProduct" class="btn btn-primary">Add a new product </a>
+            <input id="backButton" type="button" value="Back" onclick="history.go(-1)">
+            <a id="addProduct" href="/admin/products/addProduct" class="btn btn-primary">Add a new product </a>
             <br><br>
 
             <!-- display table if count if one or more product... -->
-            <% if (count> 0) { %>
+            <% if (count > 0) { %>
 
                 <table class="p-3 table table-striped">
                     <thead>
@@ -41,7 +42,7 @@
                                     <%= product.category %>
                                 </td>
                                 <td>
-                                    <% if (product.image=="" ) { %>
+                                    <% if (product.image == "") { %>
                                         <img src="/images/noImage.png" alt="defaultImage" class="noImage">
                                         <% } else {%>
                                             <img src="/productImages/<%= product._id %>/<%= product.image %>"

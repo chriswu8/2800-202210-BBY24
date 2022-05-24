@@ -44,10 +44,15 @@
 
         <h1>All Users</h1>
         <h2>
-            <a href="/add_user">Add User</a>
+        <button type="submit" class="btn btn-info">
+            <a href="/add_user" class="addUser">Add User</a>
+        </button>
         </h2>
+        <button type="submit" class="btn btn-primary" onclick="history.back()">
+            Go Back
+        </button>
         <% if (registerusers !='' ) { %>
-            <table>
+            <table id="user_table">
                 <tr>
                     <th>Avatar</th>
                     <th>Name</th>

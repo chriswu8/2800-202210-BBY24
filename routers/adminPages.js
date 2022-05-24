@@ -88,7 +88,7 @@ router.post('/addPage',
             page.save(function (err) {
                 if (err) return console.log(err);
                 req.flash("success", 'Page added!'); // NOT WORKING
-
+                console.log("Success. Page added!");
                 res.redirect('/admin/pages');
             });
         }

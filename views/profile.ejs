@@ -1,6 +1,50 @@
-<%- include('layouts/adminHeader'); %>
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+    <%- include('layouts/adminHeader'); %>
+
+
+        <header class="header">
+
+            <div class="flex">
+
+                <a href="#home" class="logo"><img src="../css/img/logo.png" alt=""></a>
+
+                <!-- Inspiration from Skaikh Anas start -->
+                <nav class="navbar">
+                    <a href="/regular">HOME</a>
+                    <a href="/protocols">PROTOCOLS</a>
+                    <a href="/weather">WEATHER</a>
+                    <a href="/login/postings">BLOG</a>
+                    <a href="/profile">PROFILE</a>
+                    <a id="logout" href="/logout">LOGOUT</a>
+                </nav>
+                <!-- Inspiration from Skaikh Anas end -->
+
+
+                <div class="dropdown" style="float:right;">
+                    <button class="dropbtn">MENU</button>
+                    <div class="dropdown-content">
+                        <a href="/regular">HOME</a>
+                        <a href="/protocols">PROTOCOLS</a>
+                        <a href="weather/">WEATHER</a>
+                        <a href="/login/postings">BLOG</a>
+                        <a href="/profile">PROFILE</a>
+
+                        <a id="logout" href="/logout">LOGOUT</a>
+                        <!--Bo -->
+                    </div>
+                </div>
+            </div>
+
+        </header>
     <div class="container">
         <h1>User Profile</h1>
+        <button type="submit" class="btn">
+            <a href="/regular" class="btn btn-primary">Go Back</a>
+        </button>
         <% if (registerusers != '') { %>
             <table>
                 <tr>
@@ -32,3 +76,6 @@
     </div>
 
 
+</body>
+
+</html>

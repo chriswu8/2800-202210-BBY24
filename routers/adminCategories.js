@@ -56,7 +56,7 @@ router.post('/addCategory',
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-
+            console.log("Error, empty field detected.");
             // document.getElementById('alertError').innerHTML = 'Title and Content fields cannot be empty';
             // return res.status(400).json({ errors: errors.array() });
         } else {
@@ -122,7 +122,7 @@ router.post('/editCategory/:id',
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-
+            console.log("Error, empty field detected.");
             // insert flash message here if possible
             res.redirect('/admin/categories');
         } else {

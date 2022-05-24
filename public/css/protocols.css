@@ -1,3 +1,21 @@
+#backButton {
+   width: 50px;
+   font-size: 20px;
+   position: absolute;
+   margin: 15px;
+   padding-top: 15px;
+
+}
+
+#chatAnchor {
+   text-decoration: none;
+}
+
+#chatText {
+   font-weight: bold;
+   color: #053C09;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Ubuntu:wght@300&display=swap');
 :root{
    --main-color:#5d9cee;
@@ -30,7 +48,7 @@ html{
 body{
     background-repeat:initial;
     background-color: #cccccc;
-    background-image: linear-gradient(rgb(255, 0, 0), rgb(231, 217, 20));
+    background-image: linear-gradient(#5d9cee, rgb#666);
 }
 
 /* hide dropdown */
@@ -265,3 +283,46 @@ section{
 }
 
 }
+
+
+/* ================================= */
+/* Live Chat */
+/* ================================= */
+.liveChat {
+   width: 80px;
+   position: relative;
+   background: #5d9cee;
+   text-align: right;
+   width: 10%;
+   height: 40px;
+   padding: 10px 15px;
+   border-radius: 6px;
+   border: 1px solid #666;
+   float: right;
+   right: 20px;
+}
+#chatText {
+   position: relative;
+   right: 6px;
+   bottom: -2px;
+}
+.liveChat::before {
+   content: '';
+   position: absolute;
+   visibility: visible;
+   top: -1px;
+   right: -10px;
+   border: 10px solid transparent;
+   border-top: 10px solid #666;
+ }
+ 
+ .liveChat::after {
+   content: '';
+   position: absolute;
+   visibility: visible;
+   top: 0px;
+   right: -8px;
+   border: 10px solid transparent;
+   border-top: 10px solid #5d9cee;
+   clear: both;
+ }
