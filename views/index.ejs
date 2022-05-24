@@ -40,9 +40,9 @@
               <div class="dropdown-content">
                  <a href="/regular">HOME</a>
                  <a href="/protocols">PROTOCOLS</a>
-                 <a href="weather/">WEATHER</a>
+                 <a href="/weather">WEATHER</a>
                  <a href="/login/postings">BLOG</a>
-                 <a href="profile/">PROFILE</a>
+                 <a href="/profile">PROFILE</a>
     
                  <a id="logout" href="/logout">LOGOUT</a>
                  <!--Bo -->
@@ -57,6 +57,9 @@
 
         <div class="row mb-1">
             <a href="/new"> <button type="button" id="create" class="btn btn-dark">Create posting</button></a>
+            <button type="button" class="btn" id="backButton">
+                <input type="button" value="Back" onclick="history.go(-1)">
+            </button>
             <br><br>
         </div>
 

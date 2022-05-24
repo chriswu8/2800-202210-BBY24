@@ -42,7 +42,7 @@
           <a href="/protocols">PROTOCOLS</a>
           <a href="/weather">WEATHER</a>
           <a href="/login/postings">BLOG</a>
-          <a href="profile/">PROFILE</a>
+          <a href="/profile">PROFILE</a>
 
           <a id="logout" href="/logout">LOGOUT</a>
           <!--Bo -->
@@ -59,6 +59,7 @@
       <form action="/weather" method="POST">
         <input type="text" placeholder="Search for a city" autofocus name="city">
         <button type="submit">SUBMIT</button>
+        <input type="button" value="Back" onclick="history.go(-1)">
         <span class="msg"></span>
       </form>
     </div>

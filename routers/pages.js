@@ -14,6 +14,28 @@ router.get('/', function (req, res) {
 
 
 /**
+ * GET chat index 
+ */
+
+ router.get('/chatIndex', function (req, res) {
+    Page.find(function (err) {
+        if (err) return console.log(err);
+        res.render('chatIndex', {
+            title: 'chatIndex'
+        });
+    });
+});
+
+/**
+ * GET chat index 
+ */
+router.get('/chat', function (req, res) {
+    res.render('chat');
+})
+
+
+
+/**
  * GET a page
  */
 router.get('/:title', function (req, res) {
