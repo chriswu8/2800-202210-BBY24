@@ -55,6 +55,7 @@
 
                                 <td>
                                     <a class="confirmDeletion"
+                                        onclick="return confirm('Are you sure you want to delete?');"
                                         href="/admin/products/deleteProduct/<%= product._id %>">Delete</a>
                                 </td>
                             </tr>
