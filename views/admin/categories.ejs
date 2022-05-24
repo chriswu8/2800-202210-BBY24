@@ -30,6 +30,7 @@
                             </td>
                             <td> <a href="/admin/categories/editCategory/<%= cat.title %>">Edit</a></td>
                             <td> <a class="confirmDeletion"
+                                    onclick="return confirm('Are you sure you want to delete?');"
                                     href="/admin/categories/deleteCategory/<%= cat._id %>">Delete</a></td>
                         </tr>
                         <% }); %>

@@ -35,6 +35,7 @@
                                 <% } else {%>
 
                                     <td> <a class="confirmDeletion"
+                                        onclick="return confirm('Are you sure you want to delete?');"
                                             href="/admin/pages/deletePage/<%= page._id %>">Delete</a>
                                     </td>
                                     <% } %>
