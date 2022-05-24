@@ -243,25 +243,12 @@ Router.get('/edit_user/:id', function(req, res) {
 Router.post('/update/:id', upload, function(req, res) {
 
     let id = req.params.id;
-    let new_image = '';
-
-    if (req.file) {
-        new_image = req.file.filename;
-        try {
-            fs.unlinkSync('./uploads/' + req.body.old_image);
-        } catch (err) {
-            throw err;
-        }
-    } else {
-        new_image = req.body.old_image;
-    }
 
     registerusers.findByIdAndUpdate(id, {
         name: req.body.name,
         password: req.body.password,
         email: req.body.email,
         number: req.body.number,
-        image: new_image
     }, (err, result) => {
         if (err) {
             res.json({ message: err.message, type: 'danger' });
@@ -281,13 +268,6 @@ Router.post('/update/:id', upload, function(req, res) {
 Router.get('/delete/:id', function(req, res) {
     let id = req.params.id;
     registerusers.findByIdAndRemove(id, function(err, result) {
-        if (result.image != '') {
-            try {
-                fs.unlinkSync('./uploads/' + result.image);
-            } catch (err) {
-                throw err;
-            }
-        }
 
         if (err) {
             res.json({ message: err.message });
