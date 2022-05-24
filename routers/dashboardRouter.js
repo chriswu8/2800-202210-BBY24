@@ -6,7 +6,6 @@ const {
     checkAuthenticated,
 } = require("../middleware/auth");
 const registerusers = require('../models/user');
-const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
@@ -152,31 +151,15 @@ Router.get('/add_user', function(req, res, next) {
 });
 
 // ====================================================
-// Upload avatar
-//=====================================================
-var storage = multer.diskStorage({
-    destination: './uploads/',
-    filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() +
-            path.extname(file.originalname));
-    }
-});
-
-var upload = multer({
-    storage: storage,
-}).single('image');
-
-// ====================================================
 // Add new user
 //=====================================================
-Router.post('/add', upload, function(req, res) {
+Router.post('/add', function(req, res) {
     const Registerusers = new registerusers({
         name: req.body.name,
         password: req.body.password,
         email: req.body.email,
         number: req.body.number,
         type: req.body.type,
-        image: req.file.filename
     });
     Registerusers.save().then(result => {
         // res.status(201).json({
@@ -240,7 +223,7 @@ Router.get('/edit_user/:id', function(req, res) {
 // ====================================================
 // Update User Profile
 //=====================================================
-Router.post('/update/:id', upload, function(req, res) {
+Router.post('/update/:id', function(req, res) {
 
     let id = req.params.id;
 
