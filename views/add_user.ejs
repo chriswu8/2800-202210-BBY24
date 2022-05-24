@@ -3,38 +3,29 @@
         <h1><%= title %></h1>
         <form method="post" action="/add" mthod="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label class="label">Name</label>
+                <label class="label">Name*</label>
                 <input type="text" id='name' name="name" class="form-control" placeholder="Please enter name" required>
             </div>
             <div class="form-group">
-                <label class="label">Password</label>
+                <label class="label">Password*</label>
                 <input type="password" id="password" name="password" class="form-control" placeholder="Please enter password" required>
             </div>
             <div class="form-group">
-                <label class="label">Email</label>
+                <label class="label">Email*</label>
                 <input type="email" name="email" class="form-control" placeholder="Please enter email" id="email" required>
             </div>
             <div class="form-group">
-                <label class="label">Phone Number</label>
+                <label class="label">Phone Number*</label>
                 <input type="number" name="number" class="form-control" placeholder="Please enter phone number" id="number" required>
             </div>
             <div>
-                <label class="label">User Type</label>
+                <label class="label">User Type*</label>
             </div>
             <div id="multiple-choice-container">
                 <input type="radio" id="admin" name="type" value="admin">
                 <label for="admin">Admin</label>
                 <input type="radio" id="regular" name="type" value="regular">
                 <label for="regular">Regular</label>
-            </div>
-            <div>
-                <label for="image" class="label">Avatar</label>
-            </div>
-            <div>    
-                <label class="file" for="image">
-                    <input type="file" id="file" name="image" required>
-                    <span class="file-custom"></span>
-                </label>
             </div>
             <button value="Add User">Add User</button>
             <button class="btn">
