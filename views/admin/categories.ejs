@@ -29,9 +29,11 @@
                                 <%= cat.title %>
                             </td>
                             <td> <a href="/admin/categories/editCategory/<%= cat.title %>">Edit</a></td>
-                            <td> <a class="confirmDeletion"
+                            <td class="deletion"> <a class="confirmDeletion"
                                     onclick="return confirm('Are you sure you want to delete?');"
-                                    href="/admin/categories/deleteCategory/<%= cat._id %>">Delete</a></td>
+                                    href="/admin/categories/deleteCategory/<%= cat._id %>"
+                                    title="This will permanently remove this category">Delete</a>
+                            </td>
                         </tr>
                         <% }); %>
                 </tbody>

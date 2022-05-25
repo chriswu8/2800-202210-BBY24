@@ -9,7 +9,7 @@ const userSchema = new schema({
     },
 
     number: {
-        type: Number,
+        type: String,
         required: true
     },
 

@@ -19,8 +19,8 @@
 		<div class="signup">
 			<form action="/register" method="post">
 				<label id="signupText" for="chk" aria-hidden="true">Click here to sign up</label>
-				<input required type="text" name="name" placeholder="Full name*" pattern="[a-zA-Z0-9]*">
-				<input required type="text" name="number" placeholder="Phone*" pattern="[0-9]">
+				<input required type="text" name="name" placeholder="Full name*" pattern="[a-zA-Z0-9_ ]*">
+				<input required type="text" name="number" placeholder="Phone*" pattern="[-()0-9]*">
 				<input required type="email" name="email" placeholder="Email*">
 				<input required type="password" name="password" placeholder="Password*">
 				<input required type="password" name="cpassword" placeholder="Retype your password*">
