@@ -15,13 +15,13 @@
 
             <div class="form-group">
                 <label for="">Title*</label>
-                <input class="form-control" type="text" name="title" placeholder="Title" required>
+                <input class="form-control" type="text" name="title" placeholder="Title" pattern="[a-zA-Z0-9]*" required>
             </div>
 
             <div class="form-group">
                 <label for="">Description*</label>
                 <textarea class="form-control" name="description"
-                    placeholder="Description" required><%= description %> </textarea>
+                    placeholder="Description" pattern="[a-zA-Z0-9]*" required><%= description %> </textarea>
             </div>
 
             <div class="form-group">
@@ -37,7 +37,7 @@
 
             <div class="form-group">
                 <label for="">Price*</label>
-                <input class="form-control" type="text" name="price" placeholder="Price" required>
+                <input class="form-control" type="number" name="price" placeholder="Price" min="0.01" max="9999" step="any" required>
             </div>
 
             <div class="form-group">
