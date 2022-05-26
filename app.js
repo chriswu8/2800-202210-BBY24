@@ -191,7 +191,6 @@ var count = 0;
 // Run when client connects
 io.on('connection', socket => {
   count++;
-  console.log("New WS connection!!! BAM! " + count);
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
 

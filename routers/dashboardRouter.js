@@ -117,27 +117,41 @@ Router.get('/dash', function (req, res) {
 Router.get('/weather', function(req, res){
     res.render('weather', {
         tempReal: temp,
+        // makes reference to temperature data
         des: weatherDesc,
+        // makes reference to weather's description data
         city: city,
+        // makes reference to city data
         country: country,
+        // makes reference to country data
         img: imgurl
+        // makes reference to weather icons data
     });
 });
 
+// ============================================================
+// AtmosPal easter egg
+// ============================================================
 Router.get('/easter_egg', function(req, res,){
     res.render('easter_egg');
 })
 
+// ============================================================
+// Admin user profile
+// ============================================================
 Router.get('/', function (req, res, next){
     res.render('all_users', { title: "All Users" });
 });
 
+// ============================================================
+// Admin user feature
+// ============================================================
 Router.get('/add_user', function(req, res, next) {
     res.render('add_user', { title: "Add New User" });
 });
 
 // ====================================================
-// Add new user
+// Add new user feature
 //=====================================================
 /**
    * Create a new user start
@@ -149,12 +163,18 @@ Router.get('/add_user', function(req, res, next) {
 Router.post('/add', function(req, res) {
     const Registerusers = new registerusers({
         name: req.body.name,
+        // makes reference to req.body's name data (specified in the name attribute of the form's <input> tag)
         password: req.body.password,
+        // makes reference to req.body's password data (specified in the password attribute of the form's <input> tag)
         email: req.body.email,
+        // makes reference to req.body's email data (specified in the email attribute of the form's <input> tag)
         number: req.body.number,
+        // makes reference to req.body's phone number data (specified in the phone number attribute of the form's <input> tag)
         type: req.body.type,
+        // makes reference to req.body's user type data (specified in the type attribute of the div's <input> tag)
     });
     Registerusers.save().then(result => {
+        // save new user's data and redirect to admin user profile page 
         res.redirect('/all_users');
     })
 });
@@ -169,6 +189,7 @@ Router.get('/all_users', function(req, res) {
             res.json({ message: err.message });
         } else {
             res.render('all_users', {
+                // rendering the all_users.ejs file
                 registerusers: registerusers,
             });
         }
@@ -179,10 +200,12 @@ Router.get('/all_users', function(req, res) {
 // Users route for regular user
 //=====================================================
 Router.get('/profile', function(req, res){
+    //find user data from database
     registerusers.find().exec(function(err, registerusers) {
         if (err) {
             res.json({ message: err.message });
         } else {
+            // rendering the profile.ejs file 
             res.render('profile', {
                 registerusers: registerusers,
             });
@@ -202,6 +225,7 @@ Router.get('/profile', function(req, res){
    */
 Router.get('/edit_user/:id', function(req, res) {
     let id = req.params.id;
+    //find user data based on ID
     registerusers.findById(id, function(err, registerusers) {
         if (err) {
             res.redirect('/all_users');
@@ -209,6 +233,7 @@ Router.get('/edit_user/:id', function(req, res) {
             if (registerusers == null) {
                 res.redirect('/all_users');
             } else {
+                // rendering the edit_user.ejs file, get user's data
                 res.render('edit_user', {
                     title: "Edit User",
                     registerusers: registerusers,
@@ -223,7 +248,7 @@ Router.get('/edit_user/:id', function(req, res) {
 // Update User Profile
 //=====================================================
 /**
-   * Update a user start
+   * Update a user information start
    * I found this code on https://youtu.be/7NnBCKJTZkc.
    *
    * @author Sahil Kumar
@@ -233,11 +258,16 @@ Router.post('/update/:id', function(req, res) {
 
     let id = req.params.id;
 
+    //find user data based on ID
     registerusers.findByIdAndUpdate(id, {
         name: req.body.name,
+        // makes reference to req.body's name data (specified in the name attribute of the form's <input> tag)
         password: req.body.password,
+        // makes reference to req.body's password data (specified in the password attribute of the form's <input> tag)
         email: req.body.email,
+        // makes reference to req.body's email data (specified in the email attribute of the form's <input> tag)
         number: req.body.number,
+        // makes reference to req.body's phone number data (specified in the phone number attribute of the form's <input> tag)
     }, (err, result) => {
         if (err) {
             res.json({ message: err.message, type: 'danger' });
@@ -246,11 +276,12 @@ Router.post('/update/:id', function(req, res) {
                 type: 'success',
                 message: 'User updated successfully'
             };
+            // rendering the all_users.ejs file 
             res.redirect('/all_users');
         }
     })
 });
-/* Update a user end */
+/* Update a user information end */
 
 // ====================================================
 // Delete User Profile
@@ -264,6 +295,7 @@ Router.post('/update/:id', function(req, res) {
    */
 Router.get('/delete/:id', function(req, res) {
     let id = req.params.id;
+    //find user data based on ID and delete it
     registerusers.findByIdAndRemove(id, function(err, result) {
 
         if (err) {
@@ -273,6 +305,7 @@ Router.get('/delete/:id', function(req, res) {
                 type: 'info',
                 message: 'User deleted sucessfully'
             };
+            // rendering the all_users.ejs file 
             res.redirect('/all_users');
         }
     });
@@ -340,6 +373,7 @@ Router.post('/postings', async function (req, res) {
 // Integrating / routing to protocols page below
 // ============================================================
 Router.get('/protocols', function (req, res) {
+    // rendering the protocols.ejs file 
     res.render('protocols');
 });
 
@@ -367,6 +401,7 @@ Router.post('/weather', async (req, res) => {
 
     https.get(url_api, (response) => {
         response.on('data', (data) => {
+            //convert JSON String from weather api passed into the function
             const weatherData = JSON.parse(data);
             const temp = weatherData.main.temp;
             const realTemperature = temp;
@@ -375,12 +410,18 @@ Router.post('/weather', async (req, res) => {
             const icon = weatherData.weather[0].icon;
             const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
 
+            // rendering the weather.ejs file 
             res.render('weather', {
                 tempReal: realTemperature,
+                // makes reference to temperature data
                 des: des,
+                // makes reference to weather's description data
                 city: city,
+                // makes reference to city data
                 country: country,
+                // makes reference to country data
                 img: imgurl
+                // makes reference to weather icons data
             });
         })
     })
@@ -398,6 +439,7 @@ Router.post('/van_weather', async function (req, res) {
 
     https.get(url_api, function (response) {
         response.on('data', function (data) {
+            //convert JSON String from weather api passed into the function
             const weatherData = JSON.parse(data);
             const temp = weatherData.main.temp;
             const realTemperature = temp;
@@ -406,12 +448,18 @@ Router.post('/van_weather', async function (req, res) {
             const icon = weatherData.weather[0].icon;
             const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
 
+            // rendering the van_weather.ejs file 
             res.render('van_weather', {
                 tempReal: realTemperature,
+                // makes reference to temperature data
                 des: des,
+                // makes reference to weather's description data
                 city: city,
+                // makes reference to city data
                 country: country,
+                // makes reference to country data
                 img: imgurl
+                // makes reference to weather icons data
             });
         })
     })
@@ -422,6 +470,7 @@ Router.post('/van_weather', async function (req, res) {
 // Regular user weather page
 // ============================================================
 Router.get('/weather', function (req, res) {
+    // rendering the weather.ejs file 
     res.render('weather');
 });
 
@@ -433,6 +482,7 @@ Router.post('/weather', async (req, res) => {
 
     https.get(url_api, (response) => {
         response.on('data', (data) => {
+            //convert JSON String from weather api passed into the function
             const weatherData = JSON.parse(data);
             const temp = weatherData.main.temp;
             const realTemperature = temp;
@@ -441,12 +491,18 @@ Router.post('/weather', async (req, res) => {
             const icon = weatherData.weather[0].icon;
             const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
 
+            // rendering the weather.ejs file 
             res.render('weather', {
                 tempReal: realTemperature,
+                // makes reference to temperature data
                 des: des,
+                // makes reference to weather's description data
                 city: city,
+                // makes reference to city data
                 country: country,
+                // makes reference to country data
                 img: imgurl
+                // makes reference to weather icons data
             });
         })
     })
@@ -457,6 +513,7 @@ Router.post('/weather', async (req, res) => {
 // Admin weather page
 // ============================================================
 Router.get('/adminWeather', function (req, res) {
+    // rendering the adminWeather.ejs file 
     res.render('adminWeather');
 });
 
@@ -468,6 +525,7 @@ Router.post('/adminWeather', async (req, res) => {
 
     https.get(url_api, (response) => {
         response.on('data', (data) => {
+            //convert JSON String from weather api passed into the function
             const weatherData = JSON.parse(data);
             const temp = weatherData.main.temp;
             const realTemperature = temp;
@@ -476,12 +534,18 @@ Router.post('/adminWeather', async (req, res) => {
             const icon = weatherData.weather[0].icon;
             const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
 
+            // rendering the weather.ejs file 
             res.render('weather', {
                 tempReal: realTemperature,
+                // makes reference to temperature data
                 des: des,
+                // makes reference to weather's description data
                 city: city,
+                // makes reference to city data
                 country: country,
+                // makes reference to country data
                 img: imgurl
+                // makes reference to weather icons data
             });
         })
     })
@@ -499,6 +563,7 @@ Router.post('/van_weather', async function (req, res) {
 
     https.get(url_api, function (response) {
         response.on('data', function (data) {
+            //convert JSON String from weather api passed into the function
             const weatherData = JSON.parse(data);
             const temp = weatherData.main.temp;
             const realTemperature = temp;
@@ -507,12 +572,18 @@ Router.post('/van_weather', async function (req, res) {
             const icon = weatherData.weather[0].icon;
             const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
 
+            // rendering the van_weather.ejs file 
             res.render('van_weather', {
                 tempReal: realTemperature,
+                // makes reference to temperature data
                 des: des,
+                // makes reference to weather's description data
                 city: city,
+                // makes reference to city data
                 country: country,
+                // makes reference to country data
                 img: imgurl
+                // makes reference to weather icons data
             });
         })
     })
@@ -523,12 +594,18 @@ Router.post('/van_weather', async function (req, res) {
 // Routing to admin user weather page (Vancouver)
 // ============================================================
 Router.get('/van_weather', function (req, res) {
+    // rendering the van_weather.ejs file 
     res.render('van_weather', {
         tempReal: temp,
+        // makes reference to temperature data
         des: weatherDesc,
+        // makes reference to weather's description data
         city: city,
+        // makes reference to city data
         country: country,
+        // makes reference to country data
         img: imgurl
+        // makes reference to weather icons data
     });
 });
 
@@ -543,6 +620,7 @@ Router.post('/cal_weather', async function (req, res) {
 
     https.get(url_api, function (response) {
         response.on('data', function (data) {
+            //convert JSON String from weather api passed into the function
             const weatherData = JSON.parse(data);
             const temp = weatherData.main.temp;
             const realTemperature = temp;
@@ -551,12 +629,18 @@ Router.post('/cal_weather', async function (req, res) {
             const icon = weatherData.weather[0].icon;
             const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
 
+            // rendering the cal_weather.ejs file 
             res.render('cal_weather', {
                 tempReal: realTemperature,
+                // makes reference to temperature data
                 des: des,
+                // makes reference to weather's description data
                 city: city,
+                // makes reference to city data
                 country: country,
+                // makes reference to country data
                 img: imgurl
+                // makes reference to weather icons data
             });
         })
     })
@@ -566,12 +650,18 @@ Router.post('/cal_weather', async function (req, res) {
 // Routing to admin user weather page (Calgary)
 // ============================================================
 Router.get('/cal_weather', function (req, res) {
+    // rendering the cal_weather.ejs file 
     res.render('cal_weather', {
         tempReal: temp,
+        // makes reference to temperature data
         des: weatherDesc,
+        // makes reference to weather's description data
         city: city,
+        // makes reference to city data
         country: country,
+        // makes reference to country data
         img: imgurl
+        // makes reference to weather icons data
     });
 });
 
@@ -586,6 +676,7 @@ Router.post('/tor_weather', async function (req, res) {
 
     https.get(url_api, function (response) {
         response.on('data', function (data) {
+            //convert JSON String from weather api passed into the function
             const weatherData = JSON.parse(data);
             const temp = weatherData.main.temp;
             const realTemperature = temp;
@@ -594,12 +685,18 @@ Router.post('/tor_weather', async function (req, res) {
             const icon = weatherData.weather[0].icon;
             const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
 
+            // rendering the tor_weather.ejs file 
             res.render('tor_weather', {
                 tempReal: realTemperature,
+                // makes reference to temperature data
                 des: des,
+                // makes reference to weather's description data
                 city: city,
+                // makes reference to city data
                 country: country,
+                // makes reference to country data
                 img: imgurl
+                // makes reference to weather icons data
             });
         })
     })
@@ -609,12 +706,18 @@ Router.post('/tor_weather', async function (req, res) {
 // Routing to admin user weather page (Toronto)
 // ============================================================
 Router.get('/tor_weather', function (req, res) {
+    // rendering the tor_weather.ejs file 
     res.render('tor_weather', {
         tempReal: temp,
+        // makes reference to temperature data
         des: weatherDesc,
+        // makes reference to weather's description data
         city: city,
+        // makes reference to city data
         country: country,
+        // makes reference to country data
         img: imgurl
+        // makes reference to weather icons data
     });
 });
 
@@ -629,6 +732,7 @@ Router.post('/nb_weather', async function (req, res) {
 
     https.get(url_api, function (response) {
         response.on('data', function (data) {
+            //convert JSON String from weather api passed into the function
             const weatherData = JSON.parse(data);
             const temp = weatherData.main.temp;
             const realTemperature = temp;
@@ -637,12 +741,18 @@ Router.post('/nb_weather', async function (req, res) {
             const icon = weatherData.weather[0].icon;
             const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
 
+            // rendering the nb_weather.ejs file 
             res.render('nb_weather', {
                 tempReal: realTemperature,
+                // makes reference to temperature data
                 des: des,
+                // makes reference to weather's description data
                 city: city,
+                // makes reference to city data
                 country: country,
+                // makes reference to country data
                 img: imgurl
+                // makes reference to weather icons data
             });
         })
     })
@@ -652,12 +762,18 @@ Router.post('/nb_weather', async function (req, res) {
 // Routing to admin user weather page (New Brunswick)
 // ============================================================
 Router.get('/nb_weather', function (req, res) {
+    // rendering the nb_weather.ejs file 
     res.render('nb_weather', {
         tempReal: temp,
+        // makes reference to temperature data
         des: weatherDesc,
+        // makes reference to weather's description data
         city: city,
+        // makes reference to city data
         country: country,
+        // makes reference to country data
         img: imgurl
+        // makes reference to weather icons data
     });
 });
 /* Implement weather API end */
