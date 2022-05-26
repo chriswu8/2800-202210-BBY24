@@ -12,10 +12,6 @@ const fileUpload = require('express-fileupload');
 
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
-const {
-    checkNotAuthenticated,
-    checkAuthenticated,
-} = require("./middleware/auth");
 const port = process.env.PORT || 8000;
 const app = express();
 // const url = 'mongodb://localhost:27017/cart';
@@ -115,9 +111,9 @@ app.use(passport.session());
 
 app.use('/', dashboardRouter);
 
-app.use('/dashboard', checkNotAuthenticated, dashboardRouter);
+app.use('/dashboard', dashboardRouter);
 
-app.use('/home', checkNotAuthenticated, dashboardRouter);
+app.use('/home', dashboardRouter);
 
 // Express messages middleware 
 app.use(cookieParser());

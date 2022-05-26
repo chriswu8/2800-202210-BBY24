@@ -1,10 +1,6 @@
 const express = require('express');
 const Router = express.Router();
 const userSchema = require('../models/user');
-const {
-    checkNotAuthenticated,
-    checkAuthenticated,
-} = require("../middleware/auth");
 const registerusers = require('../models/user');
 const fs = require('fs');
 const path = require('path');
@@ -107,23 +103,13 @@ Router.get('/logout', function (req, res) {
  * source: https://codedec.com/tutorials/logout-using-passport-module-in-node-js/
  */
 
-// module.exports = Router;
-
-
 // ====================================================
 // User login session
 //=====================================================
-// Router.get('/dashboard', checkNotAuthenticated, checkAuthenticated, (req, res) => {
-//     res.render('dashboard');
-// })
 
 Router.get('/dash', function (req, res) {
     res.render('dashboard');
 })
-
-// Router.get('/home', checkNotAuthenticated, checkAuthenticated, (req, res) => {
-//     res.render('home');
-// })
 
 // ============================================================
 // Regular user weather page
@@ -153,6 +139,13 @@ Router.get('/add_user', function(req, res, next) {
 // ====================================================
 // Add new user
 //=====================================================
+/**
+   * Create a new user start
+   * I found this code on https://youtu.be/nvSVZW2x8BQ.
+   *
+   * @author Sahil Kumar
+   * @see https://youtu.be/nvSVZW2x8BQ
+   */
 Router.post('/add', function(req, res) {
     const Registerusers = new registerusers({
         name: req.body.name,
@@ -162,12 +155,10 @@ Router.post('/add', function(req, res) {
         type: req.body.type,
     });
     Registerusers.save().then(result => {
-        // res.status(201).json({
-        //   message: "User registered successfully!",
-        // });
         res.redirect('/all_users');
     })
 });
+/* Create a new user end */
 
 // ====================================================
 // Users route for admin user
@@ -202,6 +193,13 @@ Router.get('/profile', function(req, res){
 // ====================================================
 // Edit User Profile
 //=====================================================
+/**
+   * Edit a user start
+   * I found this code on https://youtu.be/7NnBCKJTZkc.
+   *
+   * @author Sahil Kumar
+   * @see https://youtu.be/7NnBCKJTZkc
+   */
 Router.get('/edit_user/:id', function(req, res) {
     let id = req.params.id;
     registerusers.findById(id, function(err, registerusers) {
@@ -219,10 +217,18 @@ Router.get('/edit_user/:id', function(req, res) {
         }
     });
 });
+/* Edit a user end */
 
 // ====================================================
 // Update User Profile
 //=====================================================
+/**
+   * Update a user start
+   * I found this code on https://youtu.be/7NnBCKJTZkc.
+   *
+   * @author Sahil Kumar
+   * @see https://youtu.be/7NnBCKJTZkc
+   */
 Router.post('/update/:id', function(req, res) {
 
     let id = req.params.id;
@@ -244,10 +250,18 @@ Router.post('/update/:id', function(req, res) {
         }
     })
 });
+/* Update a user end */
 
 // ====================================================
 // Delete User Profile
 //=====================================================
+/**
+   * Delete a user start
+   * I found this code on https://youtu.be/7NnBCKJTZkc.
+   *
+   * @author Sahil Kumar
+   * @see https://youtu.be/7NnBCKJTZkc
+   */
 Router.get('/delete/:id', function(req, res) {
     let id = req.params.id;
     registerusers.findByIdAndRemove(id, function(err, result) {
@@ -263,6 +277,7 @@ Router.get('/delete/:id', function(req, res) {
         }
     });
 });
+/* Delete a user end */
 
 // ======================================================================================================================
 
@@ -333,6 +348,13 @@ Router.get('/protocols', function (req, res) {
 // ============================================================
 // Regular user weather page
 // ============================================================
+/**
+   * Implement weather API start
+   * I found this code on https://youtu.be/3DGReM57lOo.
+   *
+   * @author Rahul Nimkande
+   * @see https://youtu.be/3DGReM57lOo
+   */
 Router.get('/weather', function (req, res) {
     res.render('weather');
 });
@@ -364,8 +386,6 @@ Router.post('/weather', async (req, res) => {
     })
 
 });
-
-
 
 // ============================================================
 // Admin user weather page (Vancouver)
@@ -432,7 +452,6 @@ Router.post('/weather', async (req, res) => {
     })
 
 });
-
 
 // ============================================================
 // Admin weather page
@@ -641,7 +660,7 @@ Router.get('/nb_weather', function (req, res) {
         img: imgurl
     });
 });
-
+/* Implement weather API end */
 
 
 

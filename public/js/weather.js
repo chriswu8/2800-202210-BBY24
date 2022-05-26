@@ -1,4 +1,10 @@
-
+/**
+   * A weather system with javascript. 
+   * I found this code on tutsplus.com.
+   *
+   * @author George Martsoukos
+   * @see https://webdesign.tutsplus.com/tutorials/build-a-simple-weather-app-with-vanilla-javascript--cms-33893/
+   */
 const list = document.querySelector(".ajax-section .city");
 
 function getWeather() {
