@@ -3,8 +3,11 @@ const Router = express.Router();
 const userSchema = require('../models/user');
 const {
     checkNotAuthenticated,
-    checkAuthenticated,
+    checkAuthenticated,                            //temp deleted
+    authCheck,
+    authCheckAdmin
 } = require("../middleware/auth");
+// const authMiddleware = require('../middleware/auth'); //new
 const registerusers = require('../models/user');
 const multer = require('multer');
 const fs = require('fs');
@@ -31,6 +34,22 @@ const imgurl = "https://cdn.iconscout.com/icon/free/png-256/sunny-weather-1-4581
 
 
 Router.get('/', function (err, res) {
+    //     if(req.session.privilege === 'admin') {                                         //new
+    //     res.render('dashboard');
+    // } else if (req.session.privilege === 'regular') {
+    //     res.render('home');
+    // } else {
+    //     res.render('register', { title: 'Fill Form', password: '', email: '' });    //end
+    // }
+    // if (!req.session) {
+    //     res.render('register', { title: 'Fill Form', password: '', email: '' });
+    // } else if (req.session.privilege === 'admin') {
+    //     res.render('dashboard');
+    // } else if (req.session.privilege === 'regular') {
+    //     res.render('home');
+    // } else {
+    //     res.render('register', { title: 'Fill Form', password: '', email: '' });
+    // }
     res.render('register', { title: 'Fill Form', password: '', email: '' })
 })
 
@@ -75,18 +94,38 @@ Router.post('/login', function (req, res) {
 
     const { email, password } = req.body;
 
-    userSchema.findOne({ email: email }, function (err, result) {
+    userSchema.findOne({ email: email }, function (err, result) { //maybe add  'name _id', as second arg
         if ((email === "cwu213@my.bcit.ca"
             || email === "cchao38@my.bcit.ca"
             || email === "jliu436@my.bcit.ca"
             || email === "bzhou24@my.bcit.ca") && password === result.password) {
-
+            
+                //new
+                req.session.email = email;
+                req.session._id = result._id;
+                req.session.privilege = 'admin';
+                console.log(req.session);
+                //end
             res.render('dashboard');
+        }else if (err) {
+            console.log('no matches found');
+            res.redirect('/');
+            
+        }else if (!result) {
+            console.log('no matches found');
+            res.redirect('/');
+            
         } else if (email === result.email && password === result.password) {
-
+            //new
+            req.session.email = email;
+            req.session.email = result._id;
+            req.session.privilege = 'regular';
+            console.log(req.session);
+            //end
             res.render('home')
         } else {
-            throw err;
+            console.log('no matches found');
+            res.redirect('/');
         }
     })
 });
@@ -101,6 +140,14 @@ Router.post('/login', function (req, res) {
  * source: https://codedec.com/tutorials/logout-using-passport-module-in-node-js/
  */
 Router.get('/logout', function (req, res) {
+    req.session.destroy((err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(req.session);
+            console.log('success');
+        }
+    })
     req.logout();
     res.redirect('/');
 });
@@ -122,9 +169,9 @@ Router.get('/dash', function (req, res) {
     res.render('dashboard');
 })
 
-// Router.get('/home', checkNotAuthenticated, checkAuthenticated, (req, res) => {
-//     res.render('home');
-// })
+Router.get('/home',authCheck, (req, res) => {   //Router.get('/home', checkNotAuthenticated, checkAuthenticated, (req, res) => {
+    res.render('home');
+})
 
 // ============================================================
 // Regular user weather page
@@ -143,11 +190,11 @@ Router.get('/easter_egg', function(req, res,){
     res.render('easter_egg');
 })
 
-Router.get('/', function (req, res, next){
-    res.render('all_users', { title: "All Users" });
-});
+// Router.get('/', function (req, res, next){
+//     res.render('all_users', { title: "All Users" });                 //NOT SURE MAYBE USE ANOTHER ROUTE????
+// });
 
-Router.get('/add_user', function(req, res, next) {
+Router.get('/add_user', authCheckAdmin, function(req, res, next) {
     res.render('add_user', { title: "Add New User" });
 });
 
@@ -189,7 +236,7 @@ Router.post('/add', upload, function(req, res) {
 // ====================================================
 // Users route for admin user
 //=====================================================
-Router.get('/all_users', function(req, res) {
+Router.get('/all_users',authCheckAdmin, function(req, res) {
     registerusers.find().exec(function(err, registerusers) {
         if (err) {
             res.json({ message: err.message });
@@ -204,7 +251,7 @@ Router.get('/all_users', function(req, res) {
 // ====================================================
 // Users route for regular user
 //=====================================================
-Router.get('/profile', function(req, res){
+Router.get('/profile', authCheck, function(req, res){
     registerusers.find().exec(function(err, registerusers) {
         if (err) {
             res.json({ message: err.message });
@@ -219,7 +266,7 @@ Router.get('/profile', function(req, res){
 // ====================================================
 // Edit User Profile
 //=====================================================
-Router.get('/edit_user/:id', function(req, res) {
+Router.get('/edit_user/:id', authCheckAdmin, function(req, res) {
     let id = req.params.id;
     registerusers.findById(id, function(err, registerusers) {
         if (err) {
@@ -305,6 +352,7 @@ Router.get('/delete/:id', function(req, res) {
 
 const Posting = require('../models/Posting');
 const { response } = require('express');
+const user = require('../models/user');
 
 // http://localhost:8000/login/postings/new
 Router.get('/new', function (req, res) {
@@ -370,7 +418,7 @@ Router.get('/protocols', function (req, res) {
 // ============================================================
 // Regular user weather page
 // ============================================================
-Router.get('/weather', function (req, res) {
+Router.get('/weather',authCheck, function (req, res) {
     res.render('weather');
 });
 
@@ -404,107 +452,6 @@ Router.post('/weather', async (req, res) => {
 
 
 
-// ============================================================
-// Admin user weather page (Vancouver)
-// ============================================================
-Router.post('/van_weather', async function (req, res) {
-
-    const city = req.body.city;
-    const unit = 'metric';
-    const url_api = 'https://api.openweathermap.org/data/2.5/weather?q=Vancouver&appid=' + weatherApiKey + '&units=' + unit;
-
-    https.get(url_api, function (response) {
-        response.on('data', function (data) {
-            const weatherData = JSON.parse(data);
-            const temp = weatherData.main.temp;
-            const realTemperature = temp;
-            const country = weatherData.sys.country;
-            const des = weatherData.weather[0].description;
-            const icon = weatherData.weather[0].icon;
-            const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
-
-            res.render('van_weather', {
-                tempReal: realTemperature,
-                des: des,
-                city: city,
-                country: country,
-                img: imgurl
-            });
-        })
-    })
-});
-
-
-// ============================================================
-// Regular user weather page
-// ============================================================
-Router.get('/weather', function (req, res) {
-    res.render('weather');
-});
-
-Router.post('/weather', async (req, res) => {
-
-    const city = req.body.city;
-    const unit = 'metric';
-    const url_api = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + weatherApiKey + '&units=' + unit;
-
-    https.get(url_api, (response) => {
-        response.on('data', (data) => {
-            const weatherData = JSON.parse(data);
-            const temp = weatherData.main.temp;
-            const realTemperature = temp;
-            const country = weatherData.sys.country;
-            const des = weatherData.weather[0].description;
-            const icon = weatherData.weather[0].icon;
-            const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
-
-            res.render('weather', {
-                tempReal: realTemperature,
-                des: des,
-                city: city,
-                country: country,
-                img: imgurl
-            });
-        })
-    })
-
-});
-
-
-// ============================================================
-// Admin weather page
-// ============================================================
-Router.get('/adminWeather', function (req, res) {
-    res.render('adminWeather');
-});
-
-Router.post('/adminWeather', async (req, res) => {
-
-    const city = req.body.city;
-    const unit = 'metric';
-    const url_api = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + weatherApiKey + '&units=' + unit;
-
-    https.get(url_api, (response) => {
-        response.on('data', (data) => {
-            const weatherData = JSON.parse(data);
-            const temp = weatherData.main.temp;
-            const realTemperature = temp;
-            const country = weatherData.sys.country;
-            const des = weatherData.weather[0].description;
-            const icon = weatherData.weather[0].icon;
-            const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
-
-            res.render('weather', {
-                tempReal: realTemperature,
-                des: des,
-                city: city,
-                country: country,
-                img: imgurl
-            });
-        })
-    })
-
-});
 
 // ============================================================
 // Admin user weather page (Vancouver)
@@ -669,7 +616,7 @@ Router.post('/nb_weather', async function (req, res) {
 // ============================================================
 // Routing to admin user weather page (New Brunswick)
 // ============================================================
-Router.get('/nb_weather', function (req, res) {
+Router.get('/nb_weather', authCheck, function (req, res) {
     res.render('nb_weather', {
         tempReal: temp,
         des: weatherDesc,
@@ -683,3 +630,15 @@ Router.get('/nb_weather', function (req, res) {
 
 
 module.exports = Router;
+
+// module.exports = (req, res) => {
+//     const {email, password} = req.body;
+
+//     user.findOne({email: email}, (error, result)=> {
+//         if (result) {
+//             req.session.email = result.email;
+//         } else {
+// console.log('   ');
+//         }
+//     })
+// }

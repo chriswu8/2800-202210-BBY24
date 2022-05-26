@@ -47,11 +47,6 @@ h1 {
     max-width: 40px;
 }
 
-#backButton {
-    position: absolute;
-    left: -140px;
-    top: 225px;
-}
 @media only screen and (min-width : 1279px) {
 
     .container {

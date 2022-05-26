@@ -33,8 +33,6 @@ router.get('/chat', function (req, res) {
     res.render('chat');
 })
 
-
-
 /**
  * GET a page
  */

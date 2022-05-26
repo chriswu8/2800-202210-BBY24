@@ -7,10 +7,11 @@
         <%- include('../layouts/adminNavbar'); %>
             <br>
 
-            <h2 class="pageTitle">Pages</h2>         
-            <input id="backButton" type="button" value="Back" onclick="history.go(-1)">
-            <a id="addPage" href="/admin/pages/addPage" class="btn btn-primary">Add a new page </a>
-   
+            <h2 class="pageTitle">Pages</h2>
+            <a href="/admin/pages/addPage" class="btn btn-primary">Add a new page </a>
+            <button type="submit" class="btn btn-primary" onclick="history.back()">
+                Go Back
+            </button>
             <br><br>
 
             <table class="p-3 table table-striped sorting">

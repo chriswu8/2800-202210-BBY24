@@ -15,15 +15,10 @@ body {
    border: 1px dashed greenyellow;
 }
 
-h1 {
-   text-align: center;
-}
-
 h2 {
-   text-align: left;
+   text-align: center
 }
 
-/* Inpiration from Brad Traversy - Start */
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Ubuntu:wght@300&display=swap');
 
 :root {
@@ -178,7 +173,6 @@ div {
 }
 
 
-/* Inpiration from Brad Traversy - End */
 
 
 
@@ -199,29 +193,6 @@ div {
 }
 
 @media (max-width:770px) {
-
-#addPage {
-   position: absolute;
-   left: 275px;
-}
-
-#addCategory  {
-   position: absolute;
-   left: 265px;
-}
-
-#addProduct  {
-   position: absolute;
-   left: 267px;
-}
-
-#backButton {
-   position: absolute;
-   left: 10px;
-   top: 173px;
-   margin: 15px;
-
-}
 
    html {
       font-size: 50%;
@@ -319,7 +290,7 @@ div {
 /* ===================================== */
 /* Below is for user profile page */
 
-/* 
+
 #user_table {
    width: 100%;
    border-collapse: collapse;
@@ -331,10 +302,9 @@ div {
 
 #user_table td a:nth-of-type(2) {
    background-color: #55a95a;
-} */
+}
 
-/* @media (max-width:770px) {
-
+@media (max-width:770px) {
 
    #user_table,
    #user_table thead,
@@ -416,4 +386,4 @@ div {
    #user_table td:nth-of-type(6):before {
       content: "Action";
    }
-} */
+}

@@ -26,7 +26,6 @@ const userSchema = new schema({
 
     image: {
         type: String,
-        default:'/css/img/profile.png',
         required: false,
     },
     

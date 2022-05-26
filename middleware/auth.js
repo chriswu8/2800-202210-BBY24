@@ -15,9 +15,47 @@ function checkAuthenticated(req, res, next) {
         res.render("register");
     }
   }
+
+    async function authCheck (req, res, next) {                 //new, ok working
+      if(await req.session.privilege === 'regular') {
+        console.log('ok');
+        next();
+      } else {
+        console.log('lacking appropriate privileges'); 
+        res.redirect('/');
+      }
+      };
+
+      function authCheckAdmin (req, res, next) {                 //new 
+        if(req.session.privilege === 'admin') {
+          console.log('ok');
+          next();
+        } else if (req.session.privilege === 'regular') {
+          console.log('lacking appropriate privileges'); 
+          res.redirect('home');
+
+        } else {
+          console.log('lacking appropriate privileges');
+          res.redirect('/');
+        }
+        };
+
+module.exports = {
+  checkNotAuthenticated,
+  checkAuthenticated,
+  authCheck, // new
+  authCheckAdmin //new
+};
   
-  module.exports = {
-    checkNotAuthenticated,
-    checkAuthenticated,
-  };
+// const User = require('../models/user');
+
+//   module.exports = (req, res, next) => {
+//     User.findById(req.session._id, (error, user)=> {
+//       if(error || !user) {
+//         return res.redirect('/');
+
+//         next();
+//       }
+//     })
+//   };
   
