@@ -209,8 +209,11 @@ Cand Dev (https://youtu.be/6LaGLqUHKms)
 
 8. Contact Information 
 Chris Wu          cwu213@my.bcit.ca
+
 Curtis Chao       cchao38@my.bcit.ca
+
 Jonathan Liu      jliu436@my.bcit.ca
+
 Bo Zhou           bzhou24@my.bcit.ca
 
 
