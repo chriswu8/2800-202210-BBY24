@@ -208,6 +208,7 @@ somteacodes (https://github.com/somteacodes/nodecrudblog/blob/Lesson-one/views/i
 Cand Dev (https://youtu.be/6LaGLqUHKms)
 
 8. Contact Information 
+
 Chris Wu          cwu213@my.bcit.ca
 
 Curtis Chao       cchao38@my.bcit.ca
