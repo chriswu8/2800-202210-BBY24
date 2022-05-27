@@ -10,18 +10,21 @@
         <a href="/admin/products" class="btn btn-primary">Back to all product </a>
         <br><br>
 
-        <!-- enctype needed to be able to upload an image -->
+        <!-- Creates the form to add prooducts based on the work of easylearning97 - start
+                 @author easylearning97 
+                 @see https://www.youtube.com/watch?v=5b3-fAufjEk&list=PL78sHffDjI75uMmHCqxil_YROcHl5ONNj -->
         <form action="/admin/products/addProduct" method="POST" enctype="multipart/form-data">
 
             <div class="form-group">
                 <label>Title*</label>
-                <input class="form-control" type="text" name="title" placeholder="Title" pattern="[a-zA-Z0-9_ ]*" required>
+                <input class="form-control" type="text" name="title" placeholder="Title" pattern="[a-zA-Z0-9_ ]*"
+                    required>
             </div>
 
             <div class="form-group">
                 <label>Description*</label>
-                <textarea class="form-control" name="description"
-                    placeholder="Description" pattern="[a-zA-Z0-9_ ]*" required><%= description %> </textarea>
+                <textarea class="form-control" name="description" placeholder="Description" pattern="[a-zA-Z0-9_ ]*"
+                    required><%= description %> </textarea>
             </div>
 
             <div class="form-group">
@@ -36,8 +39,9 @@
             </div>
 
             <div class="form-group">
-                <label >Price*</label>
-                <input class="form-control" type="number" name="price" placeholder="Price" min="0.01" max="9999" step="any" required>
+                <label>Price*</label>
+                <input class="form-control" type="number" name="price" placeholder="Price" min="0.01" max="9999"
+                    step="any" required>
             </div>
 
             <div class="form-group">
@@ -57,6 +61,7 @@
 
         </form>
 
+        <!-- Creates the form to add prooducts based on the work of easylearning97 - end -->
 
     </body>
 

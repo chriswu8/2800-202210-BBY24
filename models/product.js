@@ -7,10 +7,6 @@ const ProductSchema = mongoose.Schema({
         required: true
     },
 
-    slug: {
-        type: String
-    },
-
     description: {
         type: String,
         required: true

@@ -1,4 +1,8 @@
 "use strict";
+const {
+  authCheck,
+  authCheckAdmin
+} = require("./middleware/auth");
 const express = require('express');
 var session = require('express-session');
 const passport = require('passport');
@@ -9,61 +13,57 @@ const dashboardRouter = require('./routers/dashboardRouter');
 const { body, validationResult } = require('express-validator');
 const pageSchema = require('./models/page')
 const fileUpload = require('express-fileupload');
-
-const cookieParser = require('cookie-parser');
-const flash = require('connect-flash');
 const port = process.env.PORT || 8000;
 const app = express();
 const url = 'mongodb+srv://atmospal:w7BYxfThauyMUO58@realmcluster.s7dvc.mongodb.net/BBY_24_user_for_group_24?retryWrites=true&w=majority';
 
 // express-session middleware
 app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    // cookie: { secure: true }
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
 }));
 
 // express-validator middleware
 app.post('/user', (req, res) => {
-    User.create({
-        username: req.body.username,
-        password: req.body.password,
-    }).then(user => res.json(user));
+  User.create({
+    username: req.body.username,
+    password: req.body.password,
+  }).then(user => res.json(user));
 });
 
 app.post(
-    '/user',
-    // username must be an email
-    body('username').isEmail(),
-    // password must be at least 8 chars long
-    body('password').isLength({ min: 8 }),
-    (req, res) => {
-        // Finds the validation errors in this request and wraps them in an object with handy functions
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
+  '/user',
+  // username must be an email
+  body('username').isEmail(),
+  // password must be at least 8 chars long
+  body('password').isLength({ min: 8 }),
+  function (req, res) {
+    // Finds the validation errors in this request and wraps them in an object with handy functions
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-        User.create({
-            username: req.body.username,
-            password: req.body.password,
-        }).then(user => res.json(user));
-    },
+    User.create({
+      username: req.body.username,
+      password: req.body.password,
+    }).then(user => res.json(user));
+  },
 );
-
 
 //Mongodb atlas
 const connectionParams = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 }
 
+/* connect to the db */
 mongoose.connect(url, connectionParams)
-    .then(
-        function () { console.log("Connected to local MongoDB. Nice!"); },
-        function(err) { console.log("Did not connect to  MongoDB =(")}
-    );
+  .then(
+    function () { console.log("Connected to local MongoDB. Nice!"); },
+    function (err) { console.log("Did not connect to  MongoDB =(") }
+  );
 
 // EJS setup
 app.set('views', path.join(__dirname, 'views'));
@@ -98,62 +98,31 @@ app.use('/dashboard', dashboardRouter);
 
 app.use('/home', dashboardRouter);
 
-// Express messages middleware 
-app.use(cookieParser());
-app.use(flash());
-app.use(function (req, res, next) {
-    res.locals.messages = require('express-messages')(req, res);
-    next();
-});
-
-
-// +++++++++++++++++++++++++++
-// integration testing below
-// ++++++++++++++++++++++++++
 const Posting = require('./models/Posting');
 
-// const postingRouter = require('./routers/postings');
-// app.use('/login/postings', postingRouter);
+app.get('/login/postings', authCheck, async function (req, res) {
 
-app.get('/login/postings', async function (req, res) {
+  const posts = await Posting.find().sort({ timeCreated: 'asc' });
 
-    // const posts = [
-    //     {
-    //         title: 'Title1.1',
-    //         snippet: 'abcdefghijklmnop',
-    //         author: 'Chris',
-    //         dateCreated: new Date,
-    //         img: 'placeholder.jpg'
-    //     },
-    //     ]
-
-    const posts = await Posting.find().sort({ timeCreated: 'asc' });
-
-    res.render('index', { posts: posts })
+  res.render('index', { posts: posts })
 });
-
-
-
-// +++++++++++++++++++++++++++
-// integration testing above
-// +++++++++++++++++++++++++++
-
 
 // Setting routes
 const pages = require('./routers/pages'); // for regular users
-app.use('/', pages);
+app.use('/', authCheck, pages);
 
 const adminPages = require('./routers/adminPages');
-app.use('/admin/pages', adminPages);
+app.use('/admin/pages', authCheck, adminPages);
 
 const adminCategories = require('./routers/adminCategories');
-app.use('/admin/categories', adminCategories);
+app.use('/admin/categories', authCheck, adminCategories);
 
 const adminProducts = require('./routers/adminProducts');
-app.use('/admin/products', adminProducts);
+app.use('/admin/products', authCheck, adminProducts);
 
 // ======================================================
 // Chat feature (credit to Brad Traversey) - start
+// @see https://github.com/bradtraversy/chatcord/blob/master/server.js
 // ======================================================
 const http = require('http');
 const socketio = require('socket.io');

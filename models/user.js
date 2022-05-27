@@ -26,10 +26,10 @@ const userSchema = new schema({
 
     image: {
         type: String,
-        default:'/css/img/profile.png',
+        default: '/css/img/profile.png',
         required: false,
     },
-    
+
     created: {
         type: Date,
         required: true,

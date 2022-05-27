@@ -6,7 +6,6 @@
 
         <%- include('../layouts/adminNavbar'); %>
             <br>
-
             <h2 class="pageTitle">Categories</h2>
             <input id="backButton" type="button" value="Back" onclick="history.go(-1)">
             <a id="addCategory" href="/admin/categories/addCategory" class="btn btn-primary">Add a new category </a>
@@ -21,9 +20,12 @@
                     </tr>
                 </thead>
 
+                <!-- Displays all the category titles based on the work of easylearning97 - start
+                 @author easylearning97 
+                 @see https://www.youtube.com/watch?v=5b3-fAufjEk&list=PL78sHffDjI75uMmHCqxil_YROcHl5ONNj -->
+
                 <tbody>
                     <% categories.forEach(function(cat) { %>
-                        <!-- the table rows will be sortable via jQuery UI sortable-->
                         <tr>
                             <td>
                                 <%= cat.title %>
@@ -37,13 +39,11 @@
                         </tr>
                         <% }); %>
                 </tbody>
+                <!-- Displays all the category titles based on the work of easylearning97 - end -->
+
             </table>
 
-
-
             <%- include('../layouts/adminFooter'); %>
-
-
 
     </body>
 

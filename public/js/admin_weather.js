@@ -5,28 +5,27 @@
    * @author Coding Tutorials
    * @see https://youtu.be/tLCU2RupVo4 
    */
-
-$(".van").mouseover(function() {
+$(".van").mouseover(function () {
     $(this).children(".detail").show();
-}).mouseout(function() {
+}).mouseout(function () {
     $(this).children(".detail").hide();
 });
 
-$(".cal").mouseover(function() {
+$(".cal").mouseover(function () {
     $(this).children(".detail").show();
-}).mouseout(function() {
+}).mouseout(function () {
     $(this).children(".detail").hide();
 });
 
-$(".tor").mouseover(function() {
+$(".tor").mouseover(function () {
     $(this).children(".detail").show();
-}).mouseout(function() {
+}).mouseout(function () {
     $(this).children(".detail").hide();
 });
 
-$(".nb").mouseover(function() {
+$(".nb").mouseover(function () {
     $(this).children(".detail").show();
-}).mouseout(function() {
+}).mouseout(function () {
     $(this).children(".detail").hide();
 });
 /* Rain with lightning effects end */

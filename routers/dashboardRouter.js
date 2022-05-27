@@ -1,9 +1,10 @@
 const express = require('express');
 const Router = express.Router();
 const userSchema = require('../models/user');
-const {                         
+const {
     authCheck,
-    authCheckAdmin
+    authCheckAdmin,
+    authCheckAdmin2
 } = require("../middleware/auth");
 // const authMiddleware = require('../middleware/auth'); //new
 const registerusers = require('../models/user');
@@ -22,31 +23,14 @@ const imgurl = "https://cdn.iconscout.com/icon/free/png-256/sunny-weather-1-4581
 // user registration (Help from and credits to Ali Babar)
 // =====================================================
 /**
-   * Performs the user registration start
+   * Performs the user registration - start
    * I found this code on https://www.youtube.com/watch?v=oLuuIgiyxmg.
    *
    * @author Ali Babar
    * @see https://www.youtube.com/watch?v=oLuuIgiyxmg 
    */
 
-
 Router.get('/', function (err, res) {
-    //     if(req.session.privilege === 'admin') {                                         //new
-    //     res.render('dashboard');
-    // } else if (req.session.privilege === 'regular') {
-    //     res.render('home');
-    // } else {
-    //     res.render('register', { title: 'Fill Form', password: '', email: '' });    //end
-    // }
-    // if (!req.session) {
-    //     res.render('register', { title: 'Fill Form', password: '', email: '' });
-    // } else if (req.session.privilege === 'admin') {
-    //     res.render('dashboard');
-    // } else if (req.session.privilege === 'regular') {
-    //     res.render('home');
-    // } else {
-    //     res.render('register', { title: 'Fill Form', password: '', email: '' });
-    // }
     res.render('register', { title: 'Fill Form', password: '', email: '' })
 })
 
@@ -79,14 +63,27 @@ Router.post('/register', async function (req, res) {
         res.render('register', { title: 'Error in Code', password: '', email: '' });
     }
 })
-/* Performs the user registration end */
-
+/* Performs the user registration  -end */
 
 // =====================================================
 // logging in
 //=====================================================
 
-// the /login is the form's action attribute
+/**
+ * Checks the email and password submitted in the login page.
+ * If the email is matches one of the four admin emails and
+ * the password is equivalent to the one found in the database
+ * a property known as privilege is added to the session object
+ * and set to 'admin'. Afterwards, redirects to admin dashboard.
+ * 
+ * If the email and password match one in the database, however,
+ * is not one of the four admin emails, adds privilege property
+ * to the session object and sets it to 'regular'. Finally, then
+ * redirects to the home page.
+ * 
+ * If email and password combination cannot be found in the 
+ * database, the user is redirected to the login/register page.
+ */
 Router.post('/login', function (req, res) {
 
     const { email, password } = req.body;
@@ -96,30 +93,22 @@ Router.post('/login', function (req, res) {
             || email === "cchao38@my.bcit.ca"
             || email === "jliu436@my.bcit.ca"
             || email === "bzhou24@my.bcit.ca") && password === result.password) {
-            
-                //new
-                req.session.email = email;
-                req.session._id = result._id;
-                req.session.privilege = 'admin';
-                console.log(req.session);
-                //end
-            res.render('dashboard');
-        }else if (err) {
-            console.log('no matches found');
-            res.redirect('/');
-            
-        }else if (!result) {
-            console.log('no matches found');
-            res.redirect('/');
-            
-        } else if (email === result.email && password === result.password) {
-            //new
+
             req.session.email = email;
-            req.session.email = result._id;
+            req.session.privilege = 'admin';
+            res.render('dashboard');
+        } else if (err) {
+            console.log('no matches found');
+            res.redirect('/');
+
+        } else if (!result) {
+            console.log('no matches found');
+            res.redirect('/');
+
+        } else if (email === result.email && password === result.password) {
+            req.session.email = email;
             req.session.privilege = 'regular';
-            console.log(req.session);
-            //end
-            res.render('home')
+            res.render('home');
         } else {
             console.log('no matches found');
             res.redirect('/');
@@ -128,12 +117,15 @@ Router.post('/login', function (req, res) {
 });
 
 
+
 // =====================================================
 // logout
 //=====================================================
 
 /* shows logout code start
- * This performs the logout feature
+ * The current session is destroyed and the user is then logged out and redirected
+ * to the login/register page.
+ * 
  * source: https://codedec.com/tutorials/logout-using-passport-module-in-node-js/
  */
 Router.get('/logout', function (req, res) {
@@ -142,7 +134,7 @@ Router.get('/logout', function (req, res) {
             console.log(err);
         } else {
             console.log(req.session);
-            console.log('success');
+            console.log('session destroyed');
         }
     })
     req.logout();
@@ -158,16 +150,18 @@ Router.get('/logout', function (req, res) {
 
 Router.get('/dash', function (req, res) {
     res.render('dashboard');
-})
+});
 
-Router.get('/home',authCheck, (req, res) => { 
+// prevents unauthorized access to home.ejs
+Router.get('/home', authCheck, (req, res) => {
     res.render('home');
-})
+});
+
 
 // ============================================================
 // Regular user weather page
 // ============================================================
-Router.get('/weather', function(req, res){
+Router.get('/weather', authCheck, function (req, res) {
     res.render('weather', {
         tempReal: temp,
         // makes reference to temperature data
@@ -185,19 +179,19 @@ Router.get('/weather', function(req, res){
 // ============================================================
 // AtmosPal easter egg
 // ============================================================
-Router.get('/easter_egg', function(req, res,){
+Router.get('/easter_egg', authCheck, function (req, res,) {
     res.render('easter_egg');
 })
 
 // ============================================================
 // Admin user feature
 // ============================================================
-Router.get('/add_user', function(req, res, next) {
+Router.get('/add_user', authCheckAdmin, function (req, res, next) {
     res.render('add_user', { title: "Add New User" });
 });
 
 // ====================================================
-// Add new user feature
+// Add new user
 //=====================================================
 /**
    * Create a new user start
@@ -206,7 +200,7 @@ Router.get('/add_user', function(req, res, next) {
    * @author Sahil Kumar
    * @see https://youtu.be/nvSVZW2x8BQ
    */
-Router.post('/add', function(req, res) {
+Router.post('/add', function (req, res) {
     const Registerusers = new registerusers({
         name: req.body.name,
         // makes reference to req.body's name data (specified in the name attribute of the form's <input> tag)
@@ -229,8 +223,8 @@ Router.post('/add', function(req, res) {
 // ====================================================
 // Users route for admin user
 //=====================================================
-Router.get('/all_users',authCheck, function(req, res) {
-    registerusers.find().exec(function(err, registerusers) {
+Router.get('/all_users', authCheck, function (req, res) {
+    registerusers.find().exec(function (err, registerusers) {
         if (err) {
             res.json({ message: err.message });
         } else {
@@ -241,12 +235,20 @@ Router.get('/all_users',authCheck, function(req, res) {
         }
     });
 });
+/* Create a new user end */
 
 // ====================================================
 // Users route for regular user
 //=====================================================
-Router.get('/profile', authCheck, function(req, res){
-    registerusers.find().exec(function(err, registerusers) {
+/**
+   * Edit a user profile start
+   * I found this code on https://youtu.be/7NnBCKJTZkc.
+   *
+   * @author Sahil Kumar
+   * @see https://youtu.be/7NnBCKJTZkc
+   */
+Router.get('/profile', authCheck, function (req, res) {
+    registerusers.find().exec(function (err, registerusers) {
         if (err) {
             res.json({ message: err.message });
         } else {
@@ -259,14 +261,18 @@ Router.get('/profile', authCheck, function(req, res){
 });
 
 // ====================================================
-// Edit User Profile
+// Edit a User Profile
 //=====================================================
-Router.get('/edit_user/:id', authCheckAdmin, function(req, res) {
+
+Router.get('/edit_user/:id', authCheckAdmin2, function (req, res) {
     let id = req.params.id;
-    registerusers.findById(id, function(err, registerusers) {
+    registerusers.findById(id, function (err, registerusers) {
         if (err) {
             res.redirect('/all_users');
         } else {
+            if (req.session.privilege === 'regular') {
+                res.redirect('/home');
+            }
             if (registerusers == null) {
                 res.redirect('/all_users');
             } else {
@@ -279,19 +285,19 @@ Router.get('/edit_user/:id', authCheckAdmin, function(req, res) {
         }
     });
 });
-/* Edit a user end */
+/* Edit a user profile end */
 
 // ====================================================
 // Update User Profile
 //=====================================================
 /**
-   * Update a user information start
+   * Update a user start
    * I found this code on https://youtu.be/7NnBCKJTZkc.
    *
    * @author Sahil Kumar
    * @see https://youtu.be/7NnBCKJTZkc
    */
-Router.post('/update/:id', function(req, res) {
+Router.post('/update/:id', function (req, res) {
 
     let id = req.params.id;
 
@@ -318,7 +324,7 @@ Router.post('/update/:id', function(req, res) {
         }
     })
 });
-/* Update a user information end */
+/* Update a user end */
 
 // ====================================================
 // Delete User Profile
@@ -330,10 +336,10 @@ Router.post('/update/:id', function(req, res) {
    * @author Sahil Kumar
    * @see https://youtu.be/7NnBCKJTZkc
    */
-Router.get('/delete/:id', function(req, res) {
+Router.get('/delete/:id', function (req, res) {
     let id = req.params.id;
     //find user data based on ID and delete it
-    registerusers.findByIdAndRemove(id, function(err, result) {
+    registerusers.findByIdAndRemove(id, function (err, result) {
 
         if (err) {
             res.json({ message: err.message });
@@ -356,9 +362,10 @@ const { response } = require('express');
 const user = require('../models/user');
 
 // http://localhost:8000/login/postings/new
-Router.get('/new', function (req, res) {
+Router.get('/new', authCheck, function (req, res) {
     res.render('new');
 });
+
 
 // takes the argument ${posting.id}; dont forget the : before the parameter name!!!
 Router.get('/', async function (req, res) {
@@ -410,11 +417,11 @@ Router.post('/postings', async function (req, res) {
 // ============================================================
 // Integrating / routing to protocols page below
 // ============================================================
-Router.get('/protocols', function (req, res) {
-    // rendering the protocols.ejs file 
+
+Router.get('/protocols', authCheck, function (req, res) {
+    // rendering the protocols.ejs file
     res.render('protocols');
 });
-
 
 
 // ============================================================
@@ -427,9 +434,6 @@ Router.get('/protocols', function (req, res) {
    * @author Rahul Nimkande
    * @see https://youtu.be/3DGReM57lOo
    */
-Router.get('/weather', function (req, res) {
-    res.render('weather');
-});
 
 Router.post('/weather', async (req, res) => {
 
@@ -486,7 +490,7 @@ Router.post('/van_weather', async function (req, res) {
             const icon = weatherData.weather[0].icon;
             const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
 
-            // rendering the van_weather.ejs file 
+            // rendering the van_weather.ejs file
             res.render('van_weather', {
                 tempReal: realTemperature,
                 // makes reference to temperature data
@@ -507,10 +511,6 @@ Router.post('/van_weather', async function (req, res) {
 // ============================================================
 // Regular user weather page
 // ============================================================
-Router.get('/weather', function (req, res) {
-    // rendering the weather.ejs file 
-    res.render('weather');
-});
 
 Router.post('/weather', async (req, res) => {
 
@@ -572,7 +572,7 @@ Router.post('/adminWeather', async (req, res) => {
             const icon = weatherData.weather[0].icon;
             const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
 
-            // rendering the weather.ejs file 
+            // rendering the weather.ejs file
             res.render('weather', {
                 tempReal: realTemperature,
                 // makes reference to temperature data
@@ -610,7 +610,7 @@ Router.post('/van_weather', async function (req, res) {
             const icon = weatherData.weather[0].icon;
             const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
 
-            // rendering the van_weather.ejs file 
+            // rendering the van_weather.ejs file
             res.render('van_weather', {
                 tempReal: realTemperature,
                 // makes reference to temperature data
@@ -631,7 +631,7 @@ Router.post('/van_weather', async function (req, res) {
 // ============================================================
 // Routing to admin user weather page (Vancouver)
 // ============================================================
-Router.get('/van_weather', function (req, res) {
+Router.get('/van_weather', authCheck, function (req, res) {
     // rendering the van_weather.ejs file 
     res.render('van_weather', {
         tempReal: temp,
@@ -650,7 +650,7 @@ Router.get('/van_weather', function (req, res) {
 // ============================================================
 // Admin user weather page (Calgary)
 // ============================================================
-Router.post('/cal_weather', async function (req, res) {
+Router.post('/cal_weather', function (req, res) {
 
     const city = req.body.city;
     const unit = 'metric';
@@ -687,8 +687,8 @@ Router.post('/cal_weather', async function (req, res) {
 // ============================================================
 // Routing to admin user weather page (Calgary)
 // ============================================================
-Router.get('/cal_weather', function (req, res) {
-    // rendering the cal_weather.ejs file 
+Router.get('/cal_weather', authCheck, function (req, res) {
+    // rendering the cal_weather.ejs file
     res.render('cal_weather', {
         tempReal: temp,
         // makes reference to temperature data
@@ -723,7 +723,7 @@ Router.post('/tor_weather', async function (req, res) {
             const icon = weatherData.weather[0].icon;
             const imgurl = 'http://openweathermap.org/img/wn/' + icon + '@2x.png';
 
-            // rendering the tor_weather.ejs file 
+            // rendering the tor_weather.ejs file
             res.render('tor_weather', {
                 tempReal: realTemperature,
                 // makes reference to temperature data
@@ -743,8 +743,8 @@ Router.post('/tor_weather', async function (req, res) {
 // ============================================================
 // Routing to admin user weather page (Toronto)
 // ============================================================
-Router.get('/tor_weather', function (req, res) {
-    // rendering the tor_weather.ejs file 
+Router.get('/tor_weather', authCheck, function (req, res) {
+    // rendering the tor_weather.ejs file
     res.render('tor_weather', {
         tempReal: temp,
         // makes reference to temperature data
@@ -800,6 +800,7 @@ Router.post('/nb_weather', async function (req, res) {
 // Routing to admin user weather page (New Brunswick)
 // ============================================================
 Router.get('/nb_weather', authCheck, function (req, res) {
+    // rendering the nb_weather.ejs file
     res.render('nb_weather', {
         tempReal: temp,
         // makes reference to temperature data
@@ -814,7 +815,6 @@ Router.get('/nb_weather', authCheck, function (req, res) {
     });
 });
 /* Implement weather API end */
-
 
 
 module.exports = Router;

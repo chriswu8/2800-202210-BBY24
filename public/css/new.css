@@ -13,18 +13,14 @@ h2 {
 }
 
 
-
-
-
 form {
     width: 90vw;
     margin: 0 auto;
-  }
-  
-  label, input {
+}
+
+label,
+input {
     /* In order to define widths */
     display: inline-block;
     width: 90vw;
-  }
-  
-
+}
