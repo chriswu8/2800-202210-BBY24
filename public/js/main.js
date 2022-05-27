@@ -1,3 +1,6 @@
+// Backend chat handling features based on Brad Traversey's work - start
+// @see https://github.com/bradtraversy/chatcord/blob/master/public/js/main.js
+
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
@@ -81,10 +84,12 @@ function outputUsers(users) {
 }
 
 //Prompt the user before leave chat room
-document.getElementById('leave-btn').addEventListener('click', function() {
+document.getElementById('leave-btn').addEventListener('click', function () {
   const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
   if (leaveRoom) {
     window.location = '../../chatIndex';
   } else {
   }
 });
+
+// Backend chat handling features based on Brad Traversey's work - end

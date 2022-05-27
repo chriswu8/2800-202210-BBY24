@@ -10,16 +10,21 @@
         <a href="/admin/categories" class="btn btn-primary">Back to all categories </a>
         <br><br>
 
+
+        <!-- Creates the form to edit categories based on the work of easylearning97 - start
+                 @author easylearning97 
+                 @see https://www.youtube.com/watch?v=5b3-fAufjEk&list=PL78sHffDjI75uMmHCqxil_YROcHl5ONNj -->
         <form action="/admin/categories/editCategory/<%= id %>" method="POST">
 
             <div class="form-group">
-                <label for="">Title</label>
-                <input class="form-control" type="text" name="title" placeholder="Title">
+                <label>Title</label>
+                <input class="form-control" type="text" name="title" placeholder="Title" pattern="[a-zA-Z0-9_ ]*"
+                    required>
             </div>
 
             <button type="submit" class="btn btn-dark">Submit</button>
         </form>
-
+        <!-- Creates the form to edit categories based on the work of easylearning97 - end -->
 
     </body>
 

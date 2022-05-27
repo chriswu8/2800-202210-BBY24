@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Ubuntu:wght@300&display=swap');
+
 body {
    margin: 25px !important;
 }
@@ -24,7 +26,6 @@ h2 {
 }
 
 /* Inpiration from Brad Traversy - Start */
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Ubuntu:wght@300&display=swap');
 
 :root {
    --main-color: #5d9cee;
@@ -90,6 +91,7 @@ div {
    border-style: solid;
    border-color: rgb(106, 114, 214);
 }
+
 
 .header .flex .navbar a {
    margin-left: 2rem;
@@ -196,32 +198,50 @@ div {
       font-size: 55%;
    }
 
+
 }
 
 @media (max-width:770px) {
+   body {
+      z-index: -100;
+   }
 
-#addPage {
-   position: absolute;
-   left: 275px;
-}
+   .logo {
+      position: absolute;
+      left: 20px;
+   }
 
-#addCategory  {
-   position: absolute;
-   left: 265px;
-}
+   .dropbtn {
+      position: absolute;
+      left: 80px;
+      bottom: -3px;
+   }
 
-#addProduct  {
-   position: absolute;
-   left: 267px;
-}
 
-#backButton {
-   position: absolute;
-   left: 10px;
-   top: 173px;
-   margin: 15px;
+   #addPage {
+      position: absolute;
+      left: 275px;
+   }
 
-}
+   #addCategory {
+      position: absolute;
+      left: 265px;
+      z-index: -1;
+   }
+
+   #addProduct {
+      position: absolute;
+      left: 267px;
+      z-index: 0;
+   }
+
+   #backButton {
+      position: absolute;
+      left: 10px;
+      top: 119px;
+      margin: 15px;
+
+   }
 
    html {
       font-size: 50%;
@@ -264,11 +284,12 @@ div {
    .dropdown-content {
       display: none;
       position: absolute;
-      right: 0;
+      left: 10px;
+      bottom: -350px;
       background-color: #f9f9f9;
       min-width: 160px;
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-      z-index: 1;
+      z-index: 8888;
       border-radius: 0.7rem;
    }
 
@@ -308,112 +329,3 @@ div {
    }
 
 }
-
-
-
-
-
-
-
-
-/* ===================================== */
-/* Below is for user profile page */
-
-/* 
-#user_table {
-   width: 100%;
-   border-collapse: collapse;
-}
-
-#user_table td a:nth-of-type(1) {
-   background-color: #e35d4a;
-}
-
-#user_table td a:nth-of-type(2) {
-   background-color: #55a95a;
-} */
-
-/* @media (max-width:770px) {
-
-
-   #user_table,
-   #user_table thead,
-   #user_table tbody,
-   #user_table th,
-   #user_table td,
-   #user_table tr {
-      display: block;
-      width: 110%;
-      margin-left: -20px;
-   }
-
-   #user_table thead tr {
-      position: absolute;
-      top: -9999px;
-      left: -9999px;
-   }
-
-   #user_table tr {
-      border: 1px solid #ccc;
-   }
-
-   #user_table th {
-      display: none;
-      width: 100%;
-   }
-
-   #user_table td {
-      border: none;
-      border-bottom: 1px solid #eee;
-      position: relative;
-      padding-left: 50%;
-   }
-
-   #user_table td:before {
-      position: absolute;
-      top: 6px;
-      left: 100px;
-      width: 45%;
-      padding-right: 10px;
-      white-space: nowrap;
-   }
-
-   #user_table tr:nth-child(1) {
-      background-color: grey;
-      color: white;
-   }
-
-   #user_table tr:nth-child(3) {
-      background-color: grey;
-      color: white;
-   }
-
-   #user_table tr:nth-child(5) {
-      background-color: grey;
-      color: white;
-   }
-
-   #user_table td:nth-of-type(1):before {
-      content: "Avatar";
-   }
-
-   #user_table td:nth-of-type(2):before {
-      content: "Name";
-   }
-
-   #user_table td:nth-of-type(3):before {
-      content: "Phone Number";
-   }
-
-   #user_table td:nth-of-type(4):before {
-      content: "Email";
-   }
-
-   #user_table td:nth-of-type(5):before {
-      content: "Type";
-   }
-
-   #user_table td:nth-of-type(6):before {
-      content: "Action";
-   }
-} */

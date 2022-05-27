@@ -1,3 +1,7 @@
+.navbar a {
+    text-decoration: none;
+}
+
 body {
     background-color: #f1f2f6;
     background-image: linear-gradient(315deg, #f1f2f6 0%, #f5f5f5 74%);
@@ -52,7 +56,25 @@ h1 {
     left: -140px;
     top: 225px;
 }
+
 @media only screen and (min-width : 1279px) {
+    .navbar a {
+        text-decoration: none;
+    }
+
+    #create2 {
+        position: relative;
+        right: 600px;
+        top: 25px;
+    }
+
+    #backButton {
+        position: relative;
+        top: -40px;
+        right: 50px;
+
+
+    }
 
     .container {
         display: grid;
@@ -70,107 +92,216 @@ h1 {
         margin-right: 850px;
     }
 
+    .flex {
+        max-height: 14vh;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: rgb(106, 114, 214);
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 0.7rem;
+    }
+
 }
 
 
-/* ============================================== */
-/* ============================================== */
-/* ============================================== */
 
 
 /* header / navbar / dropdrown css below */
 
 .dropdown {
     display: none;
- }
- 
+}
 
- .header{
+
+.header {
     position: sticky;
-    top: 0; left: 0; right:0;
+    top: 0;
+    left: 0;
+    right: 0;
     background-color: var(--white);
     box-shadow: var(--box-shadow);
-    background-color:rgb(175, 212, 235);
+    background-color: rgb(175, 212, 235);
     z-index: 999;
- }
- 
- .header .flex{
+}
+
+.header .flex {
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
-    padding:1.5rem 1rem;
- }
- 
- .header .flex .logo img{
+    padding: 1.5rem 1rem;
+}
+
+.header .flex .logo img {
     height: 5rem;
     border-radius: 18px;
     border-style: solid;
-    border-color:rgb(106, 114, 214);
- }
- 
- .tipImage img {
+    border-color: rgb(106, 114, 214);
+}
+
+.tipImage img {
     height: 10rem;
     border-radius: 18px;
     border-style: solid;
-    border-color:rgb(106, 114, 214);
- }
- 
- 
- .header .flex .navbar a:hover {
+    border-color: rgb(106, 114, 214);
+}
+
+
+.header .flex .navbar a:hover {
     background-color: var(--main-color);
     color: var(--white);
     border-radius: 0.33rem;
- }
+}
 
- .header .flex .navbar{
+.header .flex .navbar {
 
     display: none;
- }
+}
 
- .dropdown {
+.dropdown {
     position: relative;
     display: inline-block;
-  }
+}
 
- .dropbtn {
+.dropbtn {
     /*background-color: #04AA6D;*/
     color: white;
     padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
- }
-  
- .dropdown-content {
+}
+
+.dropdown-content {
     display: none;
     position: absolute;
     right: 0;
     background-color: rgb(106, 114, 214);
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border-radius: 0.7rem;
- }
-  
- .dropdown-content a {
+}
+
+.dropdown-content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     background-color: rgb(106, 114, 214);
- }
+}
 
- .dropbtn {
-     background-color:rgb(106, 114, 214);
-     border-radius:0.6rem;
- }
-  
- .dropdown-content a:hover {
-     background-color: #f1f1f1;
- }
+.dropbtn {
+    background-color: rgb(106, 114, 214);
+    border-radius: 0.6rem;
+}
 
- .dropdown:hover .dropdown-content {
-    display: block; 
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
     background-color: var(--main-color);
- }
+}
+
+
+@media screen and (min-width: 1026px) and (max-width: 2000px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .heading,
+    .ajax-section .temp {
+        font-size: 3rem;
+    }
+
+    .ajax-section .cities {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    a {
+        margin: 30px;
+    }
+
+    .dropbtn {
+        display: none;
+    }
+
+    /* header / navbar / dropdrown css below */
+
+    .dropdown {
+        display: none;
+    }
+
+
+    .header {
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--white);
+        box-shadow: var(--box-shadow);
+        background-color: rgb(175, 212, 235);
+        z-index: 999;
+    }
+
+    .header .flex {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        padding: 1.5rem 1rem;
+    }
+
+    .top-banner form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .top-banner form input,
+    .top-banner form button {
+        width: 100%;
+    }
+
+    .top-banner form button {
+        margin: 20px 0 0 0;
+    }
+
+    .header .flex .logo img {
+        height: 5rem;
+        border-radius: 18px;
+        border-style: solid;
+        border-color: rgb(106, 114, 214);
+    }
+
+    .tipImage img {
+        height: 10rem;
+        border-radius: 18px;
+        border-style: solid;
+        border-color: rgb(106, 114, 214);
+    }
+
+
+    .header .flex .navbar a:hover {
+        background-color: var(--main-color);
+        color: var(--white);
+        border-radius: 0.33rem;
+    }
+
+    .dropdown {
+        display: none;
+    }
+
+    .header .flex .navbar {
+        display: flex;
+        justify-content: center;
+    }
+}

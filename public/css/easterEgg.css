@@ -1,25 +1,34 @@
-
-
-body{
+/**
+   * Rain with lightning effects start
+   * I found this code on https://youtu.be/tLCU2RupVo4.
+   *
+   * @author Coding Tutorials
+   * @see https://youtu.be/tLCU2RupVo4 
+   */
+body {
     margin: 0;
     padding: 0;
     background-image: url(/css/img/bcit_background.jpg);
     background-size: cover;
 }
-.rain{
+
+.rain {
     height: 100vh;
     background-image: url(/css/img/rain.png);
     animation: rain 0.3s linear infinite;
 }
-@keyframes rain{
-    0%{
+
+@keyframes rain {
+    0% {
         background-position: 0% 0%;
     }
-    100%{
+
+    100% {
         background-position: 20% 100%;
     }
 }
-.rain::before{
+
+.rain::before {
     content: "";
     position: absolute;
     width: 100%;
@@ -31,32 +40,42 @@ body{
     opacity: 1;
     transition-duration: 500ms;
 }
+
 .lightning {
     transition-duration: 500ms;
 }
-@keyframes lightining{
-    0%{
+
+@keyframes lightining {
+    0% {
         opacity: 0;
     }
-    20%{
+
+    20% {
         opacity: 0;
     }
-    21%{
+
+    21% {
         opacity: 1;
     }
-    25%{
+
+    25% {
         opacity: 0;
     }
-    30%{
+
+    30% {
         opacity: 0;
     }
-    31%{
+
+    31% {
         opacity: 1;
     }
-    35%{
+
+    35% {
         opacity: 0;
     }
-    100%{
+
+    100% {
         opacity: 0;
     }
 }
+/* Rain with lightning effects end */

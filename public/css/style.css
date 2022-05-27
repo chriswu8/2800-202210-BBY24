@@ -1,3 +1,5 @@
+/* Design inspiration from Ali Babar - start
+@see https://creativebabar.com/html-css-node-js-express-and-mongodb-in-hindi-in-2022/ */
 body {
 	margin: 0;
 	padding: 0;
@@ -36,12 +38,12 @@ h1 {
 }
 
 #signupText {
-    font-size: 20px;
+	font-size: 20px;
 }
 
 
 #loginText {
-    font-size: 60px;
+	font-size: 60px;
 	padding-top: 25px;
 }
 
@@ -102,6 +104,8 @@ button:hover {
 	transform: translateY(-200px);
 }
 
+/* Design inspiration from Ali Babar - end */
+
 
 #privacy {
 	text-align: center;
@@ -110,5 +114,5 @@ button:hover {
 
 #policy {
 	text-decoration: none !important;
-	color: #4695da;
+	color: #4695DA;
 }

@@ -35,9 +35,9 @@
         <div class="dropdown-content">
           <a href="/regular">HOME</a>
           <a href="/protocols">PROTOCOLS</a>
-          <a href="weather/">WEATHER</a>
+          <a href="/weather">WEATHER</a>
           <a href="/login/postings">BLOG</a>
-          <a href="profile/">PROFILE</a>
+          <a href="/profile">PROFILE</a>
 
           <a id="logout" href="/logout">LOGOUT</a>
           <!--Bo -->
@@ -45,6 +45,9 @@
       </div>
     </div>
 
+
+    <!-- Chat room design based on the work of Brad Traversey - start
+    @see https://github.com/bradtraversy/chatcord/blob/master/public/chat.html -->
   </header>
   <div class="chat-container">
     <header class="chat-header">
@@ -69,14 +72,13 @@
       </form>
     </div>
   </div>
+  <!-- Chat index design modified based on the work of Brad Traversey - end -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js"
+    integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4=" crossorigin="anonymous"></script>
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.3/qs.min.js"
-    integrity="sha512-juaCj8zi594KHQqb92foyp87mCSriYjw3BcTHaXsAn4pEB1YWh+z+XQScMxIxzsjfM4BeVFV3Ij113lIjWiC2w=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-  <script src="http://localhost:8000/socket.io/socket.io.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="js/main.js"></script>
 </body>
 

@@ -1,108 +1,154 @@
-*{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            text-align: center;
-        }
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-          }
-        a{
-            text-decoration: none;
-            color:white;
-        }
-        h1{
-            position: relative;
-        }
-        h2{
-            
-            width: 100px;
-            background-color: #2b71b8;
-            line-height: 30px;
-            border-radius: 3px;
-            margin-bottom: 20px;
-            font-size: 20px;
-        }
-        body{
-            display: flex;
-            height: 100vh;
-            justify-content: center;
-            margin-top: 50px;
-        }
-        #container {
-            grid-row: 2 / 5;
-            grid-column: 1 / 6; 
-        }
-        th,td{
-            text-align: left;
-            border:1px solid #999;
-            padding: 10px 15px;
-        }
-        th{
-            background-color: #f0f3f0;
-        }
-        table{
-            border-collapse: collapse;
-        }
-        td a{
-            margin-right: 2px;
-            display: inline-block;
-            width: 43px;
-            height: 30px;
-            line-height: 30px;
-            border-radius: 4px;
-        }
-        td a:nth-of-type(1){
-            background-color: #e35d4a;
-        }
-        td a:nth-of-type(2){
-            background-color: #55a95a;
-        }
-        
-    @media only screen and (max-width: 760px),
-    (min-device-width: 768px) and (max-device-width: 1024px)  {
+     * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+         text-align: center;
+     }
 
-	table, thead, tbody, th, td, tr { 
-		display: block; 
-        width: 120%;
-        margin-left: -10px;
-	}
-	
-	thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
-	
-	tr { 
-        border: 1px solid #ccc; 
-    }
-    th {
-        display: none;
-        width: 100%;
-    }
-	
-	td { 
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
-	}
-	
-	td:before { 
-		position: absolute;
-		top: 6px;
-		left: 12px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-	}
-	
-	td:nth-of-type(1):before { content: "Avatar"; }
-	td:nth-of-type(2):before { content: "Name"; }
-	td:nth-of-type(3):before { content: "Phone Number"; }
-	td:nth-of-type(4):before { content: "Email"; }
-	td:nth-of-type(5):before { content: "Type"; }
-	td:nth-of-type(6):before { content: "Action"; }
-}
+     table {
+         width: 100%;
+         border-collapse: collapse;
+     }
+
+     a {
+         text-decoration: none;
+         color: white;
+     }
+
+     h1 {
+         position: relative;
+     }
+
+     h2 {
+
+         width: 100px;
+         background-color: #2b71b8;
+         line-height: 30px;
+         border-radius: 3px;
+         margin-bottom: 20px;
+         font-size: 20px;
+     }
+
+     body {
+         display: flex;
+         height: 100vh;
+         justify-content: center;
+         margin-top: 50px;
+     }
+
+     #container {
+         grid-row: 2 / 5;
+         grid-column: 1 / 6;
+     }
+
+     th,
+     td {
+         text-align: left;
+         border: 1px solid #999;
+         padding: 10px 15px;
+     }
+
+     th {
+         background-color: #f0f3f0;
+     }
+
+     table {
+         border-collapse: collapse;
+     }
+
+     td a {
+         margin-right: 2px;
+         display: inline-block;
+         width: 43px;
+         height: 30px;
+         line-height: 30px;
+         border-radius: 4px;
+     }
+
+     td a:nth-of-type(1) {
+         background-color: #e35d4a;
+     }
+
+     td a:nth-of-type(2) {
+         background-color: #55a95a;
+     }
+
+/**
+   * A media query for data tables start
+   * I found this code on css-tricks.com.
+   *
+   * @author Chris Coyier
+   * @see https://css-tricks.com/responsive-data-tables/
+   */
+     @media only screen and (max-width: 760px),
+     (min-device-width: 768px) and (max-device-width: 1024px) {
+
+         table,
+         thead,
+         tbody,
+         th,
+         td,
+         tr {
+             display: block;
+             width: 120%;
+             margin-left: -10px;
+         }
+
+         thead tr {
+             position: absolute;
+             top: -9999px;
+             left: -9999px;
+         }
+
+         tr {
+             border: 1px solid #ccc;
+         }
+
+         th {
+             display: none;
+             width: 100%;
+         }
+
+         td {
+             border: none;
+             border-bottom: 1px solid #eee;
+             position: relative;
+             padding-left: 50%;
+         }
+
+         td:before {
+             position: absolute;
+             top: 6px;
+             left: 12px;
+             width: 45%;
+             padding-right: 10px;
+             white-space: nowrap;
+         }
+
+         td:nth-of-type(1):before {
+             content: "Avatar";
+         }
+
+         td:nth-of-type(2):before {
+             content: "Name";
+         }
+
+         td:nth-of-type(3):before {
+             content: "Phone Number";
+         }
+
+         td:nth-of-type(4):before {
+             content: "Email";
+         }
+
+         td:nth-of-type(5):before {
+             content: "Type";
+         }
+
+         td:nth-of-type(6):before {
+             content: "Action";
+         }
+     }
+/* A media query for data tables end
+* source: https://css-tricks.com/responsive-data-tables/
+*/

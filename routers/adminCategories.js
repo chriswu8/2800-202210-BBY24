@@ -1,3 +1,7 @@
+const {
+    authCheck,
+    authCheckAdmin
+} = require("../middleware/auth");
 const express = require('express');
 const { append } = require('express/lib/response'); // auto generated
 const router = express.Router();
@@ -57,19 +61,8 @@ router.post('/addCategory',
 
         if (!errors.isEmpty()) {
             console.log("Error, empty field detected.");
-            // document.getElementById('alertError').innerHTML = 'Title and Content fields cannot be empty';
-            // return res.status(400).json({ errors: errors.array() });
         } else {
 
-            // Page.findOne({ slug: slug }, function (err, page) {  // left slug is in collection, right slug is the variable
-            //     if (page) {
-            //     // req.flash('danger', 'Page slug exists, choose another.');  // NOT WORKING
-            //     res.render('admin/addPage', {
-            //         title: title,
-            //         slug: slug,
-            //         content: content
-            //     });
-            // } else {
             const category = new Category({
                 title: title,
                 slug: slug
@@ -150,6 +143,11 @@ router.post('/editCategory/:id',
  * GET delete category
  */
 
+/**
+ * 
+ * @author easylearning97
+ * @source 
+ */
 router.get('/deleteCategory/:id', function (req, res) {
     Category.findByIdAndRemove(req.params.id, function (err) {
         if (err)

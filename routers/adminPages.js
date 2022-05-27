@@ -1,3 +1,7 @@
+const {
+    authCheck,
+    authCheckAdmin
+} = require("../middleware/auth");
 const express = require('express');
 const { append } = require('express/lib/response'); // auto generated
 const router = express.Router();
@@ -65,30 +69,17 @@ router.post('/addPage',
 
         if (!errors.isEmpty()) {
             console.log("Error, empty field detected.");
-            // document.getElementById('alertError').innerHTML = 'Title and Content fields cannot be empty';
-            // return res.status(400).json({ errors: errors.array() });
+
         } else {
 
-            // Page.findOne({ slug: slug }, function (err, page) {  // left slug is in collection, right slug is the variable
-            //     if (page) {
-            //     // req.flash('danger', 'Page slug exists, choose another.');  // NOT WORKING
-            //     res.render('admin/addPage', {
-            //         title: title,
-            //         slug: slug,
-            //         content: content
-            //     });
-            // } else {
             const page = new Page({
                 title: title,
-                slug: slug,
                 content: content,
                 sorting: 100
             });
 
             page.save(function (err) {
                 if (err) return console.log(err);
-                req.flash("success", 'Page added!'); // NOT WORKING
-                console.log("Success. Page added!");
                 res.redirect('/admin/pages');
             });
         }
@@ -125,7 +116,7 @@ router.post('/reorderPages', function (req, res) {
                 });
             });
 
-        }) (count);
+        })(count);
     }
 });
 
@@ -148,9 +139,6 @@ router.get('/editPage/:title', function (req, res) {
         });
     });
 });
-
-
-
 
 
 /**

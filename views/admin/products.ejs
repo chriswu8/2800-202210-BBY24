@@ -7,14 +7,14 @@
         <%- include('../layouts/adminNavbar'); %>
 
             <br>
-
             <h2 class="pageTitle">Products</h2>
             <input id="backButton" type="button" value="Back" onclick="history.go(-1)">
             <a id="addProduct" href="/admin/products/addProduct" class="btn btn-primary">Add a new product </a>
             <br><br>
-            <% console.log("The count is: " + count); %>
+
             <!-- display table if count if one or more product... -->
-            <% if (count> 0 || count != "") { %>
+            <% console.log("The count is: " + count); %>
+            <% if (count !='' || count > 0 || count != null) { %>
 
                 <table class=" p-3 table table-striped">
                 <thead>
@@ -28,6 +28,9 @@
                     </tr>
                 </thead>
 
+                <!-- Displays all the product items based on the work of easylearning97 - start
+                 @author easylearning97 
+                 @see https://www.youtube.com/watch?v=5b3-fAufjEk&list=PL78sHffDjI75uMmHCqxil_YROcHl5ONNj -->
                 <tbody>
                     <% products.forEach(function(product) { %>
                         <tr>
@@ -54,15 +57,18 @@
                             </td>
 
                             <td>
-                                <a class="confirmDeletion"
-                                    href="/admin/products/deleteProduct/<%= product._id %>">Delete</a>
+                                <a class="confirmDeletion" onclick="return confirm('Are you sure you want to delete?');"
+                                    href="/admin/products/deleteProduct/<%= product._id %>"
+                                    title="This will permanently remove this product">Delete</a>
                             </td>
                         </tr>
                         <% }); %>
                 </tbody>
+                <!-- Displays all the product items based on the work of easylearning97 - end -->
+
                 </table>
 
-                <% } else { %>
+                <% } else {%>
                     <h3 class="text-center">Out of stock.</h3>
                     <% } %>
 

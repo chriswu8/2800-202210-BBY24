@@ -1,12 +1,16 @@
+const {
+    authCheck,
+    authCheckAdmin
+} = require("../middleware/auth");
 const express = require('express');
-const { append } = require('express/lib/response'); // auto generated
+const { append } = require('express/lib/response');
 const router = express.Router();
 var { body, validationResult } = require('express-validator');
 const app = express();
 app.use(express.json());
 const fs = require('fs-extra');
 const resizeImg = require('resize-img');
-//NEW
+
 const bodyParser = require('body-parser');
 
 // GET Product model
@@ -15,18 +19,18 @@ const Product = require('../models/product');
 // GET Category model
 const Category = require('../models/category');
 
+var count;
+
 /**
  * GET products index
  */
-router.get('/', async function (req, res) {
-    var count;
+router.get('/', function (req, res) {
 
-    Product.count(async function (err, numberOfProductsInDatabase) {
-        console.log("c: " + numberOfProductsInDatabase);
-        count = await numberOfProductsInDatabase;
+
+    Product.count(function (err, c) {
+        count = c;
     });
-
-    Product.find(async function (err, products) {
+    Product.find(function (err, products) {
         res.render('admin/products', {
             products: products,
             count: count
@@ -38,6 +42,7 @@ router.get('/', async function (req, res) {
 /**
  * GET add product
  */
+
 router.get('/addProduct', function (req, res) {
     const title = "";
     const description = "";
@@ -54,12 +59,11 @@ router.get('/addProduct', function (req, res) {
 
 });
 
-const dir = 'public/productImages/'; //NEWLY ADDED
+const dir = 'public/productImages/'; 
 
 /**
  * POST add product
  */
-
 router.post('/addProduct',
 
     body('title').notEmpty(),
@@ -70,10 +74,7 @@ router.post('/addProduct',
 
 
     function (req, res) {
-        //ADDED THE BELOW
-        console.log(req.files.image);
 
-        //NEW
         var imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
 
         const title = req.body.title;
@@ -81,8 +82,6 @@ router.post('/addProduct',
         const price = req.body.price;
         const category = req.body.category;
         const image = req.body.image;
-
-
 
         // Finds the validation errors in this request and wraps them in an object
         const errors = validationResult(req);
@@ -104,47 +103,39 @@ router.post('/addProduct',
                 if (err) return console.log(err);
 
                 fs.ensureDir(dir + product._id).then(() => {
-                    console.log('success!')
                 }).catch(err => {
                     console.error(err)
                 })
 
                 fs.ensureDir(dir + product._id + '/gallery').then(() => {
-                    console.log('success!')
+                    console.log('success3!')
                 }).catch(err => {
                     console.error(err)
                 })
 
                 fs.ensureDir(dir + product._id + '/gallery/thumbs').then(() => {
-                    console.log('success!')
+                    console.log('success4!')
                 }).catch(err => {
                     console.error(err)
                 })
 
                 if (imageFile != "") {
                     var productImage = req.files.image;
-                    //var path = 'public/productImages/' + image; //CHANGED THIS TO THE BELOW
                     var path = 'public/productImages/' + product._id + '/' + imageFile;
-                    //var path = 'public/productImages/' + product._id + '/' + image;
                     productImage.mv(path, function (err) {
                         return console.log(err);
                     });
                 }
-                console.log("Success. Product added!");
                 res.redirect('/admin/products');
             });
         }
     })
 
 
-
-// =======================================
-
-
 /**
  * GET edit product
  */
-router.get('/editProduct/:id', function (req, res) { //ORIGINALLY: router.get('/editProduct/:title', function (req, res) {
+router.get('/editProduct/:id', function (req, res) { 
 
     var errors;
     if (req.session.errors)
@@ -217,18 +208,16 @@ router.post('/editPage/:title',
             res.redirect('/admin/pages');
         } else {
 
-            Page.findById(id, function (err, page) {  // left slug is in collection, right slug is the variable
+            Page.findById(id, function (err, page) {  
                 if (err)
                     return console.log(err);
 
                 page.title = title;
-                page.slug = slug;
                 page.content = content;
 
                 page.save(function (err) {
                     if (err) return console.log(err);
                     res.redirect('/admin/pages');
-                    // req.flash("Success", 'Page updated.');   // not working for some reason =/
                 });
             });
         }
@@ -310,7 +299,7 @@ router.post('/editProduct/:id', function (req, res) {
 });
 
 /**
- * POST product gallery //CURRENT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * POST product gallery 
  */
 
 router.post('/productGallery/:id', function (req, res) {
@@ -333,7 +322,7 @@ router.post('/productGallery/:id', function (req, res) {
 
 
 /**
- *  GET delete product //CURRENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ *  GET delete product 
  */
 router.get('/deleteProduct/:id', function (req, res) {
     var id = req.params.id;
