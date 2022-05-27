@@ -7,10 +7,6 @@ const PageSchema = mongoose.Schema({
         required: true
     },
 
-    slug: {
-        type: String
-    },
-
     content: {
         type: String,
         required: true

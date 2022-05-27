@@ -19,33 +19,34 @@
 <body>
     <h2>What's on your mind?</h2>
     <br>
-    <!-- The action attribute specifies WHERE (browser url) to send the form-data when a form is submitted (postings.js in this case) -->
     <form action="/postings" method="POST">
         <div class="form-group">
-            <label for="" title>Title</label><br>
+            <label for="" title>Title*</label><br>
 
-            <input required type="text" placeholder="Enter the title" name="title">
+            <input required type="text" placeholder="Enter the title" name="title" pattern="[a-zA-Z0-9_ ]*">
         </div>
         <br>
-            <div class="form-group">
-                <label for="author">Author</label><br>
-                <input required type="text" placeholder="Enter the author" name="author">
-            </div>
+        <div class="form-group">
+            <label for="author">Author*</label><br>
+            <input required type="text" placeholder="Enter the author" name="author" pattern="[a-zA-Z0-9_ ]*">
+        </div>
 
-            <br>
-            <div class="form-group">
-                <label for="description">Description</label><br>
-                <textarea required name="description" placeholder="Write your description here."
-                    class="form-control"></textarea>
+        <br>
+        <div class="form-group">
+            <label for="description">Description*</label><br>
+            <textarea required name="description" placeholder="Write your description here."
+                class="form-control"></textarea>
+        </div>
+        <br>
+        <div class="form-group">
+            <div class="text-right">
+                <!-- <a href="/"><button type="button" class="btn btn-secondary">Back</button></a> -->
+                <button type="button" class="btn btn-secondary" onclick="history.back()">Back</button>
+                <button type="reset" class="btn btn-dark">Reset</button>
+                <button type="submit" class="btn btn-dark ">Post</button>
             </div>
-            <br>
-            <div class="form-group">
-                <div class="text-right">
-                    <a href="/"><button type="button" class="btn btn-secondary">Back</button></a>
-                    <button type="submit" class="btn btn-dark ">Post</button>
-                </div>
-            </div>
-        </form>
+        </div>
+    </form>
 </body>
 
 </html>

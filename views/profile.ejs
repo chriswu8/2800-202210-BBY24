@@ -1,34 +1,92 @@
-<%- include('layouts/adminHeader'); %>
-    <div class="container">
-        <h1>User Profile</h1>
-        <% if (registerusers != '') { %>
-            <table>
-                <tr>
-                    <th>Avatar</th>
-                    <th>Name</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
-                    <th>Type</th>
-                    <th>Action</th>
-                </tr>
-                <tbody>
-                    <% registerusers.forEach((row, index) => { %>
-                        <tr>
-                            <td><img src="<%= row.image %>" width="50" class="img-thumbnail"></td>
-                            <td><%= row.name %></td>
-                            <td><%= row.number %></td>
-                            <td><%= row.email %></td>
-                            <td><%= row.type %></td>
-                            <td>
-                                <a href="/edit_user/<%= row._id %>" class="" id="edit">Edit</a>
-                            </td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-        <% } else { %>       
-            <h1>No users found in the database</h1>
-        <% } %>    
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+    <%- include('layouts/adminHeader'); %>
 
 
+        <header class="header">
+
+            <div class="flex">
+
+                <a href="#home" class="logo"><img src="../css/img/logo.png" alt=""></a>
+
+                <!-- Inspiration from Skaikh Anas start -->
+                <nav class="navbar">
+                    <a href="/regular">HOME</a>
+                    <a href="/protocols">PROTOCOLS</a>
+                    <a href="/weather">WEATHER</a>
+                    <a href="/login/postings">BLOG</a>
+                    <a href="/profile">PROFILE</a>
+                    <a id="logout" href="/logout">LOGOUT</a>
+                </nav>
+                <!-- Inspiration from Skaikh Anas end -->
+
+
+                <div class="dropdown" style="float:right;">
+                    <button class="dropbtn">MENU</button>
+                    <div class="dropdown-content">
+                        <a href="/regular">HOME</a>
+                        <a href="/protocols">PROTOCOLS</a>
+                        <a href="/weather">WEATHER</a>
+                        <a href="/login/postings">BLOG</a>
+                        <a href="/profile">PROFILE</a>
+
+                        <a id="logout" href="/logout">LOGOUT</a>
+                        <!--Bo -->
+                    </div>
+                </div>
+            </div>
+
+        </header>
+        <!-- Displays user profile page based on the work of Sahil Kumar - start
+        @author Sahil Kumar
+        @see https://youtu.be/nvSVZW2x8BQ -->
+        <div class="container">
+            <h1>User Profile</h1>
+            <button type="submit" class="btn btn-primary" onclick="history.back()">
+                Go Back
+            </button>
+            <% if (registerusers !='' ) { %>
+                <table>
+                    <tr>
+                        <th>Avatar</th>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th>Action</th>
+                    </tr>
+                    <tbody>
+                        <% registerusers.forEach((row, index)=> { %>
+                            <tr>
+                                <td><img src="<%= row.image %>" width="50" class="img-thumbnail"></td>
+                                <td>
+                                    <%= row.name %>
+                                </td>
+                                <td>
+                                    <%= row.number %>
+                                </td>
+                                <td>
+                                    <%= row.email %>
+                                </td>
+                                <td>
+                                    <%= row.type %>
+                                </td>
+                                <td>
+                                    <a href="/edit_user/<%= row._id %>" class="" id="edit">Edit</a>
+                                </td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+                <% } else { %>
+                    <h1>No users found in the database</h1>
+                    <% } %>
+        </div>
+        <!-- Displays user profile page based on the work of Sahil Kumar - end -->
+
+</body>
+
+</html>

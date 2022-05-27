@@ -29,9 +29,9 @@
                     <div class="dropdown-content">
                         <a href="/regular">HOME</a>
                         <a href="/protocols">PROTOCOLS</a>
-                        <a href="weather/">WEATHER</a>
+                        <a href="/weather">WEATHER</a>
                         <a href="/login/postings">BLOG</a>
-                        <a href="profile/">PROFILE</a>
+                        <a href="/profile">PROFILE</a>
 
                         <a id="logout" href="/logout">LOGOUT</a>
                         <!--Bo -->
@@ -44,16 +44,23 @@
 
         <h1>All Users</h1>
         <h2>
-            <a href="/add_user">Add User</a>
+            <button type="submit" class="btn btn-info">
+                <a href="/add_user" class="addUser">Add User</a>
+            </button>
         </h2>
+        <button type="submit" class="btn btn-primary" onclick="history.back()">
+            Go Back
+        </button>
+        <!-- Displays all the users based on the work of Sahil Kumar - start
+        @author Sahil Kumar
+        @see https://youtu.be/nvSVZW2x8BQ -->
         <% if (registerusers !='' ) { %>
-            <table>
+            <table id="user_table">
                 <tr>
                     <th>Avatar</th>
                     <th>Name</th>
                     <th>Phone Number</th>
                     <th>Email</th>
-                    <th>Type</th>
                     <th>Action</th>
                 </tr>
                 <tbody>
@@ -73,7 +80,9 @@
                                 <%= row.type %>
                             </td>
                             <td>
-                                <a href="/delete/<%= row._id %>" class="" id="del">Delete</a>
+                                <a href="/delete/<%= row._id %>"
+                                    onclick="return confirm('Are you sure you want to delete?');" class=""
+                                    id="del">Delete</a>
                                 <a href="/edit_user/<%= row._id %>" class="" id="edit">Edit</a>
                             </td>
                         </tr>
@@ -83,7 +92,7 @@
             <% } else { %>
                 <h1>No users found in the database</h1>
                 <% } %>
-
+                    <!-- Displays all the users based on the work of Sahil Kumar - end -->
 
 </body>
 

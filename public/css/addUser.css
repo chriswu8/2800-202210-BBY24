@@ -1,35 +1,38 @@
-.container{
+.container {
     width: 80vw;
     margin: 20px auto;
 }
-h1{
+
+h1 {
     font-size: 29px;
     font-weight: normal;
     margin: 0;
     margin-bottom: 20px;
 }
-.form-group input{
+
+.form-group input {
     width: 80vw;
-    
     height: 20px;
 }
-label.label{
+
+label.label {
     display: block;
-    font-weight:600;
+    font-weight: 600;
     margin: 10px 0;
 }
-button{
+
+button {
     margin: 10px 0;
     background-color: #2f80bc;
-    color:white;
+    color: white;
     font-size: 17px;
     padding: 4px 8px;
-    border:0;
+    border: 0;
     border-radius: 5px;
     cursor: pointer;
 }
+
 input[type="file"] {
     margin: 10px auto;
     position: relative;
 }
-

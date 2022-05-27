@@ -7,58 +7,64 @@
         <%- include('../layouts/adminNavbar'); %>
 
             <br>
-
             <h2 class="pageTitle">Products</h2>
-            <a href="/admin/products/addProduct" class="btn btn-primary">Add a new product </a>
+            <input id="backButton" type="button" value="Back" onclick="history.go(-1)">
+            <a id="addProduct" href="/admin/products/addProduct" class="btn btn-primary">Add a new product </a>
             <br><br>
 
-            <!-- display table if count if one or more product... -->
-            <% if (count> 0) { %>
+            <!-- display table if count if one or more product -->
+            <% if (count !='' || count > 0 || count != null) { %>
 
-                <table class="p-3 table table-striped">
-                    <thead>
-                        <tr class="home">
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Category</th>
-                            <th>Product Image</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                <table class=" p-3 table table-striped">
+                <thead>
+                    <tr class="home">
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Product Image</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+
+                <!-- Displays all the product items based on the work of easylearning97 - start
+                 @author easylearning97 
+                 @see https://www.youtube.com/watch?v=5b3-fAufjEk&list=PL78sHffDjI75uMmHCqxil_YROcHl5ONNj -->
+                <tbody>
+                    <% products.forEach(function(product) { %>
+                        <tr>
+                            <td>
+                                <%= product.title %>
+                            </td>
+                            <td>
+                                <!-- round to two decimal places -->
+                                $<%= parseFloat(product.price).toFixed(2) %>
+                            </td>
+                            <td>
+                                <%= product.category %>
+                            </td>
+                            <td>
+                                <% if (product.image=="" ) { %>
+                                    <img src="/images/noImage.png" alt="defaultImage" class="noImage">
+                                    <% } else {%>
+                                        <img src="/productImages/<%= product._id %>/<%= product.image %>"
+                                            alt="productImage" class="noImage">
+                                        <% } %>
+                            </td>
+                            <td>
+                                <a href="/admin/products/editProduct/<%= product._id %>">Edit</a>
+                            </td>
+
+                            <td>
+                                <a class="confirmDeletion" onclick="return confirm('Are you sure you want to delete?');"
+                                    href="/admin/products/deleteProduct/<%= product._id %>"
+                                    title="This will permanently remove this product">Delete</a>
+                            </td>
                         </tr>
-                    </thead>
+                        <% }); %>
+                </tbody>
+                <!-- Displays all the product items based on the work of easylearning97 - end -->
 
-                    <tbody>
-                        <% products.forEach(function(product) { %>
-                            <tr>
-                                <td>
-                                    <%= product.title %>
-                                </td>
-                                <td>
-                                    <!-- round to two decimal places -->
-                                    $<%= parseFloat(product.price).toFixed(2) %>
-                                </td>
-                                <td>
-                                    <%= product.category %>
-                                </td>
-                                <td>
-                                    <% if (product.image=="" ) { %>
-                                        <img src="/images/noImage.png" alt="defaultImage" class="noImage">
-                                        <% } else {%>
-                                            <img src="/productImages/<%= product._id %>/<%= product.image %>"
-                                                alt="productImage" class="noImage">
-                                            <% } %>
-                                </td>
-                                <td>
-                                    <a href="/admin/products/editProduct/<%= product._id %>">Edit</a>
-                                </td>
-
-                                <td>
-                                    <a class="confirmDeletion"
-                                        href="/admin/products/deleteProduct/<%= product._id %>">Delete</a>
-                                </td>
-                            </tr>
-                            <% }); %>
-                    </tbody>
                 </table>
 
                 <% } else {%>

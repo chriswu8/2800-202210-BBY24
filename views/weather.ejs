@@ -42,7 +42,7 @@
           <a href="/protocols">PROTOCOLS</a>
           <a href="/weather">WEATHER</a>
           <a href="/login/postings">BLOG</a>
-          <a href="profile/">PROFILE</a>
+          <a href="/profile">PROFILE</a>
 
           <a id="logout" href="/logout">LOGOUT</a>
           <!--Bo -->
@@ -57,12 +57,16 @@
     <div class="container">
       <h3 class="heading">City Temperature</h3>
       <form action="/weather" method="POST">
-        <input type="text" placeholder="Search for a city" autofocus name="city">
-        <button type="submit">SUBMIT</button>
-        <span class="msg"></span>
+        <input id="inputField" type="text" placeholder="*Search for a city" autofocus name="city" required>
+        <button class="bottomButton1" type="submit">SUBMIT</button>
+        <input class="bottomButton2" type="button" value="Back" onclick="history.go(-1)">
       </form>
     </div>
   </section>
+
+  <!-- Displays the weather page based on the work of Cand Dev - start
+  @author Cand Dev
+  @see https://youtu.be/6LaGLqUHKms -->
   <% if (city !='' ) { %>
     <section class="ajax-section">
       <div class="container">
@@ -102,8 +106,8 @@
       <h4></h4>
       <% } %>
 
-      
         <script src="/js/weather.js"></script>
+        <!-- Displays the weather page based on the work of Cand Dev - end -->
 </body>
 
 </html>
