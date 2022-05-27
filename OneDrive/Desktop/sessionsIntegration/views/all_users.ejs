@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+    <%- include('layouts/adminHeader'); %>
+
+
+        <header class="header">
+
+            <div class="flex">
+
+                <a href="#home" class="logo"><img src="../css/img/logo.png" alt=""></a>
+
+                <!-- Inspiration from Skaikh Anas start -->
+                <nav class="navbar">
+                    <a href="/regular">HOME</a>
+                    <a href="/protocols">PROTOCOLS</a>
+                    <a href="/weather">WEATHER</a>
+                    <a href="/login/postings">BLOG</a>
+                    <a href="/profile">PROFILE</a>
+                    <a id="logout" href="/logout">LOGOUT</a>
+                </nav>
+                <!-- Inspiration from Skaikh Anas end -->
+
+
+                <div class="dropdown" style="float:right;">
+                    <button class="dropbtn">MENU</button>
+                    <div class="dropdown-content">
+                        <a href="/regular">HOME</a>
+                        <a href="/protocols">PROTOCOLS</a>
+                        <a href="/weather">WEATHER</a>
+                        <a href="/login/postings">BLOG</a>
+                        <a href="/profile">PROFILE</a>
+
+                        <a id="logout" href="/logout">LOGOUT</a>
+                        <!--Bo -->
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+
+        <h1>All Users</h1>
+        <h2>
+            <button type="submit" class="btn btn-info">
+                <a href="/add_user" class="addUser">Add User</a>
+            </button>
+        </h2>
+        <button type="submit" class="btn btn-primary" onclick="history.back()">
+            Go Back
+        </button>
+        <!-- Displays all the users based on the work of Sahil Kumar - start
+        @author Sahil Kumar
+        @see https://youtu.be/nvSVZW2x8BQ -->
+        <% if (registerusers !='' ) { %>
+            <table id="user_table">
+                <tr>
+                    <th>Avatar</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+                <tbody>
+                    <% registerusers.forEach((row, index)=> { %>
+                        <tr>
+                            <td><img src="<%= row.image %>" width="50" class="img-thumbnail"></td>
+                            <td>
+                                <%= row.name %>
+                            </td>
+                            <td>
+                                <%= row.number %>
+                            </td>
+                            <td>
+                                <%= row.email %>
+                            </td>
+                            <td>
+                                <%= row.type %>
+                            </td>
+                            <td>
+                                <a href="/delete/<%= row._id %>"
+                                    onclick="return confirm('Are you sure you want to delete?');" class=""
+                                    id="del">Delete</a>
+                                <a href="/edit_user/<%= row._id %>" class="" id="edit">Edit</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <% } else { %>
+                <h1>No users found in the database</h1>
+                <% } %>
+                <!-- Displays all the users based on the work of Sahil Kumar - end -->
+
+</body>
+
+</html>

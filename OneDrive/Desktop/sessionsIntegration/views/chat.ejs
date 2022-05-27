@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+    integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="../css/atmosChat.css" />
+  <title>AtmosChat</title>
+</head>
+
+<body>
+
+  <header class="header">
+
+    <div class="flex">
+
+      <a href="#home" class="logo"><img src="../css/img/logo.png" alt=""></a>
+
+      <!-- Inspiration from Skaikh Anas start -->
+      <nav class="navbar">
+        <a href="/regular">HOME</a>
+        <a href="/protocols">PROTOCOLS</a>
+        <a href="/weather">WEATHER</a>
+        <a href="/login/postings">BLOG</a>
+        <a href="/profile">PROFILE</a>
+        <a id="logout" href="/logout">LOGOUT</a>
+      </nav>
+      <!-- Inspiration from Skaikh Anas end -->
+
+
+      <div class="dropdown" style="float:right;">
+        <button class="dropbtn">MENU</button>
+        <div class="dropdown-content">
+          <a href="/regular">HOME</a>
+          <a href="/protocols">PROTOCOLS</a>
+          <a href="/weather">WEATHER</a>
+          <a href="/login/postings">BLOG</a>
+          <a href="/profile">PROFILE</a>
+
+          <a id="logout" href="/logout">LOGOUT</a>
+          <!--Bo -->
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Chat room design based on the work of Brad Traversey - start
+    @see https://github.com/bradtraversy/chatcord/blob/master/public/chat.html -->
+  </header>
+  <div class="chat-container">
+    <header class="chat-header">
+      <h1></i> AtmosChat</h1>
+      <a id="leave-btn" class="btn">
+        <h4>Leave Room</h4>
+      </a>
+    </header>
+    <main class="chat-main">
+      <div class="chat-sidebar">
+        <h3>Room Name:</h3>
+        <h2 id="room-name"></h2>
+        <h3></i> Users</h3>
+        <ul id="users"></ul>
+      </div>
+      <div class="chat-messages"></div>
+    </main>
+    <div class="chat-form-container">
+      <form id="chat-form">
+        <input id="msg" type="text" placeholder="   Enter your message" required autocomplete="off" />
+        <button class="btn">Send</button>
+      </form>
+    </div>
+  </div>
+  <!-- Chat index design modified based on the work of Brad Traversey - end -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js"
+    integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4=" crossorigin="anonymous"></script>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>

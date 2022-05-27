@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../layouts/adminHeader'); %>
+
+    <body>
+
+        <%- include('../layouts/adminNavbar'); %>
+            <br>
+
+            <h2 class="pageTitle">Pages</h2>
+            <input id="backButton" type="button" value="Back" onclick="history.go(-1)">
+            <a id="addPage" href="/admin/pages/addPage" class="btn btn-primary">Add a new page </a>
+            <br><br>
+
+            <table class="p-3 table table-striped sorting">
+                <thead>
+                    <tr class="home">
+                        <th>Title</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+
+                <!-- Displays all the page titles based on the work of easylearning97 - start
+                 @author easylearning97 
+                 @see https://www.youtube.com/watch?v=5b3-fAufjEk&list=PL78sHffDjI75uMmHCqxil_YROcHl5ONNj -->
+                <tbody>
+                    <% pages.forEach(function(page) { %>
+                        <!-- the table rows will be sortable via jQuery UI sortable-->
+                        <tr id="id_<%= page._id %>" class="<%= page._id %>">
+                            <td>
+                                <%= page.title %>
+                            </td>
+                            <td> <a href="/admin/pages/editPage/<%= page.title %>">Edit</a></td>
+                            <% if (page.title==="Home" ) { %>
+                                <td></td>
+                                <% } else {%>
+
+                                    <td> <a class="confirmDeletion"
+                                            onclick="return confirm('Are you sure you want to delete?');"
+                                            href="/admin/pages/deletePage/<%= page._id %>">Delete</a>
+                                    </td>
+                                    <% } %>
+                        </tr>
+                        <% }); %>
+                </tbody>
+                <!-- Displays all the page titles based on the work of easylearning97 - end -->
+
+            </table>
+
+            <%- include('../layouts/adminFooter'); %>
+
+    </body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../layouts/adminHeader'); %>
+
+    <body>
+
+        <h2 class="pageTitle">Add a page</h2>
+        <a href="/admin/pages" class="btn btn-primary">Back to all pages </a>
+        <br><br>
+
+        <form action="/admin/pages/addPage" method="POST">
+
+            <div class="form-group">
+                <label>Title*</label>
+                <input class="form-control" type="text" name="title" placeholder="Title" pattern="[a-zA-Z0-9_ ]*"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label>Content*</label>
+                <textarea class="form-control" name="content" placeholder="Content" pattern="[a-zA-Z0-9_ ]*"
+                    required> </textarea>
+            </div>
+
+            <button type="submit" class="btn btn-dark">Submit</button>
+            <button type="reset" class="btn btn-dark">Reset</button>
+        </form>
+
+
+    </body>
+
+</html>
