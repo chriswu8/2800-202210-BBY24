@@ -1,6 +1,11 @@
-/* RESET STYLES
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-:root {
+/**
+   * A weather system with javascript start
+   * I found this code on tutsplus.com.
+   *
+   * @author George Martsoukos
+   * @see https://webdesign.tutsplus.com/tutorials/build-a-simple-weather-app-with-vanilla-javascript--cms-33893/
+   */
+   :root {
     --bg_main: #645c5c;
     --text_light: #fff;
     --text_med: #53627c;
@@ -25,11 +30,11 @@
   button {
     cursor: pointer;
   }
-   
+  
   input {
     -webkit-appearance: none;
   }
-   
+  
   button,
   input {
     border: none;
@@ -62,9 +67,8 @@
     padding: 0 15px;
   }
   
-  
   /* SECTION #1
-  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+    –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .top-banner {
     color: var(--text_light);
   }
@@ -77,7 +81,6 @@
   }
   
   .top-banner form {
-    position: relative;
     display: flex;
     align-items: center;
   }
@@ -90,7 +93,7 @@
   }
   
   .top-banner form input::placeholder {
-    color: currentColor; 
+    color: currentColor;
   }
   
   .top-banner form button {
@@ -108,17 +111,8 @@
     background: var(--darkred);
   }
   
-  .top-banner form .msg {
-    position: absolute;
-    bottom: -40px;
-    left: 0;
-    max-width: 450px;
-    min-height: 40px;
-  }
-  
-  
   /* SECTION #2
-  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+    –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .ajax-section {
     margin: 70px 0 20px;
   }
@@ -166,7 +160,7 @@
   .ajax-section .city sup {
     font-size: 0.5em;
   }
-
+  
   .ajax-section .city-name img {
     position: relative;
     float: left;
@@ -185,31 +179,46 @@
     height: 100px;
   }
   
-  @media screen and (max-width: 1000px) {
-    body {
-      padding: 30px;
-    }
-    
-    .ajax-section .cities {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
+  @media screen and (max-width: 2000px) {
   
-  @media screen and (max-width: 700px) {
-    .heading,
-    .ajax-section .temp {
-      font-size: 3rem;
+    body {
+      padding: 15px;
     }
-    
-    .ajax-section {
-      margin-top: 20px;
+  
+    .ajax-section .cities {
+      grid-template-columns: repeat(1, 1fr);
     }
-    
+  
+    /* header / navbar / dropdrown css below */
+  
+    .dropdown {
+      display: none;
+    }
+  
+    .header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--white);
+      box-shadow: var(--box-shadow);
+      background-color: rgb(175, 212, 235);
+      z-index: 999;
+    }
+  
+    .header .flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      padding: 1.5rem 1rem;
+    }
+  
     .top-banner form {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
     }
-    
+  
     .top-banner form input,
     .top-banner form button {
       width: 100%;
@@ -218,128 +227,197 @@
     .top-banner form button {
       margin: 20px 0 0 0;
     }
-    
-    .top-banner form .msg {
-      position: static;
-      max-width: none;
-      min-height: 0;
-      margin-top: 10px;
+  
+    .header .flex .logo img {
+      height: 5rem;
+      border-radius: 18px;
+      border-style: solid;
+      border-color: rgb(106, 114, 214);
     }
   
-    .ajax-section .cities {
-      grid-template-columns: repeat(2, 1fr);
+    .tipImage img {
+      height: 10rem;
+      border-radius: 18px;
+      border-style: solid;
+      border-color: rgb(106, 114, 214);
+    }
+  
+  
+    .header .flex .navbar a:hover {
+      background-color: var(--main-color);
+      color: var(--white);
+      border-radius: 0.33rem;
+    }
+  
+  
+    a {
+      position: relative;
+      padding: 25px;
+    }
+  
+    .dropbtn {
+      /*background-color: #04AA6D;*/
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+  
+    ​ .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: rgb(106, 114, 214);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      border-radius: 0.7rem;
+    }
+  
+    ​ .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      background-color: rgb(106, 114, 214);
+    }
+  
+    ​ .dropbtn {
+      background-color: rgb(106, 114, 214);
+      border-radius: 0.6rem;
+    }
+  
+    ​ .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+  
+    ​ .dropdown:hover .dropdown-content {
+      display: block;
+      background-color: var(--main-color);
     }
   }
   
+  @media screen and (min-width: 1025px) {
+    .dropbtn {
+      position: relative;
+      display: none;
+    }
+  }
+  
+  @media screen and (max-width: 1025px) {
+    a {
+      position: relative;
+      padding: 10px;
+    }
+  }
+  
+  
   @media screen and (max-width: 500px) {
+  
     body {
       padding: 15px;
     }
-    
+  
     .ajax-section .cities {
       grid-template-columns: repeat(1, 1fr);
     }
-
-    
-/* ============================================== */
-/* ============================================== */
-/* ============================================== */
-
-
-/* header / navbar / dropdrown css below */
-
-.dropdown {
-  display: none;
-}
-
-
-.header{
-  position: sticky;
-  top: 0; left: 0; right:0;
-  background-color: var(--white);
-  box-shadow: var(--box-shadow);
-  background-color:rgb(175, 212, 235);
-  z-index: 999;
-}
-
-.header .flex{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  padding:1.5rem 1rem;
-}
-
-.header .flex .logo img{
-  height: 5rem;
-  border-radius: 18px;
-  border-style: solid;
-  border-color:rgb(106, 114, 214);
-}
-
-.tipImage img {
-  height: 10rem;
-  border-radius: 18px;
-  border-style: solid;
-  border-color:rgb(106, 114, 214);
-}
-
-
-.header .flex .navbar a:hover {
-  background-color: var(--main-color);
-  color: var(--white);
-  border-radius: 0.33rem;
-}
-
-.header .flex .navbar{
-
-  display: none;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropbtn {
-  /*background-color: #04AA6D;*/
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  background-color: rgb(106, 114, 214);
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  border-radius: 0.7rem;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  background-color: rgb(106, 114, 214);
-}
-
-.dropbtn {
-   background-color:rgb(106, 114, 214);
-   border-radius:0.6rem;
-}
-
-.dropdown-content a:hover {
-   background-color: #f1f1f1;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block; 
-  background-color: var(--main-color);
-}
+  
+    /* header / navbar / dropdrown css below */
+  
+    .header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--white);
+      box-shadow: var(--box-shadow);
+      background-color: rgb(175, 212, 235);
+      z-index: 999;
+    }
+  
+    .header .flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      padding: 1.5rem 1rem;
+    }
+  
+    .header .flex .logo img {
+      height: 5rem;
+      border-radius: 18px;
+      border-style: solid;
+      border-color: rgb(106, 114, 214);
+    }
+  
+    .tipImage img {
+      height: 10rem;
+      border-radius: 18px;
+      border-style: solid;
+      border-color: rgb(106, 114, 214);
+    }
+  
+  
+    .header .flex .navbar a:hover {
+      background-color: var(--main-color);
+      color: var(--white);
+      border-radius: 0.33rem;
+    }
+  
+    .header .flex .navbar {
+  
+      display: none;
+    }
+  
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+  
+    .dropbtn {
+      /*background-color: #04AA6D;*/
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+  
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: rgb(106, 114, 214);
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      border-radius: 0.7rem;
+    }
+  
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      background-color: rgb(106, 114, 214);
+    }
+  
+    .dropbtn {
+      background-color: rgb(106, 114, 214);
+      border-radius: 0.6rem;
+    }
+  
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+  
+    .dropdown:hover .dropdown-content {
+      display: block;
+      background-color: var(--main-color);
+    }
   }
+  
+  /* A weather system with javascript end 
+  * source:  https://webdesign.tutsplus.com/tutorials/build-a-simple-weather-app-with-vanilla-javascript--cms-33893/
+  */
