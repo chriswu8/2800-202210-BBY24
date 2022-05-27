@@ -9,7 +9,6 @@ const dashboardRouter = require('./routers/dashboardRouter');
 const { body, validationResult } = require('express-validator');
 const pageSchema = require('./models/page')
 const fileUpload = require('express-fileupload');
-
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const {
@@ -128,9 +127,7 @@ app.use(function (req, res, next) {
 });
 
 
-// +++++++++++++++++++++++++++
-// integration testing below
-// ++++++++++++++++++++++++++
+
 const Posting = require('./models/Posting');
 
 // const postingRouter = require('./routers/postings');
@@ -138,26 +135,11 @@ const Posting = require('./models/Posting');
 
 app.get('/login/postings', async function (req, res) {
 
-    // const posts = [
-    //     {
-    //         title: 'Title1.1',
-    //         snippet: 'abcdefghijklmnop',
-    //         author: 'Chris',
-    //         dateCreated: new Date,
-    //         img: 'placeholder.jpg'
-    //     },
-    //     ]
-
     const posts = await Posting.find().sort({ timeCreated: 'asc' });
 
     res.render('index', { posts: posts })
 });
 
-
-
-// +++++++++++++++++++++++++++
-// integration testing above
-// +++++++++++++++++++++++++++
 
 
 // Setting routes
@@ -172,6 +154,8 @@ app.use('/admin/categories', adminCategories);
 
 const adminProducts = require('./routers/adminProducts');
 app.use('/admin/products', adminProducts);
+
+
 
 // ======================================================
 // Chat feature (credit to Brad Traversey) - start
@@ -195,7 +179,6 @@ var count = 0;
 // Run when client connects
 io.on('connection', socket => {
   count++;
-  console.log("New WS connection!!! BAM! " + count);
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
 

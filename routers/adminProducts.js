@@ -4,7 +4,6 @@ const router = express.Router();
 var { body, validationResult } = require('express-validator');
 const app = express();
 app.use(express.json());
-//const mkdirp = require('mkdirp');
 const fs = require('fs-extra');
 const resizeImg = require('resize-img');
 //NEW
@@ -19,14 +18,15 @@ const Category = require('../models/category');
 /**
  * GET products index
  */
-router.get('/', function (req, res) {
+router.get('/', async function (req, res) {
     var count;
 
-    Product.count(function (err, c) {
-        count = c;
+    Product.count(async function (err, numberOfProductsInDatabase) {
+        console.log("c: " + numberOfProductsInDatabase);
+        count = await numberOfProductsInDatabase;
     });
 
-    Product.find(function (err, products) {
+    Product.find(async function (err, products) {
         res.render('admin/products', {
             products: products,
             count: count
@@ -38,7 +38,6 @@ router.get('/', function (req, res) {
 /**
  * GET add product
  */
-
 router.get('/addProduct', function (req, res) {
     const title = "";
     const description = "";
@@ -145,30 +144,30 @@ router.post('/addProduct',
 /**
  * GET edit product
  */
- router.get('/editProduct/:id', function (req, res) { //ORIGINALLY: router.get('/editProduct/:title', function (req, res) {
+router.get('/editProduct/:id', function (req, res) { //ORIGINALLY: router.get('/editProduct/:title', function (req, res) {
 
     var errors;
-    if (req.session.errors) 
+    if (req.session.errors)
         errors = req.session.errors;
     req.session.errors = null;
 
     Category.find(function (err, categories) {
 
-        Product.findById(req.params.id, function(err, p){
+        Product.findById(req.params.id, function (err, p) {
             if (err) {
                 console.log(err);
-                res.render('./admin/products'); 
+                res.render('./admin/products');
             } else {
                 var galleryDir = 'public/productImages/' + p._id + '/gallery';
                 var galleryImages = null;
 
-                fs.readdir(galleryDir, function(err, files) {
+                fs.readdir(galleryDir, function (err, files) {
                     if (err) {
                         console.log(err);
                     } else {
                         galleryImages = files;
 
-                        res.render('./admin/editProduct', { 
+                        res.render('./admin/editProduct', {
                             title: p.title,
                             errors: errors,
                             description: p.description,
@@ -237,12 +236,12 @@ router.post('/editPage/:title',
 );
 
 //POST edit product 
-router.post('/editProduct/:id', function(req, res) {
+router.post('/editProduct/:id', function (req, res) {
 
     body('title').notEmpty(),
-    body('description').notEmpty(),
-    body('category').notEmpty(),
-    body('price').notEmpty().isDecimal(); //originally ','
+        body('description').notEmpty(),
+        body('category').notEmpty(),
+        body('price').notEmpty().isDecimal(); //originally ','
 
     const title = req.body.title;
     const description = req.body.description;
@@ -258,73 +257,73 @@ router.post('/editProduct/:id', function(req, res) {
     const errors = validationResult(req);
     console.log(errors);
 
-    if(!errors) { //cannot locate the error, however it exists, but is not fatal
+    if (!errors) { //cannot locate the error, however it exists, but is not fatal
         req.session.errors = errors;
-        res.redirect('/admin/products/editProduct/' + id);       
-    }   
-    
-        console.log(errors);
-        var p = new Product();
-            //}
+        res.redirect('/admin/products/editProduct/' + id);
+    }
 
-            if (p) {
-                Product.findById(id, function(err, p){
-                     if(err){
-                         console.log(err);
-                     }
+    console.log(errors);
+    var p = new Product();
+    //}
 
-                    p.title = title;
-                    p.description = description;
-                    p.price = parseFloat(price).toFixed(2);
-                    p.category = category;
-                    if (imageFile != "") {
-                        p.image = imageFile;
+    if (p) {
+        Product.findById(id, function (err, p) {
+            if (err) {
+                console.log(err);
+            }
+
+            p.title = title;
+            p.description = description;
+            p.price = parseFloat(price).toFixed(2);
+            p.category = category;
+            if (imageFile != "") {
+                p.image = imageFile;
+            }
+
+            p.save(function (err) {
+                if (err) {
+                    console.log(err);
+                }
+
+                if (imageFile != "") {
+                    if (pimage != "") {
+                        fs.remove('public/productImages/' + id + '/' + pimage, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
+
                     }
 
-                    p.save(function (err){
-                        if (err) {
-                            console.log(err);
-                        }
-
-                        if(imageFile !="") {
-                            if (pimage != "") {
-                                fs.remove('public/productImages/' + id + '/' + pimage, function(err) {
-                                     if (err) {
-                                         console.log(err);
-                                     }
-                                });
-                                
-                            }
-
-                            var productImage = req.files.image;
-                            var path = 'public/productImages/' + id + '/' + imageFile;
-                            productImage.mv(path, function (err) {
-                                return console.log(err);
-                            });
-                        }
-                        
-                        res.redirect('/admin/products/editProduct/' + id);
+                    var productImage = req.files.image;
+                    var path = 'public/productImages/' + id + '/' + imageFile;
+                    productImage.mv(path, function (err) {
+                        return console.log(err);
                     });
+                }
 
-                });
-            }
+                res.redirect('/admin/products/editProduct/' + id);
+            });
+
         });
+    }
+});
 
 /**
  * POST product gallery //CURRENT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  */
 
- router.post('/productGallery/:id', function (req, res) {
+router.post('/productGallery/:id', function (req, res) {
 
     var productImage = req.files.file;
     var id = req.params.id;
-    var path = 'public/productImages/' + id +'/gallery/' + req.files.file.name;
-    var thumbsPath = 'public/productImages/' + id +'/gallery/thumbs/' + req.files.file.name; //???
-    
-    productImage.mv(path, function(err){
+    var path = 'public/productImages/' + id + '/gallery/' + req.files.file.name;
+    var thumbsPath = 'public/productImages/' + id + '/gallery/thumbs/' + req.files.file.name; //???
+
+    productImage.mv(path, function (err) {
         if (err) console.log(err);
 
-        resizeImg(fs.readFileSync(path), {width:100, height: 100}).then(function (buf) {
+        resizeImg(fs.readFileSync(path), { width: 100, height: 100 }).then(function (buf) {
             fs.writeFileSync(thumbsPath, buf);
         });
     });
@@ -336,15 +335,15 @@ router.post('/editProduct/:id', function(req, res) {
 /**
  *  GET delete product //CURRENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  */
- router.get('/deleteProduct/:id', function (req, res) {
+router.get('/deleteProduct/:id', function (req, res) {
     var id = req.params.id;
     var path = 'public/productImages/' + id;
 
-    fs.remove(path, function(err) {
+    fs.remove(path, function (err) {
         if (err) {
             console.log(err);
         } else {
-            Product.findByIdAndRemove(id, function(err) {
+            Product.findByIdAndRemove(id, function (err) {
                 console.log(err);
             });
             res.redirect('/admin/products');
@@ -357,16 +356,16 @@ router.post('/editProduct/:id', function(req, res) {
  * GET delete image 
  */
 
- router.get('/deleteImage/:image', function (req, res) {
+router.get('/deleteImage/:image', function (req, res) {
 
-    var originalImage = 'public/productImages/' + req.query.id +'/gallery/' + req.params.image;
-    var thumbImage = 'public/productImages/' + req.query.id +'/gallery/thumbs/' + req.params.image;
+    var originalImage = 'public/productImages/' + req.query.id + '/gallery/' + req.params.image;
+    var thumbImage = 'public/productImages/' + req.query.id + '/gallery/thumbs/' + req.params.image;
 
     fs.remove(originalImage, function (err) {
         if (err) {
             console.log(err);
         } else {
-            fs.remove(thumbImage, function (err){
+            fs.remove(thumbImage, function (err) {
                 if (err) {
                     console.log(err);
                 } else {

@@ -42,11 +42,11 @@
 
             <div class="form-group">
                 <label for="">Image</label>
+                <!-- code snippet from https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded start -->
                 <input class="form-control" type="file" name="image" id="img"
                     onchange="document.getElementById('imgPreview').src = window.URL.createObjectURL(this.files[0])">
                 <br>
 
-                <!-- code snippet from https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded start -->
                 <img id="imgPreview" alt="Choose file to preview image" width="100" height="100" />
                 <!-- code snippet from https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded end -->
                 <br><br>

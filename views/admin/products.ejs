@@ -12,57 +12,57 @@
             <input id="backButton" type="button" value="Back" onclick="history.go(-1)">
             <a id="addProduct" href="/admin/products/addProduct" class="btn btn-primary">Add a new product </a>
             <br><br>
-
+            <% console.log("The count is: " + count); %>
             <!-- display table if count if one or more product... -->
-            <% if (count > 0) { %>
+            <% if (count> 0 || count != "") { %>
 
-                <table class="p-3 table table-striped">
-                    <thead>
-                        <tr class="home">
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Category</th>
-                            <th>Product Image</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                <table class=" p-3 table table-striped">
+                <thead>
+                    <tr class="home">
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Product Image</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% products.forEach(function(product) { %>
+                        <tr>
+                            <td>
+                                <%= product.title %>
+                            </td>
+                            <td>
+                                <!-- round to two decimal places -->
+                                $<%= parseFloat(product.price).toFixed(2) %>
+                            </td>
+                            <td>
+                                <%= product.category %>
+                            </td>
+                            <td>
+                                <% if (product.image=="" ) { %>
+                                    <img src="/images/noImage.png" alt="defaultImage" class="noImage">
+                                    <% } else {%>
+                                        <img src="/productImages/<%= product._id %>/<%= product.image %>"
+                                            alt="productImage" class="noImage">
+                                        <% } %>
+                            </td>
+                            <td>
+                                <a href="/admin/products/editProduct/<%= product._id %>">Edit</a>
+                            </td>
+
+                            <td>
+                                <a class="confirmDeletion"
+                                    href="/admin/products/deleteProduct/<%= product._id %>">Delete</a>
+                            </td>
                         </tr>
-                    </thead>
-
-                    <tbody>
-                        <% products.forEach(function(product) { %>
-                            <tr>
-                                <td>
-                                    <%= product.title %>
-                                </td>
-                                <td>
-                                    <!-- round to two decimal places -->
-                                    $<%= parseFloat(product.price).toFixed(2) %>
-                                </td>
-                                <td>
-                                    <%= product.category %>
-                                </td>
-                                <td>
-                                    <% if (product.image == "") { %>
-                                        <img src="/images/noImage.png" alt="defaultImage" class="noImage">
-                                        <% } else {%>
-                                            <img src="/productImages/<%= product._id %>/<%= product.image %>"
-                                                alt="productImage" class="noImage">
-                                            <% } %>
-                                </td>
-                                <td>
-                                    <a href="/admin/products/editProduct/<%= product._id %>">Edit</a>
-                                </td>
-
-                                <td>
-                                    <a class="confirmDeletion"
-                                        href="/admin/products/deleteProduct/<%= product._id %>">Delete</a>
-                                </td>
-                            </tr>
-                            <% }); %>
-                    </tbody>
+                        <% }); %>
+                </tbody>
                 </table>
 
-                <% } else {%>
+                <% } else { %>
                     <h3 class="text-center">Out of stock.</h3>
                     <% } %>
 
