@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Vancouver Weather</title>
+
+   <!-- font awesome cdn -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file -->
+   <link rel="stylesheet" href="../css/weather.css">
+
+</head>
+
+<body>
+    <% if (city != '') { %>
+        <section class="ajax-section">
+          <div class="container">
+            <ul class="city">
+              <li class="city">
+              <% if(city !== null)  {%>
+                  <h2 class="city-name">
+                    <span class="city" id="city"><%= city %></span>   
+                    <sup><%= country %></sup>
+                  </h2>
+                  <% } %>
+            
+                  <% if(tempReal !== null)  {%>
+                  <div class="city-temp" id="temp"><%= tempReal %><sup>°C</sup></div>
+                  <% } %>
+                  <figure>
+                    <% if(img !== null)  {%>
+                    <img class="city-icon" id="icon" src="<%= img %>" alt="">
+                    <% } %>
+                    <% if(des !== null)  {%>
+                    <figcaption class="des" id="des"><%= des %></figcaption>
+                    <% } %>
+                  </figure>
+              </li>
+            </ul>
+          </div>
+        </section>
+        <% } else { %>       
+          <h1></h1>
+      <% } %>
+
+    <section class="top-banner">
+        <div class="container">
+          <h1 class="heading">Vancouver</h1>
+          <form action="/van_weather" method="POST">
+            <input type="text" placeholder="Vancouver" autofocus name="city" value="Vancouver">
+            <button type="submit">SUBMIT</button>
+            <span class="msg"></span>
+          </form>
+        </div>
+      </section>
+    
+</body>
+</html>

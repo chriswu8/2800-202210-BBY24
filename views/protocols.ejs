@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Home_Page</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+   <!-- font awesome cdn -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+   <!-- custom css file -->
+   <link rel="stylesheet" href="./css/protocols.css">
+
+</head>
+<body>
+   
+<!-- header -->
+
+<header class="header">
+
+   <div class="flex"> 
+
+      <a href="#home" class="logo"><img src="./css/img/logo.png" alt=""></a>
+
+      <nav class="navbar">
+        <a href="/regular">HOME</a>
+            <a href="/protocols">PROTOCOLS</a>
+            <a href="/weather">WEATHER</a>
+            <a href="/login/postings">BLOG</a>
+            <a href="/profile">PROFILE</a>
+            <a id="logout" href="/logout">LOGOUT</a>
+      </nav>
+
+      <div class="dropdown" style="float:right;">
+         <button class="dropbtn">MENU</button>
+         <div class="dropdown-content">
+          <a href="/regular">HOME</a>
+               <a href="/protocols">PROTOCOLS</a>
+               <a href="weather/">WEATHER</a>
+               <a href="/login/postings">BLOG</a>
+               <a href="profile/">PROFILE</a>
+               <a id="logout" href="/logout">LOGOUT</a>
+         </div>
+       </div>
+      </div>
+
+</header>
+
+<button type="button" class="btn" id="backButton">
+  <input type="button" value="Back" onclick="history.go(-1)">
+</button> <br><br><br><br>
+
+<!--main section-->
+<div class="container">
+    <div class="jumbotron">
+      <h2>Emergency Weather Information</h2>
+    </div>
+  </div>
+
+  <br><br><br>
+
+<div class="container-xxl">
+  <p>
+    <div class="col text-center">
+      <button class="btn btn-light btn-lg btn-block btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#heat_wave" aria-expanded="false" aria-controls="collapseExample">
+        Heat Wave
+      </button>
+      </div>
+    </p>
+    <div class="collapse" id="heat_wave">
+      <div class="card card-body">
+        <h1>During a Heat Wave</h1>
+          <li>Never leave children alone in a parked car. Temperatures can rise to 52 Celsius (125 Fahrenheit) within 20 minutes inside a vehicle when the outside temperature is 34 C (93 F). Leaving the car windows slightly open will not keep the inside of the vehicle at a safe temperature.</li>
+          <li>Drink plenty of fluids. Drink extra water even before you feel thirsty and if you are active on a hot day. Ask your health-care provider about how much water you should drink on hot days if you are on water pills or limiting your fluid intake.</li>
+          <li>Keep cool. Stay indoors in air-conditioned buildings or take a cool bath or shower. At temperatures above 30 C (86 F), fans alone may not be able to prevent heat-related illness. Sunscreen will protect against the sun’s ultraviolet (UV) rays, but not from the heat.</li>
+          <li>Plan activity before 10 a.m. or after 4 p.m., when the sun’s UV radiation is the weakest.</li>
+          <li>Avoid tiring work or exercise in hot, humid environments. If you must work or exercise, drink two to four glasses of non-alcoholic fluids each hour. Rest breaks are important and should be taken in the shade.</li>
+          <li>Avoid sunburn. Use a broad-spectrum sunscreen with SPF 30 or higher on exposed skin and an SPF 30 lip balm, and reapply often.</li>
+          <li>Wear lightweight, light-coloured, loose-fitting clothing and a wide brimmed hat, or use an umbrella for shade.</li>
+          <li>Regularly check older adults, children and others for signs of heat-related illness, and make sure they are keeping cool and drinking plenty of fluids. Check on those who are unable to leave their homes and people with emotional or mental-health challenges whose judgment may be impaired.</li>
+          <li>Heat also affects pets. Never leave a pet in a parked car. Limit pets’ exercise, and be sure to provide them with plenty of water and shade.</li>
+      </div>
+    </div>
+    <br>
+  <!---->
+    <p>
+        <div class="col text-center">
+        <button class="btn btn-light btn-lg btn-block btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#blizzard" aria-expanded="false" aria-controls="collapseExample">
+          Blizzard
+        </button>
+        </div>
+      </p>
+      <div id="rounded_edge">
+      <div class="collapse" id="blizzard">
+        <div class="card card-body">
+            <ul>
+                <li>If a blizzard or heavy blowing snow is forecast, you may want to string a lifeline between your house and any outbuildings to which you may have to go during the storm.</li>
+                <li>When a winter storm hits, stay indoors. If you must go outside, dress for the weather. Outer clothing should be tightly woven and water-repellent. The jacket should have a hood. Wear mittens - they are warmer than gloves - and a hat, as most body heat is lost through the head.</li>
+                <li>In wide-open areas, visibility can be virtually zero during heavy blowing snow or a blizzard. You can easily lose your way. If a blizzard strikes, do not try to walk to another building unless there is a rope to guide you or something you can follow.</li>
+                <li>If you must travel during a winter storm, do so during the day and let someone know your route and arrival time.</li>
+                <li>If your car gets stuck in a blizzard or snowstorm, remain calm and stay in your car. Allow fresh air in your car by opening the window slightly on the sheltered side - away from the wind. You can run the car engine about 10 minutes every half-hour if the exhaust system is working well. Beware of exhaust fumes and check the exhaust pipe periodically to make sure it is not blocked with snow. Remember: you can't smell potentially fatal carbon monoxide fumes.</li>
+                <li>To keep your hands and feet warm, exercise them periodically. In general, it is a good idea to keep moving to avoid falling asleep. If you do try to shovel the snow from around your car, avoid overexerting yourself.</li>
+                <li>Overexertion in the bitter cold can cause death as a result of sweating or a heart attack.</li>
+                <li>Keep watch for traffic or searchers.</li>
+                <li>If you live on a farm, shelter animals. Generally, if the structure is sound, the animals should be placed indoors. Once they are inside, secure all openings to the outside. The sheltering should be ordered and completed before similar action is taken for humans. Water supplies should be checked for freezing. Many animals have died of thirst during the winter, even with abundant water sources, because they could not drink the water as it was frozen solid.</li>
+              </ul> 
+        </div>
+      </div>
+    </div>
+<!----->
+      <br>
+
+    <p>
+      <div class="col text-center">
+        <button class="btn btn-light btn-lg btn-block btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#lightning" aria-expanded="false" aria-controls="collapseExample">
+          Lightning
+        </button>
+        </div>
+      </p>
+      <div class="collapse" id="lightning">
+        <div class="card card-body">
+            <li>Always take shelter during lightning.</li>
+            <li>To estimate how far away the lightning is, count the seconds between the flash of lightning and the thunderclap. Each second is about 300 metres. If you count fewer than 30 seconds look for shelter. If you count fewer than 5 seconds take shelter immediately.</li>
+            <li>Wait 30 minutes after the last lightning strike in a severe storm before venturing outside again.</li>
+            <li>If you are caught in the open, do not lie flat. Crouch down with your feet close together and your head down (the "leap-frog" position). By minimizing your contact with the ground, you reduce the risk of being electrocuted by a ground charge.</li>
+            <li>Do not ride bicycles, motorcycles, tractors, golf carts or use metal shovels or golf clubs because they may conduct electricity.</li>
+        </div>
+      </div>
+<!----->
+      <br>
+      <p>
+        <div class="col text-center">
+        <button class="btn btn-light btn-lg btn-block btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#hail" aria-expanded="false" aria-controls="collapseExample">
+          Hail
+        </button>
+        </div>
+    </p>
+    
+    <div class="collapse" id="hail">
+      <div class="card card-body">
+          <ul>
+              <li>If hail is forecast, you may want to protect your vehicle by putting it in the garage.</li>
+              <li>Take cover when hail begins to fall. Do not go out to cover plants, cars or garden furniture or to rescue animals. Hail comes down at great speed, especially when accompanied by high winds. Although no one in Canada has ever been killed by hail, people have been seriously injured by it.</li>
+              <li>When a hailstorm hits, stay indoors, and keep yourself and your pets away from windows, glass doors and skylights which can shatter if hit by hailstones. Avoid using the telephone during a storm, and do not touch metal objects like stoves, radiators, metal pipes, and sinks.</li>
+              <li>When a hailstorm hits, find shelter and avoid underpasses or any low lying areas that may flood.</li>
+            </ul> 
+      </div>
+    </div>
+    
+    <br>
+<!---->
+    <p>
+      <div class="col text-center">
+      <button class="btn btn-light btn-lg btn-block btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#hurricane" aria-expanded="false" aria-controls="collapseExample">
+        Hurricane
+      </button>
+      </div>
+  </p>
+  
+  <div class="collapse" id="hurricane">
+    <div class="card card-body">
+        <ul>
+          <h1>Before a Hurricane</h1>
+            <li>Trim trees and shrubs around your home to minimize the risk of broken branches and debris.</li>
+            <li>Make sure all pets have ID tags.</li>
+            <li>Photograph or scan important documents like driver’s licenses, social security cards, passports, prescriptions, tax statements and other legal papers. Upload the images online for safekeeping</li>
+            <li>Find all local emergency shelters. Know your evacuation route.</li>
+            <li>Fully fuel your vehicles.</li>
+            <li>Stay informed by monitoring the storm via local radio, NOAA radio, TV, and internet. Listen for alerts to evacuate.</li>
+            <li>Turn off propane tanks</li>
+            <li>Bring all lawn furniture, grills, trash barrels, bikes, hanging plants, toys, and gardening tools inside or tied down in a secure spot.</li>
+            <li>Move any electronics to higher shelves to keep away from water damage.</li>
+            <h1>During a Hurricane</h1>
+            <li>GET IN - If you are outside, get inside.  If you're already inside, get as far into the middle of the building as possible. </li>
+            <li>GET DOWN - Get underground if possible.  If you cannot, go to the lowest floor possible. </li>
+            <li>COVER UP - Flying and falling debris are a storm's number one killer.  Use pillows, blankets, coats, helmets, etc to cover up and protect your head and body from flying debris.</li>
+            <li>Stay indoors and away from windows and glass doors.</li>
+            <li>Close all interior doors—secure and brace external doors.</li>
+            <li>Take refuge in a small interior room, closet, or hallway on the lowest level.</li>
+            <li>Lie on the floor under a table or another sturdy object.</li>
+            <h1>After a Hurricane</h1>
+            <li>Let your friends and family know that you are safe.</li>
+            <li>Do NOT drink tap water unless authorized to do so.</li>
+            <li>Check the temperature in your fridge or freezer. Anything that has remained at 40 degrees Fahrenheit or colder is safe to eat. Otherwise, throw it out to be safe.</li>
+            <li>Immediately remove or air out water-damaged items. It’s critical to minimize the chance of mold growing in your home.</li>
+            <li>Do NOT drive or walk through floodwaters which may be electrically-charged and filled with contaminants; just six inches of moving flood water will knock a grown man down. Do NOT underestimate the power of moving waters.</li>
+          </ul> 
+    </div>
+  </div>
+  
+  <br>
+
+  </div>
+
+  
+<button class="liveChat"> <a id="chatAnchor" href="/chatIndex"><div id="chatText">Chat</div></a></button> <br><br>
+  
+
+
+<!--Footer-->
+<section class="footer">
+ 
+    <div class="group-info">2022 BCIT BBY-24 AtmosPal</div>
+ </section>
+ 
+
+ 
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+
+
+ </body>
+ </html>
