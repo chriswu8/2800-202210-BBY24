@@ -18,9 +18,8 @@ const {
 } = require("./middleware/auth");
 const port = process.env.PORT || 8000;
 const app = express();
-const url = 'mongodb://localhost:27017/cart';
-// const url = 'mongodb+srv://atmospal:w7BYxfThauyMUO58@realmcluster.s7dvc.mongodb.net/BBY_24_user_for_group_24?retryWrites=true&w=majority';
-
+// const url = 'mongodb://localhost:27017/cart';
+const url = 'mongodb+srv://atmospal:w7BYxfThauyMUO58@realmcluster.s7dvc.mongodb.net/BBY_24_user_for_group_24?retryWrites=true&w=majority';
 
 // ======================================
 // sessions
@@ -39,25 +38,11 @@ const url = 'mongodb://localhost:27017/cart';
 // );
 
 // express-session middleware
-// app.use(session({
-//     secret: 'keyboard cat',
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: true },
-//     store: create.MongoStore({
-//       mongoURL: 'mongodb://localhost:27017/cart',
-//       ttl: 14 * 24 * 60 ^ 60,
-//       autoRemove: 'native'
-//     })
-//     //resave: true,             removed
-//     //saveUninitialized: true,        removed
-//     // cookie: { secure: true }
-// }));
-
 app.use(session({
-  secret: 'secret-key',
-  resave: false,
-  saveUninitialized: false,
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    // cookie: { secure: true }
 }));
 
 // express-validator middleware
