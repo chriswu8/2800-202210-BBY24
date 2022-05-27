@@ -12,30 +12,9 @@ const fileUpload = require('express-fileupload');
 
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
-const {
-    checkNotAuthenticated,
-    checkAuthenticated,
-} = require("./middleware/auth");
 const port = process.env.PORT || 8000;
 const app = express();
-// const url = 'mongodb://localhost:27017/cart';
 const url = 'mongodb+srv://atmospal:w7BYxfThauyMUO58@realmcluster.s7dvc.mongodb.net/BBY_24_user_for_group_24?retryWrites=true&w=majority';
-
-// ======================================
-// sessions
-// ======================================
-// app.use(session({
-//     secret: 'someSecret',
-//     resave: true,
-//     saveUninitialized: true,
-//     store: MongoStore.create({
-//         mongoUrl: url,
-//         ttl: 24 * 60 * 60,
-//         collection: 'mySessions',
-//         autoRemove: 'native'
-//     })
-// })
-// );
 
 // express-session middleware
 app.use(session({
@@ -115,9 +94,9 @@ app.use(passport.session());
 
 app.use('/', dashboardRouter);
 
-app.use('/dashboard', checkNotAuthenticated, dashboardRouter);
+app.use('/dashboard', dashboardRouter);
 
-app.use('/home', checkNotAuthenticated, dashboardRouter);
+app.use('/home', dashboardRouter);
 
 // Express messages middleware 
 app.use(cookieParser());
@@ -185,7 +164,6 @@ const {
   userLeave,
   getRoomUsers
 } = require('./utils/users');
-const { create } = require('connect-mongo');
 
 const server = http.createServer(app);
 const io = socketio(server);
@@ -196,7 +174,6 @@ var count = 0;
 // Run when client connects
 io.on('connection', socket => {
   count++;
-  console.log("New WS connection!!! BAM! " + count);
   socket.on('joinRoom', ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
 

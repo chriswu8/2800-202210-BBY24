@@ -5,7 +5,7 @@
             <div class="form-group">
                 <label class="label">Name</label>
                 <input type="text" id='name' name="name" class="form-control" value="<%= registerusers.name %>"
-                 placeholder="Please enter name">
+                 placeholder="Please enter name" pattern="[a-zA-Z0-9]*">
             </div>
             <div class="form-group">
                 <label class="label">Password</label>
@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label class="label">Phone Number</label>
-                <input type="number" name="number" class="form-control" placeholder="Please enter phone number" 
+                <input type="text" name="number" class="form-control" pattern="[0-9]" placeholder="Please enter phone number" 
                 value="<%= registerusers.number %>" id="number">
             </div>
             <div>
@@ -31,17 +31,10 @@
                 <input type="radio" id="regular" name="type" value="<%= registerusers.type %>">
                 <label for="regular">Regular</label>
             </div>
-            <div>
-                <label for="image" class="label">Avatar</label>
-            </div>
-            <div>    
-                <label class="file" for="image">
-                    <input type="file" id="file" name="image">
-                    <span class="file-custom"></span>
-                </label>
-                <img src="/<%= registerusers.image %>" width="100" class="img-thumbnail">
-            </div>
-            <input type="hidden" name="old_image" value="<%= registerusers.image %>"/>
-            <button name="submit" class="btn" value="Update User">Update User</button>
+            <button name="submit" class="btn btn-primary" value="Update User">Update User</button>
+            <button type="submit" class="btn">
+                <a href="/profile" class="btn btn-danger">Cancel</a>
+            </button>
         </form>
     </div>
+    <script src="/js/format.js"></script>

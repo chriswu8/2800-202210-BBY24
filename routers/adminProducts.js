@@ -16,16 +16,17 @@ const Product = require('../models/product');
 // GET Category model
 const Category = require('../models/category');
 
+var count;
+
 /**
  * GET products index
  */
 router.get('/', function (req, res) {
-    var count;
+    
 
     Product.count(function (err, c) {
         count = c;
     });
-
     Product.find(function (err, products) {
         res.render('admin/products', {
             products: products,
@@ -105,19 +106,19 @@ router.post('/addProduct',
                 if (err) return console.log(err);
 
                 fs.ensureDir(dir + product._id).then(() => {
-                    console.log('success!')
+                    console.log('success2!')
                 }).catch(err => {
                     console.error(err)
                 })
 
                 fs.ensureDir(dir + product._id + '/gallery').then(() => {
-                    console.log('success!')
+                    console.log('success3!')
                 }).catch(err => {
                     console.error(err)
                 })
 
                 fs.ensureDir(dir + product._id + '/gallery/thumbs').then(() => {
-                    console.log('success!')
+                    console.log('success4!')
                 }).catch(err => {
                     console.error(err)
                 })

@@ -40,15 +40,19 @@
          <div class="dropdown-content">
           <a href="/regular">HOME</a>
                <a href="/protocols">PROTOCOLS</a>
-               <a href="weather/">WEATHER</a>
+               <a href="/weather">WEATHER</a>
                <a href="/login/postings">BLOG</a>
-               <a href="profile/">PROFILE</a>
+               <a href="/profile">PROFILE</a>
                <a id="logout" href="/logout">LOGOUT</a>
          </div>
        </div>
       </div>
 
 </header>
+
+<button type="button" class="btn" id="backButton">
+  <input type="button" value="Back" onclick="history.go(-1)">
+</button> <br><br><br><br>
 
 <!--main section-->
 <div class="container">
@@ -193,40 +197,12 @@
   </div>
 
   
-<button class="liveChat"> <a href="/chatIndex"><div id="chatText">Chat</div></a></button> <br><br>
+<button class="liveChat"> <a id="chatAnchor" href="/chatIndex"><div id="chatText">Chat</div></a></button> <br><br>
   
 
 
 <!--Footer-->
 <section class="footer">
-    <!-- <p>Information taken from https://www.crd.bc.ca/prepare-yourself/hazards-in-our-region/severe-weather</p>
-    <p>Information taken from https://www.weather.gov/ama/severesafetytips</p>
-    <p>Information taken from https://www.almanac.com/content/how-survive-hurricane</p>
-    <p>Information taken from https://news.gov.bc.ca/releases/2021PSSG0043-001226</p> -->
-
-    <div class="box-container">
- 
-       <div class="box">
-          <i class="fa-brands fa-instagram"></i>
-          <h3>Instagram</h3>
-       </div>
- 
-       <div class="box">
-          <i class="fa-brands fa-twitter"></i>
-          <h3>Twitter</h3>
-       </div>
- 
-       <div class="box">
-          <i class="fa-brands fa-facebook-square"></i>
-          <h3>Facebook</h3>
-       </div>
- 
-       <div class="box">
-          <i class="fa-brands fa-youtube"></i>
-          <h3>Youtube</h3>
-       </div>
- 
-    </div>
  
     <div class="group-info">2022 BCIT BBY-24 AtmosPal</div>
  </section>

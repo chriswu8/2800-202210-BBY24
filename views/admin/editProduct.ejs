@@ -19,17 +19,17 @@
     <form action="/admin/products/editProduct/<%= id %>" method="POST" enctype="multipart/form-data">
 
         <div class="form-group">
-            <label for="">Title</label>
-            <input class="form-control" type="text" name="title" value="<%= title %>" placeholder="Title">
+            <label>Title</label>
+            <input class="form-control" type="text" name="title" value="<%= title %>" pattern="[a-zA-Z0-9_ ]*" placeholder="Title">
         </div>
 
         <div class="form-group">
-            <label for="">Description</label>
-            <textarea class="form-control" name="description" placeholder="Description"><%= description %> </textarea>
+            <label>Description</label>
+            <textarea class="form-control" name="description" pattern="[a-zA-Z0-9_ ]*" placeholder="Description"><%= description %> </textarea>
         </div>
 
         <div class="form-group">
-            <label for="">Category</label>
+            <label>Category</label>
             <select name="category" class="form-control">       <!--SKIPPED PART AT 2:00 FOR VID 29-->
                 <% categories.forEach(function(cat) { %>
                     <option>
@@ -40,13 +40,14 @@
         </div>
 
         <div class="form-group">
-            <label for="">Price</label>
-            <input class="form-control" type="text" name="price" value="<%= price %>" placeholder="Price">
+            <label>Price</label>
+            <input class="form-control" type="number" name="price" value="<%= price %>"
+             placeholder="Price" min="0.01" max="9999" step="any">
         </div>
 
         <!--NEWLY ADDED-->
         <div class="form-group">
-            <label for="">Current Image</label>
+            <label>Current Image</label>
             <p>
                 <% if (image == "") { %>
                     <img class="noimage" src="/images/noImage.png" alt="">
@@ -57,7 +58,7 @@
         </div>
 
         <div class="form-group">
-            <label for="">Upload Image</label>
+            <label>Upload Image</label>
             <!--BELOW IS THE ORIGINAL-->
             <input class="form-control" type="file" name="image" id="img"  
                 onchange="document.getElementById('imgPreview').src = window.URL.createObjectURL(this.files[0])"><br>

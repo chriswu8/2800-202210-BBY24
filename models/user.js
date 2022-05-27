@@ -9,7 +9,7 @@ const userSchema = new schema({
     },
 
     number: {
-        type: Number,
+        type: String,
         required: true
     },
 
@@ -26,6 +26,7 @@ const userSchema = new schema({
 
     image: {
         type: String,
+        default:'/css/img/profile.png',
         required: false,
     },
     

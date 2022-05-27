@@ -1,4 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Ubuntu:wght@300&display=swap');
+
+#backButton {
+   width: 50px;
+   font-size: 20px;
+   position: absolute;
+   margin: 15px;
+   padding-top: 15px;
+
+}
+
+#chatAnchor {
+   text-decoration: none;
+}
+
+#chatText {
+   font-weight: bold;
+   color: #053C09;
+}
+
 :root{
    --main-color:#5d9cee;
    --black:#333;
@@ -30,7 +49,7 @@ html{
 body{
     background-repeat:initial;
     background-color: #cccccc;
-    background-image: linear-gradient(#5d9cee, rgb#666);
+    background-image: linear-gradient(#5d9cee, rgb(107, 107, 107));
 }
 
 /* hide dropdown */

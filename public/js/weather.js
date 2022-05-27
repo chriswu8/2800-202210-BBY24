@@ -1,4 +1,10 @@
-
+/**
+   * A weather system with javascript. 
+   * I found this code on tutsplus.com.
+   *
+   * @author George Martsoukos
+   * @see https://webdesign.tutsplus.com/tutorials/build-a-simple-weather-app-with-vanilla-javascript--cms-33893/
+   */
 const list = document.querySelector(".ajax-section .city");
 
 function getWeather() {
@@ -29,7 +35,7 @@ function getWeather() {
       li.classList.add("city");
       const markup = `
         <h2 class="city-name" data-name="${name},${sys.country}">
-          <span><img src='./css/img/location.png' alt='' class='locate'></a>${name}</span>
+          <span><img src='/css/img/location.png' alt='' class='locate'></a>${name}</span>
           <sup>${sys.country}</sup>
         </h2>
         <div class="city-temp">${Math.round(main.temp)}<sup>°C</sup></div>
