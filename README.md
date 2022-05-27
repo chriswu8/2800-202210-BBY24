@@ -10,127 +10,127 @@ Frontend: HTML, Bootstrap, CSS, JavaScript, and JQuery
 
 4. Listing of File Contents of folder 
 
-│  .env
-│  .gitignore
-│  app.js
-│  index.css
-│  package-lock.json
-│  package.json
-│  Procfile
-│
-├─models
-│      category.js
-│      page.js
-│      Posting.js
-│      product.js
-│      user.js
-│
-├─public
-│  ├─css
-│  │  │  addUser.css
-│  │  │  adminStyle.css
-│  │  │  allUsers.css
-│  │  │  atmosChat.css
-│  │  │  dashboard.css
-│  │  │  easterEgg.css
-│  │  │  editUser.css
-│  │  │  home.css
-│  │  │  index.css
-│  │  │  new.css
-│  │  │  protocols.css
-│  │  │  show.css
-│  │  │  style.css
-│  │  │  weather.css
-│  │  │
-│  │  └─img
-│  │          avatar.png
-│  │          bar.png
-│  │          bcit_background.jpg
-│  │          cityHall.jpg
-│  │          dummy.png
-│  │          extreme_weather.jpg
-│  │          facebook.jpg
-│  │          highWind.jpg
-│  │          img1.jpg
-│  │          instagram.jpg
-│  │          lightining.png
-│  │          location.png
-│  │          logo.png
-│  │          newBrunswick.jpg
-│  │          profile.png
-│  │          rain.png
-│  │          scienceWorld.jpg
-│  │          toronto.jpg
-│  │          twitter.jpg
-│  │          youtube.jpg
-│  │
-│  ├─images
-│  │      noImage.png
-│  │
-│  ├─js
-│  │      admin_weather.js
-│  │      easterEgg.js
-│  │      format.js
-│  │      main.js
-│  │      weather.js
-│  │
-│  └─productImages
-│      │  batteries.png
-│      │  blanket.png
-│      │
-│      ├─routers
-│      adminCategories.js
-│      adminPages.js
-│      adminProducts.js
-│      dashboardRouter.js
-│      pages.js
-│
-├─uploads
-│      image-1652810152414.png
-│
-├─utils
-│      messages.js
-│      users.js
-│
-└─views
-    │  add_user.ejs
-    │  all_users.ejs
-    │  cal_weather.ejs
-    │  chat.ejs
-    │  chatIndex.ejs
-    │  dashboard.ejs
-    │  easter_egg.ejs
-    │  edit_user.ejs
-    │  home.ejs
-    │  index.ejs
-    │  messages
-    │  nb_weather.ejs
-    │  new.ejs
-    │  profile.ejs
-    │  protocols.ejs
-    │  register.ejs
-    │  show.ejs
-    │  tor_weather.ejs
-    │  van_weather.ejs
-    │  weather.ejs
-    │
-    ├─admin
-    │      addCategory.ejs
-    │      addPage.ejs
-    │      addProduct.ejs
-    │      categories.ejs
-    │      editCategory.ejs
-    │      editPage.ejs
-    │      editProduct.ejs
-    │      pages.ejs
-    │      products.ejs
-    │
-    └─layouts
-            adminFooter.ejs
-            adminHeader.ejs
-            adminNavbar.ejs
-            footer.ejs
-            header.ejs
+│  .env                                                           
+│  .gitignore                                                          
+│  app.js                                                          
+│  index.css                                                          
+│  package-lock.json                                                          
+│  package.json                                                          
+│  Procfile                                                          
+│                                                          
+├─models                                                          
+│      category.js                                                          
+│      page.js                                                          
+│      Posting.js                                                          
+│      product.js                                                          
+│      user.js                                                          
+│                                                          
+├─public                                                          
+│  ├─css                                                          
+│  │  │  addUser.css                                                          
+│  │  │  adminStyle.css                                                          
+│  │  │  allUsers.css                                                          
+│  │  │  atmosChat.css                                                          
+│  │  │  dashboard.css                                                          
+│  │  │  easterEgg.css                                                          
+│  │  │  editUser.css                                                          
+│  │  │  home.css                                                          
+│  │  │  index.css                                                          
+│  │  │  new.css                                                          
+│  │  │  protocols.css                                                          
+│  │  │  show.css                                                          
+│  │  │  style.css                                                          
+│  │  │  weather.css                                                          
+│  │  │                                                          
+│  │  └─img                                                          
+│  │          avatar.png                                                          
+│  │          bar.png                                                          
+│  │          bcit_background.jpg                                                          
+│  │          cityHall.jpg                                                          
+│  │          dummy.png                                                          
+│  │          extreme_weather.jpg                                                          
+│  │          facebook.jpg                                                          
+│  │          highWind.jpg                                                          
+│  │          img1.jpg                                                          
+│  │          instagram.jpg                                                          
+│  │          lightining.png                                                          
+│  │          location.png                                                          
+│  │          logo.png                                                          
+│  │          newBrunswick.jpg                                                          
+│  │          profile.png                                                          
+│  │          rain.png                                                          
+│  │          scienceWorld.jpg                                                          
+│  │          toronto.jpg                                                          
+│  │          twitter.jpg                                                          
+│  │          youtube.jpg                                                          
+│  │                                                          
+│  ├─images                                                          
+│  │      noImage.png                                                          
+│  │                                                          
+│  ├─js                                                          
+│  │      admin_weather.js                                                          
+│  │      easterEgg.js                                                          
+│  │      format.js                                                          
+│  │      main.js                                                          
+│  │      weather.js                                                          
+│  │                                                          
+│  └─productImages                                                          
+│      │  batteries.png                                                          
+│      │  blanket.png                                                          
+│      │                                                          
+│      ├─routers                                                          
+│      adminCategories.js                                                          
+│      adminPages.js                                                          
+│      adminProducts.js                                                          
+│      dashboardRouter.js                                                          
+│      pages.js                                                          
+│                                                          
+├─uploads                                                          
+│      image-1652810152414.png                                                          
+│                                                          
+├─utils                                                          
+│      messages.js                                                          
+│      users.js                                                          
+│                                                          
+└─views                                                          
+    │  add_user.ejs                                                          
+    │  all_users.ejs                                                          
+    │  cal_weather.ejs                                                          
+    │  chat.ejs                                                          
+    │  chatIndex.ejs                                                          
+    │  dashboard.ejs                                                          
+    │  easter_egg.ejs                                                          
+    │  edit_user.ejs                                                          
+    │  home.ejs                                                          
+    │  index.ejs                                                          
+    │  messages                                                          
+    │  nb_weather.ejs                                                          
+    │  new.ejs                                                          
+    │  profile.ejs                                                          
+    │  protocols.ejs                                                          
+    │  register.ejs                                                          
+    │  show.ejs                                                          
+    │  tor_weather.ejs                                                          
+    │  van_weather.ejs                                                          
+    │  weather.ejs                                                          
+    │                                                          
+    ├─admin                                                          
+    │      addCategory.ejs                                                          
+    │      addPage.ejs                                                          
+    │      addProduct.ejs                                                          
+    │      categories.ejs                                                          
+    │      editCategory.ejs                                                          
+    │      editPage.ejs                                                          
+    │      editProduct.ejs                                                          
+    │      pages.ejs                                                          
+    │      products.ejs                                                          
+    │                                                          
+    └─layouts                                                          
+  	adminFooter.ejs                                                          
+	adminHeader.ejs                                                          
+	adminNavbar.ejs                                                          
+	footer.ejs                                                          
+	header.ejs                                                          
 
 5. How to install / run the project 
 
