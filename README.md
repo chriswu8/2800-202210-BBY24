@@ -4,6 +4,7 @@
 2. Project Description: BBY-24 is developing AtmosPal, a mobile-first and interactive weather application that helps people with limited awareness to plan and prepare for various weather-induced events, through providing information, alerts, protocols, and safety products.
 
 3. Technologies used 
+
 Frontend: HTML, EJS, Bootstrap, CSS, JavaScript, and JQuery
 
 Backend: Node.js, Javascript, Socket.io, MongoDB, Openweather API, mongoose, Heroku
