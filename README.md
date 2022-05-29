@@ -5,8 +5,10 @@
 
 3. Technologies used 
 Frontend: HTML, EJS, Bootstrap, CSS, JavaScript, and JQuery
-            Backend: Node.js, Javascript, Socket.io, MongoDB, Openweather API, mongoose, Heroku
-            Database: MongoDB
+
+Backend: Node.js, Javascript, Socket.io, MongoDB, Openweather API, mongoose, Heroku
+
+Database: MongoDB
 
 4. Listing of File Contents of folder 
 
