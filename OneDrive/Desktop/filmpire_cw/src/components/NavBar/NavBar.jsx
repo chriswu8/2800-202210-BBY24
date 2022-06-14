@@ -6,7 +6,11 @@ import { Link } from 'react-router-dom';
 const NavBar = () => {
   console.log('movie info');
   return (
-    <div>NavBar</div>
+    <>
+      <AppBar>
+        <h1>Nav!</h1>
+      </AppBar>
+    </>
   );
 };
 
