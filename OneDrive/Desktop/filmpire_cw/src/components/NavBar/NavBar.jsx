@@ -12,7 +12,18 @@ const NavBar = () => {
     <>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
-          <h1>Nav!!!</h1>
+          <h1>Nav@@</h1>
+          {isMobile && (
+            <IconButton
+              color="inherit"
+              edge="start"
+              style={{ outline: 'none' }}
+              onClick={() => {}}
+              className={classes.menuButton}
+            >
+              <Menu />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
     </>
