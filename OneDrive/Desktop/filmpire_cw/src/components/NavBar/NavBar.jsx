@@ -9,6 +9,7 @@ const NavBar = () => {
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width:600px)');
   const theme = useTheme();
+  const isAuthenticated = true;
 
   return (
     <>
@@ -35,6 +36,29 @@ const NavBar = () => {
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
 
+          {!isMobile && 'Search...'}
+          <div>
+            {!isAuthenticated ? (
+              <button color="inherit" onClick={() => { }}>
+                Login &nbsp; <AccountCircle />
+              </button>
+            ) : (
+              <Button
+                color="inherit"
+                component={Link}
+                to="/profile/:id"
+                className={classes.linkButton}
+                onClick={() => { }}
+              >
+                {!isMobile && <>My Movies &nbsp; </>}
+                <Avatar
+                  style={{ width: 30, height: 30 }}
+                  alt="Profile"
+                  src="https://www.clipartmax.com/png/middle/110-1104174_computer-icons-user-clip-art-lily-pad-coloring-page.png"
+                />
+              </Button>
+            )}
+          </div>
         </Toolbar>
       </AppBar>
     </>
